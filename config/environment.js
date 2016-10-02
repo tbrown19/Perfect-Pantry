@@ -3,9 +3,22 @@
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'perfect-pantry',
+    podModulePrefix: 'perfect-pantry/features',
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
+    contentSecurityPolicy: { 'connect-src': "'self' https://auth.firebase.com wss://*.firebaseio.com" },
+    firebase: {
+      apiKey: "AIzaSyBw3vNME-rEHNhkhlmdGmxEP0a1OKB2Ndc",
+      authDomain: "perfect-pantry.firebaseapp.com",
+      databaseURL: "https://perfect-pantry.firebaseio.com",
+      storageBucket: "perfect-pantry.appspot.com",
+      messagingSenderId: "385354777639"
+    },
+    torii: {
+      sessionServiceName: 'session'
+    },
+
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

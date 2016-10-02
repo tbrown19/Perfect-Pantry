@@ -2,6 +2,9 @@
   "name": "perfect-pantry",
   "dependencies": {
     "ember": "~2.8.0",
-    "ember-cli-shims": "0.1.1"
+    "ember-cli-shims": "0.1.1",
+    "firebase": "^3.0.0",
+    "bootstrap": "~3.3.5",
+    "font-awesome": "~4.5.0"
   }
 }
