@@ -18,7 +18,8 @@ placeholder='password'
       {{fa-icon 'spinner' spin=true}} Signing in...
     </button>
 {{else}}
-    <button class='btn btn-default' {{action 'signIn' 'password'}}>
+    <button class='btn btn-default' {{action 'signIn' email password}}>
       {{fa-icon 'sign-in'}} Sign In
     </button>
+
 {{/if}}
