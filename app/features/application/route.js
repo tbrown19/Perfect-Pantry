@@ -4,6 +4,7 @@ export default Ember.Route.extend({
   session: Ember.inject.service('session'),
   beforeModel: function() {
     return this.get('session').fetch().then(()=> {
+      debugger;
       console.log('session fetched');
       //Get the the url the user is coming from
       //This is needed so if the user refreshes it redirects them back the page they were on.

@@ -21,7 +21,11 @@ export default Ember.Route.extend({
         provider: 'password',
         'email': email,
         'password': password
-      }).then(window.location = '/dashboard');//)
+      }).then(() => {
+        window.location = '/dashboard';
+      });
+
+       //)
         /*
         .then(function (data) {
         console.log(data.currentUser);
