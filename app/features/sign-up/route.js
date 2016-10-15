@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  firebaseApp: Ember.inject.service(),
+
   beforeModel() {
     debugger;
     if (this.get('session.isAuthenticated')) {
@@ -9,15 +11,17 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    signUp() {
-      const auth = this.get('firebase').auth();
-      auth.createUserWithEmailAndPassword(this.get('email'), this.get('password')).
+    signUp(firstName,email,password) {
+      const auth = this.get('firebaseApp').auth();
+      auth.createUserWithEmailAndPassword(email, password).
       then((userResponse) => {
         const user = this.store.createRecord('user', {
-          id: userResponse.uid,
-          email: userResponse.email
+          firstName: firstName,
+          email: userResponse.email,
         });
+        debugger;
         return user.save();
+
       });
     }
   }

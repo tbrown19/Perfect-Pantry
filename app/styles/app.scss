@@ -1,0 +1,53 @@
+$primary-white: #F6F7EB;
+
+@import 'https://fonts.googleapis.com/css?family=Archivo+Black';
+$archivo-black: 'Archivo Black', sans-serif;
+
+#main-nav-bar{
+  background-color: #4C4C9D;
+  border: 0;
+  border-radius: 0;
+
+}
+.container{
+  width:100%;
+}
+.navbar{
+  margin-bottom: 0px;
+}
+#nav-branding{
+  color: $primary-white;
+  font-size: 2em;
+  font-family: $archivo-black;
+}
+
+#nav-link-items{
+  color: $primary-white;
+  font-family: "Helvetica Neue";
+  //margin-left: 2%;
+
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: $primary-white;
+  font-size: 1.25em;
+}
+
+
+.navbar-default .navbar-nav > li > a:hover{
+  color: white;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus{
+  border-bottom: 5px solid #FDE74C;
+  padding-bottom: 10px;
+  background-color: inherit;
+  color: $primary-white;
+}
+
+.dashboard-col{
+  background-color: lightcyan;
+  padding: 5px;
+  margin: 1px;
+  border: 2px solid cyan;
+}

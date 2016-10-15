@@ -1,10 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  beforeModel() {
-    debugger;
-    if (this.get('session.isAuthenticated')) {
-      this.transitionTo('dashboard');
+  session: Ember.inject.service('session'),
+
+  beforeModel: function() {
+    if(this.get('session').get('isAuthenticated')){
+      console.log("you are authed")
+      this.transitionTo('/dashboard');
     }
   },
 
@@ -14,12 +16,12 @@ export default Ember.Route.extend({
       //var email = controller.get('email');
       //var password = controller.get('password');
       //var self = this;
-      debugger;
+      console.log("in da sign in action");
       this.get('session').open('firebase', {
         provider: 'password',
         'email': email,
         'password': password
-      }).then(this.transitionTo('dashboard'));//)
+      }).then(window.location = '/dashboard');//)
         /*
         .then(function (data) {
         console.log(data.currentUser);

@@ -1,13 +1,41 @@
-<div class='container'>
-    <div class='navbar-brand'>EmberFirebaseDemo</div>
-    <div class='navbar-right'>
-      {{#if session.isAuthenticated}}
-          <button class='btn btn-default navbar-btn'{{action 'signOut'}} >
-            {{fa-icon 'sign-out'}} Sign Out
-          </button>
-      {{/if}}
-    </div>
-</div>
-<div class='container'>
+
+{{#if session.isAuthenticated}}
+  {{#bs-navbar id = "main-nav-bar"}}
+      <div class="navbar-header">
+        {{#bs-navbar-toggle}}
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        {{/bs-navbar-toggle}}
+          <a class="navbar-brand " id = "nav-branding" href="#">perfect pantry</a>
+      </div>
+      {{#bs-navbar-content}}
+        {{#bs-navbar-nav id = "nav-link-items"}}
+          {{#bs-nav-item}}{{#link-to "dashboard"}}Dashboard{{/link-to}}{{/bs-nav-item}}
+          {{#bs-nav-item}}{{#link-to "pantry"}}Pantry{{/link-to}}{{/bs-nav-item}}
+          {{#bs-nav-item}}{{#link-to "shopping-list"}}Shopping List{{/link-to}}{{/bs-nav-item}}
+        {{/bs-navbar-nav}}
+
+        {{#bs-navbar-nav class = "navbar-right"}}
+          {{#bs-dropdown tagName="li"}}
+            {{#bs-dropdown-toggle}}Settings<span class="caret"></span>{{/bs-dropdown-toggle}}
+            {{#bs-dropdown-menu}}
+                <li>{{#link-to "index"}}Something{{/link-to}}</li>
+                <li>{{#link-to "index"}}Sign out{{/link-to}}</li>
+                <button type="button" class="btn btn-default" {{action 'signOut'}}>Left</button>
+
+            {{/bs-dropdown-menu}}
+          {{/bs-dropdown}}
+        {{/bs-navbar-nav}}
+
+      {{/bs-navbar-content}}
+  {{/bs-navbar}}
+
+
+
+{{/if}}
+
+<div class="container">
   {{outlet}}
 </div>

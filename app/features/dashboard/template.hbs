@@ -1,9 +1,36 @@
-<div class='page-header'>
-    <h1>Welcome, you are signed in!</h1>
-</div>
-<div class='panel panel-default'>
-    <div class='panel-heading'>{{session.currentUser.email}}</div>
-    <div class='panel-body'>
-        <img src='{{session.currentUser.profileImageURL}}' />
+<div class="container">
+    <div class='page-header'>
+        <h1>Welcome, you are signed in!</h1>
+    </div>
+    <div class='panel panel-default'>
+        <div class='panel-heading'>{{session.currentUser.email}}</div>
+        <div class='panel-body'>
+            some test info
+        </div>
+    </div>
+    <div class="row centered">
+        <div class="col-md-4 padding">
+            <div class="dashboard-col "> {{#each model as |user|}}
+                <p>{{user.email}}</p>
+            {{/each}}
+            </div>
+
+        </div>
+        <div class="col-md-4 padding">
+            <div class="dashboard-col "> {{#each model as |user|}}
+                <p>{{user.email}}</p>
+            {{/each}}
+            </div>
+
+        </div>
+        <div class="col-md-4 padding">
+            <div class="dashboard-col ">
+              {{#each model as |user|}}
+                  <p>{{user.email}}</p>
+              {{/each}}
+            </div>
+
+        </div>
     </div>
 </div>
+

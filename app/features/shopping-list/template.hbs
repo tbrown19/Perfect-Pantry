@@ -1,0 +1,22 @@
+{{#if model}}
+  <h1>{{model.name}}</h1>
+  {{#each model.users as |user|}}
+    <p>{{user.email}}</p>
+    <h4>Welcome to your shopping list</h4>
+    {{input type="text"  class='form-control'  value=pantryName placeholder="Add a new item here"}}
+    <button class='btn btn-default'{{action 'createPantry' pantryName}}>
+      {{fa-icon 'user-plus'}} Add
+    </button>
+  {{/each}}
+
+{{else}}
+  <h4>You don't currently have a shopping list. Let's get one created for you. Enter it's name below.</h4>
+  {{input type="text"  class='form-control'  value=pantryName placeholder="Enter the pantry name here"}}
+  <button class='btn btn-default'{{action 'createShoppingList' pantryName}}>
+    {{fa-icon 'user-plus'}} Create
+  </button>
+{{/if}}
+
+
+
+

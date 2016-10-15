@@ -1,0 +1,14 @@
+{{#if model}}
+<h1>{{model.name}}</h1>
+  {{#each model.users as |user|}}
+    <p>{{user.email}}</p>
+  {{/each}}
+
+{{else}}
+<h4>You don't currently have a pantry. Let's get one created for you. Enter it's name below.</h4>
+{{input type="text"  class='form-control'  value=pantryName placeholder="Enter the pantry name here"}}
+<button class='btn btn-default'{{action 'createPantry' pantryName}}>
+  {{fa-icon 'user-plus'}} Create
+</button>
+{{/if}}
+
