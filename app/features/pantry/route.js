@@ -39,16 +39,14 @@ export default Ember.Route.extend({
         name: "Shopping List",
       });
 
-
-      var wantedUser;
       //Query the user from the firebase database based on their email
       this.store.query('user', {
-        'filter[email]': userEmail
+        orderBy: 'email', equalTo: userEmail
       }).then((allUsers) => {
         //Then select the user, set their pantry to the current one, and save both models.
-        wantedUser = allUsers.objectAt(0);
+        var wantedUser = allUsers.objectAt(0);
         wantedUser.set('pantry', pantry);
-        wantedUser.set('shopping-list', shoppingList);
+        wantedUser.set('shoppingList', shoppingList);
         wantedUser.save();
         pantry.save();
         shoppingList.save();

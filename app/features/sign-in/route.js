@@ -5,7 +5,6 @@ export default Ember.Route.extend({
 
   beforeModel: function() {
     if(this.get('session').get('isAuthenticated')){
-      console.log("you are authed")
       this.transitionTo('/dashboard');
     }
   },
@@ -25,17 +24,6 @@ export default Ember.Route.extend({
         window.location = '/dashboard';
       });
 
-       //)
-        /*
-        .then(function (data) {
-        console.log(data.currentUser);
-        let uid = this.get('session').get('uid');
-        this.store.findRecord('user', uid).then(user => {
-          console.log(user.get('firstName'));
-          self.transitionTo('user', uid);
-        });
-        */
-      //});
     },
 
   }

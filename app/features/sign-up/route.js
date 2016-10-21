@@ -19,9 +19,7 @@ export default Ember.Route.extend({
           firstName: firstName,
           email: userResponse.email,
         });
-        debugger;
         return user.save();
-
       });
     }
   }
