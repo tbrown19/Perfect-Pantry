@@ -12,7 +12,7 @@
     <div class="panel-body">
       <div>
         <ul class="list-group" id = "shopping-list-main">
-          {{#each model as |shoppingItem|}}
+          {{#each model.shoppingListItems as |shoppingItem|}}
             <li class="list-group-item">
               <input type="checkbox" class = "list-checkbox"> {{shoppingItem.name}}
             </li>

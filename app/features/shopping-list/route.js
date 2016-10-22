@@ -30,10 +30,7 @@ export default Ember.Route.extend({
     // });
 
     return this.store.findAll('shopping-list').then((shoppingLists) => {
-      var shoppingList = shoppingLists.filterBy("id", this.get('userID')).objectAt(0);
-      return shoppingList.get('shoppingListItems').then((items) => {
-        return items;
-      });
+      return shoppingLists.filterBy("id", this.get('userID')).objectAt(0);
     });
 
   },
