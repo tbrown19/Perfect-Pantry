@@ -17,23 +17,31 @@ export default Ember.Route.extend({
   },
 
   model(){
-    var shoppingList;
     //Put the return ember rsvp hash inside of this
     //Needs to be inside of this find all because the promise needs a chance to complete first.
+    // return this.store.findAll('shopping-list').then((shoppingLists) => {
+    //   var shoppingList = shoppingLists.filterBy("id", this.get('userID')).objectAt(0);
+    //   return shoppingList.get('shoppingListItems').then((items) => {
+    //     return Ember.RSVP.hash({
+    //       shoppingList: shoppingList,
+    //       shoppingListItems: items
+    //     });
+    //   });
+    // });
+
     return this.store.findAll('shopping-list').then((shoppingLists) => {
-      shoppingList = shoppingLists.filterBy("id", this.get('userID')).objectAt(0);
-      return Ember.RSVP.hash({
-        shoppingList: shoppingList,
-        shoppingListItems: shoppingList.get('shoppingListItems')
+      var shoppingList = shoppingLists.filterBy("id", this.get('userID')).objectAt(0);
+      return shoppingList.get('shoppingListItems').then((items) => {
+        return items;
       });
     });
-
 
   },
 
 
   actions: {
     addNewItems(itemName){
+
       console.log("does this get called? aka the route actions?");
       //Create a new shopping list item
       var newItem = this.get('store').createRecord('shopping-list-item', {
@@ -44,21 +52,13 @@ export default Ember.Route.extend({
       this.get('store').findAll('shopping-list').then((shoppingLists) => {
         //Set the shopping list equal to the first object(should be only object)
         var shoppingList = shoppingLists.filterBy("id", this.get('userID')).objectAt(0);
-
-        //If the length of the name of the item is greater than 2, then add it to the shopping list.
-        //The firebase backend handles the rest of the error handling if the name isn't greater than 2
-        if (newItem.get('name').length > 2) {
-          //Then push the newly created item to the shopping list
-          shoppingList.get('shoppingListItems').pushObject(newItem);
-        }
-
+        //Then push the newly created item to the shopping list
+        shoppingList.get('shoppingListItems').pushObject(newItem);
         //Then first save the new item, then save the shopping list.
-        newItem.save().then(function () {
-          shoppingList.save();
+        shoppingList.save().then(function () {
+          newItem.save();
         });
-
       });
-
 
     }
   }

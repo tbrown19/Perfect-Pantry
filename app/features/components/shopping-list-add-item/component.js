@@ -11,7 +11,7 @@ export default Ember.Component.extend({
       var itemName = itemName||"";
 
       //Check the item name length here, and if its invalid, then change the boolean
-      if(itemName.length > 3){
+      if(itemName.length > 2){
         //Send the action(addItem), the route will then catch it.
         this.set('ivalidItemName',false);
         this.sendAction('addItem',itemName);
