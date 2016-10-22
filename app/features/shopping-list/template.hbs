@@ -1,27 +1,37 @@
-{{#if model.shoppingList}}
-  <h1>{{model.shoppingList.name}}</h1>
-  <h4>Welcome to your shopping list</h4>
-  {{input type="text"  class='form-control'  value=newItemName placeholder="Add a new item here"}}
-  <button class='btn btn-default'{{action 'addNewItems' newItemName}}>
-    {{fa-icon 'user-plus'}} Add
-  </button>
-
-  <div>
-    <ul>
-      {{#each model.shoppingListItems as |shoppingItem|}}
-        <li>{{shoppingItem.name}}</li>
-      {{/each}}
-    </ul>
-
+<div class="container">
+  <div class='page-header'>
+    <h1>Shopping List</h1>
   </div>
 
-{{else}}
-  <h4>You don't currently have a shopping list. Let's get one created for you. Enter it's name below.</h4>
-  {{input type="text"  class='form-control'  value=pantryName placeholder="Enter the pantry name here"}}
-  <button class='btn btn-default'{{action 'createShoppingList' pantryName}}>
-    {{fa-icon 'user-plus'}} Create
-  </button>
-{{/if}}
+
+
+
+  <div class="panel panel-default">
+    <div class="panel-heading">{{shopping-list-add-item addItem='addNewItems'}}</div>
+    <div class="panel-body">
+      <div>
+        <ul class="list-group" id = "shopping-list-main">
+          {{#each model.shoppingListItems as |shoppingItem|}}
+            <li class="list-group-item">
+              <input type="checkbox" class = "list-checkbox"> {{shoppingItem.name}}
+            </li>
+          {{/each}}
+        </ul>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+</div>
+
 
 
 

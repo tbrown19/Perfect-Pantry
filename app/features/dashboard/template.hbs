@@ -1,36 +1,49 @@
 <div class="container">
     <div class='page-header'>
-        <h1>Welcome, you are signed in!</h1>
+        <h1>Dashboard</h1>
     </div>
-    <div class='panel panel-default'>
-        <div class='panel-heading'>{{session.currentUser.email}}</div>
-        <div class='panel-body'>
-            some test info
-        </div>
-    </div>
+
     <div class="row centered">
         <div class="col-md-4 padding">
-            <div class="dashboard-col "> {{#each model as |user|}}
-                <p>{{user.email}}</p>
-            {{/each}}
+          <h2 class = "text-center dash-section-header">Shopping List</h2>
+            <div class="dashboard-col">
+              <ul class="list-group dashboard-list-group">
+                <li class="list-group-item">Cras justo odio</li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Morbi leo risus</li>
+                <li class="list-group-item">Porta ac consectetur ac</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+              </ul>
             </div>
 
         </div>
         <div class="col-md-4 padding">
-            <div class="dashboard-col "> {{#each model as |user|}}
-                <p>{{user.email}}</p>
-            {{/each}}
+          <h2 class = "text-center dash-section-header">Recent Purchases</h2>
+          <div class="dashboard-col ">
+              <ul class="list-group dashboard-list-group">
+                <li class="list-group-item">Cras justo odio</li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Morbi leo risus</li>
+                <li class="list-group-item">Porta ac consectetur ac</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+              </ul>
             </div>
 
         </div>
         <div class="col-md-4 padding">
-            <div class="dashboard-col ">
-              {{#each model as |user|}}
-                  <p>{{user.email}}</p>
-              {{/each}}
+          <h2 class = "text-center dash-section-header">Contributions</h2>
+          <div class="dashboard-col">
+              <ul class="list-group dashboard-list-group">
+                <li class="list-group-item">Cras justo odio</li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Morbi leo risus</li>
+                <li class="list-group-item">Porta ac consectetur ac</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+              </ul>
             </div>
 
         </div>
     </div>
 </div>
+
 
