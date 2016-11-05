@@ -199,6 +199,12 @@ body {
   display: block;
 }
 
+.landing-page-action-button:hover{
+  color: #BAA6A8;
+  text-decoration: none;
+  border-color: #BAA6A8;
+}
+
 .landing-page-nav-link>a{
   margin-right: 15px;
   color: gray !important;
