@@ -1,0 +1,19 @@
+{
+   "rules":{
+      ".read":"auth != null",
+      ".write":"auth != null",
+      "users":{
+         ".indexOn":[
+            "email"
+         ]
+      },
+      "shoppingListItems":{
+         "$shoppingListItem":{
+            "name":{
+               ".validate":"newData.val().length > 2"
+            },
+            ".validate":"newData.hasChildren(['name','shoppingList'])"
+         }
+      }
+   }
+}

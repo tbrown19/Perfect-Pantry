@@ -1,20 +1,14 @@
 <div class="container">
-  <div class='page-header'>
-    <h1>Shopping List</h1>
-  </div>
 
-  {{model}}
-
-
-
-  <div class="panel panel-default">
+  <div class="panel panel-default shopping-list-panel">
     <div class="panel-heading">{{shopping-list-add-item addItem='addNewItems'}}</div>
     <div class="panel-body">
       <div>
-        <ul class="list-group" id = "shopping-list-main">
+
+        <ul class="list-group" id="shopping-list-main">
           {{#each model.shoppingListItems as |shoppingItem|}}
             <li class="list-group-item">
-              <input type="checkbox" class = "list-checkbox"> {{shoppingItem.name}}
+              <input type="checkbox" class="list-checkbox"> {{shoppingItem.name}}
             </li>
           {{/each}}
         </ul>
@@ -22,15 +16,6 @@
       </div>
     </div>
   </div>
-
-
-
-
-
-
-
-
-
 </div>
 
 

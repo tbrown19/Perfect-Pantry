@@ -2,12 +2,15 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:600');
 @import url('https://fonts.googleapis.com/css?family=PT+Sans:700i');
 @import url('https://fonts.googleapis.com/css?family=Ubuntu:400,700');
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
 
 $primary-white: #F6F7EB;
-$primary-background-color: #EEEEEE;
+$primary-background-color: #f3f3f3;
 $secondary-color: #222831;
 $accent-color: #00ADB5;
-$secondary-main-color: #393E46;
+$secondary-main-color: #424C58;
+
 $primary-font: 'Ubuntu', sans-serif;
 
 #main-nav-bar {
@@ -15,6 +18,11 @@ $primary-font: 'Ubuntu', sans-serif;
   border: 0;
   border-radius: 0;
 
+}
+#main-nav-bar {
+  background-color: $primary-white;
+  border: 0;
+  border-radius: 0;
 }
 
 body {
@@ -24,7 +32,7 @@ body {
 
 .container {
   width: 90%;
-  height: 100em;
+  height: 100vh;
   background-color: $primary-background-color;
   font-family: $primary-font;
 
@@ -39,6 +47,13 @@ body {
   font-size: 2.4em;
   font-family: 'PT Sans', sans-serif;
   padding-bottom: 4px;
+  font-weight: lighter;
+}
+#landing-page-nav-branding{
+  padding-left: 10px;
+  color: black;
+  font-size: 3em;
+  font-family: 'PT Sans', sans-serif;
   font-weight: lighter;
 }
 
@@ -62,13 +77,12 @@ body {
   color: white;
   padding: 10px;
   margin-bottom: -1px;
-  border-radius: 10px 10px 0px 0px;
 }
 
 .page-header {
-  color: $secondary-color;
+  color: black;
   padding-bottom: 0px;
-  border-bottom: 3px solid $secondary-color;
+  border-bottom: 3px solid black;
 }
 
 .page-header > h1 {
@@ -76,32 +90,180 @@ body {
 }
 
 .dashboard-list-group {
-  font-size: 1.25em;
+  font-size: 1em;
   padding: 2.5px;
-  border: 4px solid $secondary-main-color;
-  border-top: 0px;
-  border-radius: 0px 0px 10px 10px;
 }
 
-.shopping-list-add-btn{
+.shopping-list-add-btn {
   border-radius: 10px;
 }
 
-.new-item-form > div > input{
-  height:50px;
+.new-item-form > div > input {
+  height: 50px;
   font-size: 20px;
-  margin-top:15px;
-
-}
-.new-item-form > div > span > button{
-  font-size: 20px;
-  height:50px;
-  margin-bottom:15px;
-  margin-top:15px;
+  margin-top: 15px;
 
 }
 
-#shopping-list-main{
+.new-item-form > div > span > button {
+  font-size: 20px;
+  height: 50px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+
+}
+
+#shopping-list-main {
   font-size: 1.4em;
 }
 
+.dashboard-col {
+  background-color: white;
+
+
+}
+
+.dashboard-group{
+  -moz-box-shadow: 10px 10px 5px #888;
+  -webkit-box-shadow: 10px 10px 5px #888;
+  box-shadow: 5px 5px 5px lightgray;
+}
+
+.row-fluid{
+  white-space: nowrap;
+}
+
+.row-fluid .col-lg-3{
+  display: inline;
+}
+.span11{
+  overflow: auto;
+}
+
+.list-item-dash{
+  font-size: 1.25em;
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.list-item-dash:last-child{
+  border-bottom:0px;
+}
+
+.shopping-list-panel{
+  -moz-box-shadow: 10px 10px 5px #888;
+  -webkit-box-shadow: 10px 10px 5px #888;
+  box-shadow: 5px 5px 5px lightgray;
+  margin-top: 15px;
+}
+.site-nav-bar{
+  background-color: $secondary-color;
+  left:250px;
+}
+
+.settings-drop-down{
+  color: $primary-white;
+}
+.navbar-default .navbar-nav > li > a{
+  color: $primary-white;
+  font-size: 1.5em;
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus{
+  color: $primary-white;
+  background-color: $secondary-color;
+
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus{
+  background-color: $secondary-color;
+
+  color: $primary-white;
+}
+.dropdown-menu{
+}
+.remove_button_css {
+  outline: none;
+  padding: 5px;
+  border: 0px;
+  box-sizing: none;
+  background-color: transparent;
+}
+
+.landing-page-container{
+  background: linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2)), url('/assets/images/bg2.jpg') no-repeat center center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  text-align: center;
+  color: #f8f8f8;
+  background-size: cover;
+  max-height: 90vh;
+  min-height: 90vh;
+
+}
+
+
+
+.landing-page-main-text{
+  width: 100%;
+  color: $primary-white;
+  font-family: 'Raleway', sans-serif;
+  text-align: center;
+
+}
+@media (min-width: 768px) {
+  .landing-page-main-text > h1{
+    font-size: 5.25em;
+  }
+  .landing-page-main-text > h2{
+    font-size: 3em;
+  }
+}
+
+
+.landing-page-signin{
+  margin-top: 15vh;
+  text-align: center;
+  font-size: 1.5em;
+  font-family: 'Raleway', sans-serif;
+}
+
+
+.landing-page-action-button{
+  background-color: transparent;
+  border: 2px solid ghostwhite;
+  opacity: 50%;
+  color: ghostwhite;
+  padding: 14px 25px;
+  margin-bottom: 25px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+
+.landing-page-nav-link>a{
+
+  margin-right: 15px;
+  color: gray !important;
+}
+
+.landing-page-nav-link>a:hover{
+  margin-right: 15px;
+  color: $secondary-main-color !important;
+  background-color: transparent !important;
+}
+.landing-brand{
+  color:$secondary-color !important;
+}
+
+.intro-message {
+  position: relative;
+  padding-top: 20%;
+  padding-bottom: 20%;
+}
+.landing-page-padding{
+  padding-left: 20px;
+  padding-right: 20px;
+}

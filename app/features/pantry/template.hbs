@@ -1,11 +1,8 @@
 <div class="container">
 
   {{#if model}}
-    <div class='page-header'>
-      <h1>Pantry</h1>
-    </div>
-
     <h1>{{model.name}}</h1>
+
     {{#each model.users as |user|}}
       <p>{{user.email}}</p>
     {{/each}}

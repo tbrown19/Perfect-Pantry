@@ -21,15 +21,12 @@
         {{/bs-navbar-nav}}
 
         {{#bs-navbar-nav class = "navbar-right"}}
-          {{#bs-dropdown tagName="li"}}
+          {{#bs-dropdown class = "settings-drop-down" tagName="li"}}
             {{#bs-dropdown-toggle}}
               {{fa-icon 'gear'}} Settings <span class="caret"></span>
             {{/bs-dropdown-toggle}}
             {{#bs-dropdown-menu}}
-                <li>{{#link-to "index"}}Something{{/link-to}}</li>
-                <li>{{#link-to "index"}}Sign out{{/link-to}}</li>
-                <button type="button" class="btn btn-default" {{action 'signOut'}}>Left</button>
-
+                <button type="button" class="btn btn-default remove_button_css" {{action 'signOut'}}>Sign Out</button>
             {{/bs-dropdown-menu}}
           {{/bs-dropdown}}
         {{/bs-navbar-nav}}
@@ -40,7 +37,4 @@
 
 
 {{/if}}
-
-<div class="container">
-  {{outlet}}
-</div>
+{{outlet}}
