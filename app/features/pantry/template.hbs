@@ -1,18 +1,18 @@
 <div class="container">
 
-  {{#if model}}
-    <h1>{{model.name}}</h1>
+  <form class="col s12">
+    <div class="row">
+      <div class="col s12">
+        <form {{action "sendPantryInvite" on="submit"}}>
+          Enter the email of the pantry you wish to join.
+          <div class="input-field inline">
+            <input id="email" type="email" class="validate">
+            <label for="email" data-error="wrong" data-success="right">Email</label>
+          </div>
+        </form>
 
-    {{#each model.users as |user|}}
-      <p>{{user.email}}</p>
-    {{/each}}
-
-  {{else}}
-    <h4>You don't currently have a pantry. Let's get one created for you. Enter it's name below.</h4>
-    {{input type="text"  class='form-control'  value=pantryName placeholder="Enter the pantry name here"}}
-    <button class='btn btn-default'{{action 'createPantry' pantryName}}>
-      {{fa-icon 'user-plus'}} Create
-    </button>
-  {{/if}}
+      </div>
+    </div>
+  </form>
 
 </div>

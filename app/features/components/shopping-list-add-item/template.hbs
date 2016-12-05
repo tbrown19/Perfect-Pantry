@@ -1,14 +1,15 @@
 {{#if ivalidItemName}}
-  <div class="alert alert-danger" role="alert">A shopping list item must be at least 3 characters long.</div>
+  <div class="alert alert-danger" role="alert" xmlns="http://www.w3.org/1999/html">A shopping list item must be at least
+    3 characters long.
+  </div>
 {{/if}}
 
-<form  class = "new-item-form" {{action 'addNewItems' newItemName on="submit"}}>
+<form class="new-item-form" {{action 'addNewItems' newItemName on="submit"}}>
   <div class="input-group">
-    <span class="input-group-btn">
-       <button class='btn btn-default shopping-list-add-btn'>
-         {{fa-icon 'plus'}} Add
-       </button>
-    </span>
-    {{input type="text"  class='form-control'  value=newItemName placeholder="Add a new item here"}}
+      <div class="row">
+        <div class="input-field col m12">
+          {{input type="text" class='form-control' id = "new-shopping-list-item"  value=newItemName placeholder="Add a new item here"}}
+        </div>
+      </div>
   </div>
 </form>

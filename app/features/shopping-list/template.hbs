@@ -1,24 +1,32 @@
 <div class="container">
 
-  <div class="panel panel-default shopping-list-panel">
-    <div class="panel-heading">{{shopping-list-add-item addItem='addNewItems'}}</div>
-    <div class="panel-body">
-      <div>
+  <div class="row">
+    <div class="col-md-12">
+        <div class="dashboard-group basic-card" id = "shopping-list-card">
 
-        <ul class="list-group" id="shopping-list-main">
-          {{#each model.shoppingListItems as |shoppingItem|}}
-            <li class="list-group-item">
-              <input type="checkbox" class="list-checkbox"> {{shoppingItem.name}}
-            </li>
-          {{/each}}
-        </ul>
+          <h2 class="dash-section-header">
+            {{fa-icon 'clock-o'}} Shopping list sorted by: Recently Added
+          </h2>
+
+
+
+          {{shopping-list-add-item addItem='addNewItems'}}
+          <div>
+            <ul class="list-group" id="shopping-list-main">
+              {{#each model.shoppingListItems as |shoppingItem|}}
+                <li class="list-item-dash">
+                  <input type="checkbox" class="list-checkbox"> {{shoppingItem.name}}
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
 
       </div>
-    </div>
+
   </div>
+
 </div>
-
-
 
 
 
