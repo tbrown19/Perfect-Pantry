@@ -3,31 +3,35 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans:700i');
 @import url('https://fonts.googleapis.com/css?family=Ubuntu:400,700');
 @import url('https://fonts.googleapis.com/css?family=Raleway');
+@import 'materialize';
 
+$primary-background-color: #f5f5f5;
+$primary-color-dark:   #303F9F;
+$primary-color:        #3F51B5;
+$primary-color-light:  #C5CAE9;
+$primary-color-text:   #FFFFFF;
+$accent-color:         #536DFE;
+$primary-text-color:   #212121;
+$secondary-text-color: #757575;
+$divider-color:        #BDBDBD;
 
-$primary-white: #F6F7EB;
-$primary-background-color: #f3f3f3;
-$secondary-color: #222831;
-$accent-color: #00ADB5;
-$secondary-main-color: #424C58;
 
 $primary-font: 'Ubuntu', sans-serif;
 
 #main-nav-bar {
-  background-color: $secondary-color;
+  background-color: $primary-color-dark;
   border: 0;
   border-radius: 0;
-
+  box-shadow: 0 3px 4px 0 rgba(0,0,0,0.14),0 3px 3px -2px rgba(0,0,0,0.12),0 1px 8px 0 rgba(0,0,0,0.2);
 }
 
 body {
   background-color: $primary-background-color;
-
 }
 
 .container {
   width: 90%;
-  height: 100vh;
+  height: 100%;
   background-color: $primary-background-color;
   font-family: $primary-font;
 
@@ -38,7 +42,7 @@ body {
 }
 
 #nav-branding {
-  color: $primary-white;
+  color: $primary-color-text;
   font-size: 2.4em;
   font-family: 'PT Sans', sans-serif;
   padding-bottom: 4px;
@@ -53,7 +57,7 @@ body {
 }
 
 #nav-link-items > li > a {
-  color: $primary-white;
+  color: rgba(255, 255, 255, 0.7);
   font-size: 1.5em;
   //margin-left: 2%;
   font-family: $primary-font;
@@ -63,12 +67,13 @@ body {
   border-bottom: 5px solid $accent-color;
   padding-bottom: 10px;
   background-color: inherit;
-  color: $primary-white;
+  color: $primary-color-text !important;
+
 }
 
 .dash-section-header {
   font-size: 2em;
-  background-color: $secondary-main-color;
+  background-color: $primary-color;
   color: white;
   padding: 10px;
   margin-bottom: -1px;
@@ -93,92 +98,46 @@ body {
   border-radius: 10px;
 }
 
-.new-item-form > div > input {
-  height: 50px;
-  font-size: 20px;
-  margin-top: 15px;
-
-}
-
-.new-item-form > div > span > button {
-  font-size: 20px;
-  height: 50px;
-  margin-bottom: 15px;
-  margin-top: 15px;
-
+.new-item-form > .input-group{
+  margin: 0 auto;
+  min-width: 90%;
 }
 
 #shopping-list-main {
-  font-size: 1.4em;
+  font-size: 1.3em;
+}
+#shopping-list-main > .list-group-item{
+   border: 0px;
+ }
+#shopping-list-main > .list-group-item > input{
+  margin-right: 10px;
 }
 
 .dashboard-col {
   background-color: white;
-
-
 }
 
-.dashboard-group{
-  -moz-box-shadow: 10px 10px 5px #888;
-  -webkit-box-shadow: 10px 10px 5px #888;
-  box-shadow: 5px 5px 5px lightgray;
-}
 
-.row-fluid{
-  white-space: nowrap;
-}
-
-.row-fluid .col-lg-3{
-  display: inline;
-}
-.span11{
-  overflow: auto;
-}
-
-.list-item-dash{
-  font-size: 1.25em;
-  position: relative;
-  display: block;
-  padding: 10px 15px;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
-}
-
-.list-item-dash:last-child{
-  border-bottom:0px;
-}
-
-.shopping-list-panel{
-  -moz-box-shadow: 10px 10px 5px #888;
-  -webkit-box-shadow: 10px 10px 5px #888;
-  box-shadow: 5px 5px 5px lightgray;
-  margin-top: 15px;
-}
-.site-nav-bar{
-  background-color: $secondary-color;
-  left:250px;
-}
 
 .settings-drop-down{
-  color: $primary-white;
+  color: $primary-color-text;
 }
 .navbar-default .navbar-nav > li > a{
-  color: $primary-white;
+  color: $primary-color-text;
   font-size: 1.5em;
 }
 
+
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus{
-  color: $primary-white;
-  background-color: $secondary-color;
+  color: $primary-color-text;
+  background-color: $primary-color-dark;
 
 }
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus{
-  background-color: $secondary-color;
+  background-color: $primary-color-dark;
+  color: $primary-color-text !important;
+}
 
-  color: $primary-white;
-}
-.dropdown-menu{
-}
 .remove_button_css {
   outline: none;
   padding: 5px;
@@ -189,13 +148,13 @@ body {
 
 .landing-page-container{
   background: linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2)), url('/assets/images/bg2.jpg') no-repeat center center;
-  padding-top: 50px;
+  padding-top: 20px;
   padding-bottom: 50px;
   text-align: center;
   color: #f8f8f8;
   background-size: cover;
-  max-height: 90vh;
-  min-height: 90vh;
+  max-height: 91.5vh;
+  min-height: 91.5vh;
 
 }
 
@@ -203,19 +162,24 @@ body {
 
 .landing-page-main-text{
   width: 100%;
-  color: $primary-white;
+  color: $primary-color-text;
   font-family: 'Raleway', sans-serif;
   text-align: center;
 
 }
-@media (min-width: 768px) {
+@media (max-width: 768px){
+
   .landing-page-main-text > h1{
-    font-size: 5.25em;
+    font-size: 2.5em;
   }
   .landing-page-main-text > h2{
-    font-size: 3em;
+    font-size: 2em;
+    margin-bottom: 0px;
   }
 }
+
+
+
 
 
 .landing-page-signin{
@@ -224,7 +188,6 @@ body {
   font-size: 1.5em;
   font-family: 'Raleway', sans-serif;
 }
-
 
 .landing-page-action-button{
   background-color: transparent;
@@ -239,26 +202,64 @@ body {
 }
 
 .landing-page-nav-link>a{
-
   margin-right: 15px;
   color: gray !important;
 }
 
 .landing-page-nav-link>a:hover{
   margin-right: 15px;
-  color: $secondary-main-color !important;
+  color: lightgray !important;
   background-color: transparent !important;
 }
+
 .landing-brand{
-  color:$secondary-color !important;
+  color:black !important;
 }
 
-.intro-message {
-  position: relative;
-  padding-top: 20%;
-  padding-bottom: 20%;
-}
 .landing-page-padding{
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.basic-card{
+  box-shadow: 0 5px 10px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.23);
+  background-color: #fff;
+}
+
+
+#new-shopping-list-item{
+  padding-bottom: 0px;
+  font-size: 24px;
+  width:100%;
+}
+
+#new-shopping-list-item:focus {
+  outline: none;
+}
+
+.list-item-dash{
+  font-size: 1.25em;
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.list-item-dash:last-child{
+  border-bottom:0px;
+}
+textarea:focus, input:focus{
+  outline: none;
+}
+
+@media (min-width: 768px){
+  .hide-the-button{
+    display: none;
+  }
+}
+@media (max-width: 768px){
+  .hide-the-button{
+    background-color: transparent;
+  }
 }

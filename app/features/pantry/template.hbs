@@ -1,11 +1,17 @@
 <div class="container">
 
   {{#if model}}
-    <h1>{{model.name}}</h1>
-
-    {{#each model.users as |user|}}
-      <p>{{user.email}}</p>
-    {{/each}}
+    <form class="col s12">
+      <div class="row">
+        <div class="col s12">
+          This is an inline input field:
+          <div class="input-field inline">
+            <input id="email" type="email" class="validate">
+            <label for="email" data-error="wrong" data-success="right">Email</label>
+          </div>
+        </div>
+      </div>
+    </form>
 
   {{else}}
     <h4>You don't currently have a pantry. Let's get one created for you. Enter it's name below.</h4>
@@ -13,6 +19,12 @@
     <button class='btn btn-default'{{action 'createPantry' pantryName}}>
       {{fa-icon 'user-plus'}} Create
     </button>
+    <h4>You don't currently have a pantry. Let's get one created for you. Enter it's name below.</h4>
+    {{input type="text"  class='form-control'  value=pantryName placeholder="Enter the pantry name here"}}
+    <button class='btn btn-default'{{action 'createPantry' pantryName}}>
+      {{fa-icon 'user-plus'}} Create
+    </button>
   {{/if}}
+
 
 </div>

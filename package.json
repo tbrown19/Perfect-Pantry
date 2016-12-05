@@ -1,7 +1,7 @@
 {
   "name": "perfect-pantry",
   "version": "0.0.0",
-  "description": "Small description for perfect-pantry goes here",
+  "description": "A smart pantry management system",
   "private": true,
   "directories": {
     "doc": "doc",
