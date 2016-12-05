@@ -6,7 +6,7 @@ export default Ember.Route.extend({
 
   beforeModel(){
     //Before the model loads get the users ID so that it can be used to find their pantry.
-    var userEmail = this.get('session').get('currentUser.email');
+    const userEmail = this.get('session').get('currentUser.email');
     this.store.query('user', {
       orderBy: 'email', equalTo: userEmail
     }).then((allUsers) => {
@@ -25,35 +25,8 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    createPantry(pantryName){
-      //Get the user email from the session
-      var userEmail = this.get('session').get('currentUser.email');
+    sendPantryInvite(){
 
-      //Create a new empty pantry
-      var pantry = this.get('store').createRecord('pantry', {
-        name: pantryName,
-      });
-
-      //Create a new empty shopping list
-      var shoppingList = this.get('store').createRecord('shopping-list', {
-        name: "Shopping List",
-      });
-
-      //Query the user from the firebase database based on their email
-      this.store.query('user', {
-        orderBy: 'email', equalTo: userEmail
-      }).then((allUsers) => {
-        //Then select the user, set their pantry to the current one, and save both models.
-        var wantedUser = allUsers.objectAt(0);
-        wantedUser.set('pantry', pantry);
-        wantedUser.set('shoppingList', shoppingList);
-        wantedUser.save();
-        pantry.save();
-        shoppingList.save();
-      });
-
-      return pantry.save();
-    },
-
+    }
   }
 });
