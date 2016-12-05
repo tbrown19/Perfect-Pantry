@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a47e093d-1132-4d5f-a70c-38edab7f29a6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="a47e093d-1132-4d5f-a70c-38edab7f29a6" name="Default" comment="" />
     <ignored path="Perfect-Pantry.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -613,12 +610,12 @@
       <workItem from="1478387462375" duration="2677000" />
       <workItem from="1480904954102" duration="2528000" />
       <workItem from="1480967938463" duration="75000" />
-      <workItem from="1480968047707" duration="263000" />
+      <workItem from="1480968047707" duration="490000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14050000" />
+    <option name="totallyTimeSpent" value="14277000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
