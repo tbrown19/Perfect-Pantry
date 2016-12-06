@@ -22,28 +22,20 @@ export default Ember.Route.extend({
         user.save().then(() => {
           //Get the user email from the session
           //Done this way so that we dont take direct input from user. idk.
-          var userEmail = this.get('session').get('currentUser.email');
+          const userEmail = user.get('email');
 
           //Create a new empty pantry
-          var pantry = this.get('store').createRecord('pantry');
+          const pantry = this.get('store').createRecord('pantry');
 
           //Create a new empty shopping list
-          var shoppingList = this.get('store').createRecord('shopping-list', {
+          const shoppingList = this.get('store').createRecord('shopping-list', {
             name: "Shopping List",
           });
 
-          //Query the user from the firebase database based on their email
-          this.store.query('user', {
-            orderBy: 'email', equalTo: userEmail
-          }).then((allUsers) => {
-            //Then select the user, set their pantry to the current one, and save both models.
-            var wantedUser = allUsers.objectAt(0);
-            wantedUser.set('pantry', pantry);
-            wantedUser.set('shoppingList', shoppingList);
-            wantedUser.save();
-            pantry.save();
-            shoppingList.save();
-          });
+
+          user.set('pantry', pantry);
+          user.set('shoppingList', shoppingList);
+          user.save();
 
           return pantry.save().then(() => {
             this.transitionTo('sign-in');

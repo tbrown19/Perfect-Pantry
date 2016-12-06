@@ -1,16 +1,35 @@
 <div class="container">
 
-  <form class="col s12">
-    <div class="row">
-      <div class="col s12">
-        <form {{action "sendPantryInvite" on="submit"}}>
-          Enter the email of the pantry you wish to join.
-          <div class="input-field inline">
-            <input id="email" type="email" class="validate">
-            <label for="email" data-error="wrong" data-success="right">Email</label>
-          </div>
-        </form>
+  {{#if model.unconfirmedUsers}}
+    <div>
+      The following users wish to join your pantry.
+      <ul class="list-group">
+        {{#each model.unconfirmedUsers as |user|}}
+          <li class="list-item-dash">
+            <input type="checkbox" class="list-checkbox"> {{user.email}}
+            <button class='btn btn-default' {{action 'addUserToPantry' user.email}}>
+              {{fa-icon 'plus'}} Add user
+            </button>
+            <button class='btn btn-default' {{action 'denyUserFromPantry' user.email}}>
+              {{fa-icon 'minus'}} Deny user
+            </button>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
 
+
+
+  <form class="new-item-form" {{action 'sendPantryRequest' pantryEmail on="submit"}}>
+    <div class="input-group">
+      <div class="row">
+        Enter the email of the pantry you wish to join.
+        <div class="input-field inline">
+          {{input type="email" class='form-control' id = "email"  value=pantryEmail}}
+          <label for="email">Email</label>
+
+        </div>
       </div>
     </div>
   </form>

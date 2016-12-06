@@ -48,7 +48,7 @@ export default Ember.Route.extend({
 
       this.get('store').findAll('shopping-list').then((shoppingLists) => {
         //Set the shopping list equal to the first object(should be only object)
-        var shoppingList = shoppingLists.filterBy("id", this.get('userID')).objectAt(0);
+        let shoppingList = shoppingLists.filterBy("id", this.get('userID')).objectAt(0);
         //Then push the newly created item to the shopping list
         shoppingList.get('shoppingListItems').pushObject(newItem);
         //Then first save the new item, then save the shopping list.
