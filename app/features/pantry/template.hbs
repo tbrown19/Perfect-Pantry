@@ -1,5 +1,5 @@
 <div class="container">
-
+  <h1>You are {{session.currentUser.email}}</h1>
   {{#if model.unconfirmedUsers}}
     <div>
       The following users wish to join your pantry.
@@ -26,7 +26,7 @@
       <div class="row">
         Enter the email of the pantry you wish to join.
         <div class="input-field inline">
-          {{input type="email" class='form-control' id = "email"  value=pantryEmail}}
+          {{input type="email" class='form-control' id = "pantryRequest"  value=pantryEmail}}
           <label for="email">Email</label>
 
         </div>
