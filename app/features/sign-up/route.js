@@ -19,11 +19,8 @@ export default Ember.Route.extend({
           firstName: firstName,
           email: userResponse.email,
         });
+        // First we save the user, then we can go about updating their pantry and shopping list.
         user.save().then(() => {
-          //Get the user email from the session
-          //Done this way so that we dont take direct input from user. idk.
-          const userEmail = user.get('email');
-
           //Create a new empty pantry
           const pantry = this.get('store').createRecord('pantry');
 
@@ -35,14 +32,14 @@ export default Ember.Route.extend({
 
           user.set('pantry', pantry);
           user.set('shoppingList', shoppingList);
-          user.save();
+          pantry.save();
+          shoppingList.save();
 
-          return pantry.save().then(() => {
+          return user.save().then(() => {
             this.transitionTo('sign-in');
           });
         });
       });
-
     }
   }
 });
