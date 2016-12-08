@@ -224,6 +224,9 @@ body {
   background-color: #fff;
 }
 
+.shopping-list-item-label {
+  font-size: 1.5em !important;
+}
 
 #new-shopping-list-item{
   padding-bottom: 0px;
@@ -236,6 +239,7 @@ body {
 }
 
 .list-item-dash{
+  margin-top: 15px;
   font-size: 1.25em;
   position: relative;
   display: block;
@@ -250,6 +254,9 @@ body {
 textarea:focus, input:focus{
   outline: none;
 }
+
+
+
 
 @media (min-width: 768px){
   .hide-the-button{

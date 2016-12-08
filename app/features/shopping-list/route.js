@@ -1,26 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-
-  userID: "",
-
-
-  beforeModel(){
-    //Before the model loads get the users ID so that it can be used to find their pantry.
-  },
+  selectedItems: [],
+  test: false,
 
   model(){
-    const userEmail = this.get('session').get('currentUser.email');
-
-    return this.store.query('user', {
-      orderBy: 'email', equalTo: userEmail
-    }).then((allUsers) => {
-      const shoppingID = allUsers.objectAt(0).get('shoppingList.id');
-      return this.store.findAll('shopping-list').then((shoppingLists) => {
-        return shoppingLists.filterBy("id", shoppingID).objectAt(0);
-      });
-    });
-
+    //Get the user from the application model and return their shopping list
+    const user = this.modelFor('application');
+    return user.get('shoppingList');
 
   },
 
@@ -40,6 +27,18 @@ export default Ember.Route.extend({
         newItem.save();
       });
 
+    },
+
+    selectItem(item){
+      const selectedItems = this.get('selectedItems');
+      if(selectedItems.includes(item)){
+        selectedItems.removeObject(item);
+        console.log("its already in there");
+      }
+      else{
+        selectedItems.addObject(item);
+        console.log('its not in there.');
+      }
     }
   }
 });

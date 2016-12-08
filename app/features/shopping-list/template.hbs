@@ -10,18 +10,20 @@
 
 
 
+
           {{shopping-list-add-item addItem='addNewItems'}}
           <div>
             <ul class="list-group" id="shopping-list-main">
               {{#each model.shoppingListItems as |shoppingItem|}}
-                <li class="list-item-dash">
-                  <input type="checkbox" class="list-checkbox"> {{shoppingItem.name}}
-                </li>
+                {{shopping-list-item shoppingItem = shoppingItem selectItem='selectItem'}}
               {{/each}}
             </ul>
           </div>
-        </div>
 
+        </div>
+          {{#each selectedItems as |value|}}
+              {{value.text}}
+          {{/each}}
       </div>
 
   </div>
