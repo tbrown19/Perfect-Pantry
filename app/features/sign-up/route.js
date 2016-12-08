@@ -4,7 +4,6 @@ export default Ember.Route.extend({
   firebaseApp: Ember.inject.service(),
 
   beforeModel() {
-    debugger;
     if (this.get('session.isAuthenticated')) {
       this.transitionTo('dashboard');
     }

@@ -42,35 +42,48 @@ export default Ember.Route.extend({
         if (allUsers.get('length') === 0) {
           alert("no user found with that email.");
         }
-        var pantryID = allUsers.objectAt(0).get('pantry.id');
+        const pantryID = allUsers.objectAt(0).get('pantry.id');
 
 
         this.store.findAll('pantry').then((pantries) => {
-          var pantry = pantries.filterBy("id", pantryID).objectAt(0);
+          const pantry = pantries.filterBy("id", pantryID).objectAt(0);
           pantry.get('unconfirmedUsers').pushObject(this.get('user'));
           this.get('user').set('pendingPantry',pantry);
+          console.log( this.get('user').get('pendingPantry'));
           this.get('user').save();
           pantry.save();
         });
-
+        this.currentModel.reload();
       });
     },
 
     // Allows the user to confirm another users email and add them to their pantry.
     addUserToPantry(userEmail){
+      var pantry = this.currentModel;
+
       this.store.query('user', {
         orderBy: 'email', equalTo: userEmail
       }).then((allUsers) => {
         const user = allUsers.objectAt(0);
-        const userID = allUsers.objectAt(0).get('pantry.id');
-        let pantry = this.currentModel;
 
-        pantry.get('unconfirmedUsers').removeObject(user);
-        pantry.get('users').pushObject(user);
-        pantry.save().then(() => {
-          alert("pantry saved.");
+        pantry.get('unconfirmedUsers').then((users) => {
+          users.removeObject(user);
         });
+
+        pantry.get('users').then((users) => {
+          users.pushObject(user);
+        });
+
+        // user.set('pantry', pantry);
+        // user.set('pendingPantry', null);
+
+        pantry.save();
+        user.save();
+        console.log( pantry.get('unconfirmedUsers'));
       });
+
+
+      this.currentModel.reload();
 
     },
 

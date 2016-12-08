@@ -1,5 +1,7 @@
 <div class="container">
   <h1>You are {{session.currentUser.email}}</h1>
+  <h1>You are {{model.id}}</h1>
+
   {{#if model.unconfirmedUsers}}
     <div>
       The following users wish to join your pantry.
@@ -34,4 +36,19 @@
     </div>
   </form>
 
-</div>
+
+  <h3>The people in your pantry:</h3>
+  {{#each model.users as |user|}}
+    {{user.email}}
+  {{/each}}
+
+  <h3>The shopping items in your pantry:</h3>
+  {{#each model.users as |user|}}
+    <ul>
+    {{#each user.shoppingList.shoppingListItems as |item|}}
+      <li>{{item.name}}</li>
+    {{/each}}
+    </ul>
+  {{/each}}
+
+  </div>

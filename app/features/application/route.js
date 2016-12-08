@@ -14,6 +14,7 @@ export default Ember.Route.extend({
       this.transitionTo(redirect);
 
     }, function() {
+
       console.log('no session to fetch');
     });
   },
@@ -24,7 +25,7 @@ export default Ember.Route.extend({
       this.transitionTo('/');
     },
     accessDenied: function() {
-      this.transitionTo('/');
+      return this.transitionTo('/');
     }
   }
 
