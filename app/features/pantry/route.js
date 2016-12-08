@@ -2,7 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   pantryID: "",
-  user: null,
+  user: 0,
+  pantryID: 0,
 
   beforeModel(){
 
@@ -10,24 +11,16 @@ export default Ember.Route.extend({
 
   model(){
     //Get the user from the application model and return their shopping list
+    if(this.get('user') === 0){
+      const user = this.modelFor('application');
+      this.set('user', user);
+      this.set('pantryID', user.get('pantry.id'));
+    }
 
-    const user = this.modelFor('application');
-
-    //Before the model loads get the users ID so that it can be used to find their pantry.
-    const userEmail = this.get('session').get('currentUser.email');
-    this.store.query('user', {
-      orderBy: 'email', equalTo: userEmail
-    }).then((allUsers) => {
-      //Then select the user, set their pantry to the current one, and save both models.
-      this.set('pantryID', allUsers.objectAt(0).get('pantry.id'));
-      this.set('user', allUsers.objectAt(0));
-
+    //return this.get('pantry');
+    return this.store.findAll('pantry').then((pantries) => {
+      return pantries.filterBy("id", this.get('pantryID')).objectAt(0);
     });
-
-    return user.get('pantry');
-    // return this.store.findAll('pantry').then((pantries) => {
-    //   return pantries.filterBy("id", this.get('pantryID')).objectAt(0);
-    // });
 
 
   },
@@ -52,16 +45,22 @@ export default Ember.Route.extend({
         }
         const pantryID = allUsers.objectAt(0).get('pantry.id');
 
+
         //We then take= the user that we found, and find their pantry.
         this.store.findAll('pantry').then((pantries) => {
-          const pantry = pantries.filterBy("id", pantryID).objectAt(0);
+          console.log(pantries)
+          let pantry2 = pantries.filterBy("id", pantryID).objectAt(0);
+          debugger;
+
+          pantry2.get('unconfirmedUsers').pushObject(this.get('user'));
+
           //We add the user to the pantry's unconfirmed user, and then update their pending pantry id so that
           //Both the pantry and the user can have some idea of their invite.
-          pantry.get('unconfirmedUsers').pushObject(this.get('user'));
-          this.get('user').set('pendingPantry',pantry);
+          this.get('user').set('pendingPantry',pantry2);
           this.get('user').save();
-          pantry.save();
+          pantry2.save();
         });
+
       });
     },
 
