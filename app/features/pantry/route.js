@@ -48,17 +48,15 @@ export default Ember.Route.extend({
 
         //We then take= the user that we found, and find their pantry.
         this.store.findAll('pantry').then((pantries) => {
-          console.log(pantries)
-          let pantry2 = pantries.filterBy("id", pantryID).objectAt(0);
-          debugger;
-
-          pantry2.get('unconfirmedUsers').pushObject(this.get('user'));
-
+          const pantry = pantries.filterBy("id", pantryID).objectAt(0);
           //We add the user to the pantry's unconfirmed user, and then update their pending pantry id so that
+          pantry.get('unconfirmedUsers').pushObject(this.get('user'));
+
           //Both the pantry and the user can have some idea of their invite.
-          this.get('user').set('pendingPantry',pantry2);
+          this.get('user').set('pendingPantry',pantry);
           this.get('user').save();
-          pantry2.save();
+
+          pantry.save();
         });
 
       });
@@ -78,14 +76,16 @@ export default Ember.Route.extend({
         pantry.get('unconfirmedUsers').then((users) => {
           users.removeObject(user);
         });
+        pantry.save().then(() => {
+          pantry.get('users').then((users) => {
+            users.pushObject(user);
 
-        pantry.get('users').then((users) => {
-          users.pushObject(user);
+          });
         });
 
 
+
         pantry.save();
-        user.save();
       });
 
     },
@@ -95,6 +95,10 @@ export default Ember.Route.extend({
     // But that could just be fixed by rewriting the way we add a user like previously suggested.
     denyUserFromPantry(userEmail){
 
+    },
+
+    show() {
+      this.$('.modal').modal();
     }
 
   }

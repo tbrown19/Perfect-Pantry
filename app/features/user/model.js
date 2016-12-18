@@ -6,6 +6,7 @@ export default DS.Model.extend({
   email: DS.attr('String'),
   pantry: belongsTo('pantry'),
   pendingPantry: belongsTo('pantry'),
-  shoppingList: DS.belongsTo('shopping-list')
+  shoppingList: DS.belongsTo('shopping-list'),
+  purchasedList: DS.belongsTo('purchased-list')
 
 });

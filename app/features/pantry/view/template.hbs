@@ -1,0 +1,15 @@
+<div class="dashboard-group basic-card">
+
+  <h2 class="text-center dash-section-header">
+    {{fa-icon 'cutlery'}} Pantry
+  </h2>
+  <div class="dashboard-col ">
+    <ul class="dashboard-list-group">
+      {{#each model.users as |user|}}
+          {{#each user.shoppingList.shoppingListItems as |item|}}
+            <li class="list-item-dash" >{{item.name}}</li>
+          {{/each}}
+      {{/each}}
+    </ul>
+  </div>
+</div>

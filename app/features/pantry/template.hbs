@@ -1,6 +1,4 @@
 <div class="container">
-  <h1>You are {{session.currentUser.email}}</h1>
-  <h1>You are {{model.id}}</h1>
 
   {{#if model.unconfirmedUsers}}
     <div>
@@ -21,34 +19,25 @@
     </div>
   {{/if}}
 
-
-
   <form class="new-item-form" {{action 'sendPantryRequest' pantryEmail on="submit"}}>
     <div class="input-group">
       <div class="row">
         Enter the email of the pantry you wish to join.
         <div class="input-field inline">
-          {{input type="email" class='form-control' id = "pantryRequest"  value=pantryEmail}}
-          <label for="email">Email</label>
+          {{input type="email" class='form-control' id = "pantryRequest"  value=pantryEmail placeholder="Email"}}
 
         </div>
       </div>
     </div>
   </form>
 
+  <div class="col-md-12 padding">
+    {{outlet}}
 
-  <h3>The people in your pantry:</h3>
-  {{#each model.users as |user|}}
-    {{user.email}}
-  {{/each}}
+  </div>
 
-  <h3>The shopping items in your pantry:</h3>
-  {{#each model.users as |user|}}
-    <ul>
-    {{#each user.shoppingList.shoppingListItems as |item|}}
-      <li>{{item.name}}</li>
-    {{/each}}
-    </ul>
-  {{/each}}
+
+
+
 
   </div>

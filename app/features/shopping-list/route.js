@@ -13,11 +13,12 @@ export default Ember.Route.extend({
 
 
   actions: {
-    addNewItems(itemName){
+    addNewItems(itemQty,itemName){
 
       //Create a new shopping list item
       const newItem = this.get('store').createRecord('shopping-list-item', {
-        name: itemName
+        name: itemName,
+        quantity: itemQty
       });
 
       //Then add it to the shopping list and save both objects.
@@ -33,12 +34,21 @@ export default Ember.Route.extend({
       const selectedItems = this.get('selectedItems');
       if(selectedItems.includes(item)){
         selectedItems.removeObject(item);
-        console.log("its already in there");
+        console.log("removing object");
       }
       else{
         selectedItems.addObject(item);
-        console.log('its not in there.');
+        console.log('adding object');
       }
+    },
+
+    selectAll(){
+      const shoppingList = this.currentModel;
+      var checkboxes = document.getElementsByName('options');
+      for(var i=0; i<checkboxes.length; i++) {
+        checkboxes[i].checked = event.currentTarget.checked;
+      }
+
     }
   }
 });

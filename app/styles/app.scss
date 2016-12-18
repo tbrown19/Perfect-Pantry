@@ -228,14 +228,15 @@ body {
   font-size: 1.5em !important;
 }
 
-#new-shopping-list-item{
+#new-shopping-list-item-qty{
   padding-bottom: 0px;
   font-size: 24px;
   width:100%;
 }
-
-#new-shopping-list-item:focus {
-  outline: none;
+#new-shopping-list-item{
+  padding-bottom: 0px;
+  font-size: 24px;
+  width:100%;
 }
 
 .list-item-dash{
@@ -255,7 +256,9 @@ textarea:focus, input:focus{
   outline: none;
 }
 
-
+.btn:focus{
+  color: white;
+}
 
 
 @media (min-width: 768px){

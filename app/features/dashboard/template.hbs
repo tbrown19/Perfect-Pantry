@@ -2,18 +2,20 @@
   <div class="row centered">
     <div class="col-md-8 padding">
       <div class="dashboard-group basic-card">
-
         <h2 class="text-center dash-section-header">
-          {{fa-icon 'shopping-cart'}} Shopping List
+          {{fa-icon 'shopping-cart'}} Shopping List (Recently Added)
         </h2>
 
         <div class="dashboard-col">
           <ul class="dashboard-list-group">
-            <li class="list-item-dash">Cras justo odio</li>
-            <li class="list-item-dash">Dapibus ac facilisis in</li>
-            <li class="list-item-dash">Morbi leo risus</li>
-            <li class="list-item-dash">Porta ac consectetur ac</li>
-            <li class="list-item-dash">Vestibulum at eros</li>
+            {{#each model.shoppingList.first5Items as |item|}}
+            <li class="list-item-dash">{{item.name}}</li>
+            {{/each}}
+            <!--<li class="list-item-dash">Cras justo odio</li>-->
+            <!--<li class="list-item-dash">Dapibus ac facilisis in</li>-->
+            <!--<li class="list-item-dash">Morbi leo risus</li>-->
+            <!--<li class="list-item-dash">Porta ac consectetur ac</li>-->
+            <!--<li class="list-item-dash">Vestibulum at eros</li>-->
           </ul>
         </div>
 
