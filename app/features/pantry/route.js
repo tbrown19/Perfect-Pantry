@@ -6,7 +6,6 @@ export default Ember.Route.extend({
   pantryID: 0,
 
   beforeModel(){
-
   },
 
   model(){
@@ -64,28 +63,32 @@ export default Ember.Route.extend({
 
     // Allows the user to confirm another users email and add them to their pantry.
     addUserToPantry(userEmail){
-      const pantry = this.currentModel;
 
       //We find the user that the current user wishes to add by the email
       this.store.query('user', {
         orderBy: 'email', equalTo: userEmail
       }).then((allUsers) => {
+        var pantry = this.currentModel;
+
         const user = allUsers.objectAt(0);
+        console.log(user.get('id'));
+        // //We then remove the pending user from the unconfirmed, and add them to the normal users.
 
-        //We then remove the pending user from the unconfirmed, and add them to the normal users.
-        pantry.get('unconfirmedUsers').then((users) => {
-          users.removeObject(user);
-        });
-        pantry.save().then(() => {
-          pantry.get('users').then((users) => {
+        pantry.get('users').then((users) => {
+          console.log(users);
+          users.pushObject(user);
+          pantry.save().then((pantry) => {
             users.pushObject(user);
+            pantry.get('unconfirmedUsers').then((users) => {
+              users.removeObject(user);
+              pantry.save();
+              this.refresh();
 
+            });
           });
+          console.log(users);
+
         });
-
-
-
-        pantry.save();
       });
 
     },
@@ -97,9 +100,6 @@ export default Ember.Route.extend({
 
     },
 
-    show() {
-      this.$('.modal').modal();
-    }
 
   }
 
