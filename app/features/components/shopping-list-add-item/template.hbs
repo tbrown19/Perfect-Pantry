@@ -4,22 +4,20 @@
   </div>
 {{/if}}
 
-<form class="new-item-form" {{action 'addNewItems' itemQty itemName on="submit"}}>
-  <div class="input-group">
-      <div class="row">
-        <div class="input-field col-md-2">
-          {{input type="number" class='form-control'  id = "new-shopping-list-item-qty" value=itemQty placeholder="Quantity"}}
-        </div>
-        <div class="input-field col-md-9">
-          {{input type="text" class='form-control' id = "new-shopping-list-item"  value=itemName placeholder="Add a new item here"}}
-        </div>
-        <div class="input-field col-md-1">
-          <button {{action 'addNewItems' itemQty itemName}} type="button" class="btn-default btn"> {{fa-icon 'plus'}} Add </button>
-
-        </div>
 
 
-      </div>
 
+
+<form {{action 'addNewItems' itemQty itemName on="submit"}}>
+  <div class="form-group">
+    <div class="col-xs-1">
+      {{input type="number" class='form-control' id = "new-shopping-list-item-qty" value=itemQty placeholder = 0 }}
+    </div>
+    <div class="col-xs-3">
+      {{input type="text" class='form-control' id = "new-shopping-list-item" value=itemName placeholder="Item Name"}}
+    </div>
+    <div class="col-xs-4">
+      <button {{action 'addNewItems' itemQty itemName}} type="button" class="btn-default btn"> {{fa-icon 'plus'}} Add to cart</button>
+    </div>
   </div>
 </form>

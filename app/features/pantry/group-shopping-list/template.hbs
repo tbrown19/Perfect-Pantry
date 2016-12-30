@@ -1,0 +1,40 @@
+<div class="dashboard-group basic-card">
+
+  <h2 class="text-center dash-section-header">
+    {{fa-icon 'shopping-cart'}} Group Shopping List
+  </h2>
+  <div class="dashboard-col ">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Qty</th>
+        <th>Item Name</th>
+        <th>Added By</th>
+        <th>Added Date</th>
+        <th></th>
+
+      </tr>
+      </thead>
+      <tbody id = "group-shopping-list">
+
+      {{#each model.user.pantry.users as |user|}}
+        {{#each user.shoppingList.shoppingListItems as |item|}}
+          <tr>
+            <td>{{item.quantity}}</td>
+            <td>{{item.name}}</td>
+            <td>{{user.firstName}}</td>
+            <td>{{item.addedDate}}</td>
+            <td>
+              <button type="button" class="btn btn-default" {{action 'purchaseItem' item}}>
+                {{fa-icon 'usd'}} Buy
+              </button>
+
+            </td>
+          </tr>
+        {{/each}}
+      {{/each}}
+
+      </tbody>
+    </table>
+  </div>
+</div>

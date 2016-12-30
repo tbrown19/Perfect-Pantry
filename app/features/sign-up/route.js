@@ -24,15 +24,17 @@ export default Ember.Route.extend({
           const pantry = this.get('store').createRecord('pantry');
 
           //Create a new empty shopping list
-          const shoppingList = this.get('store').createRecord('shopping-list', {
-            name: "Shopping List",
-          });
+          const shoppingList = this.get('store').createRecord('shopping-list');
 
+          const purchasedList = this.get('store').createRecord('purchased-list');
 
           user.set('pantry', pantry);
           user.set('shoppingList', shoppingList);
+          user.set('purchasedList', purchasedList);
+
           pantry.save();
           shoppingList.save();
+          purchasedList.save();
 
           return user.save().then(() => {
             this.transitionTo('sign-in');

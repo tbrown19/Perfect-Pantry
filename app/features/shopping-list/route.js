@@ -1,6 +1,8 @@
 import Ember from 'ember';
+import moment from 'moment';
 
 export default Ember.Route.extend({
+
   selectedItems: [],
   test: false,
 
@@ -13,30 +15,40 @@ export default Ember.Route.extend({
 
 
   actions: {
-    addNewItems(itemQty,itemName){
-
+    addNewItems(itemQty, itemName){
+      console.log(moment().format());
+      const pantryID = this.modelFor('application').get('pantry.id');
       //Create a new shopping list item
       const newItem = this.get('store').createRecord('shopping-list-item', {
         name: itemName,
-        quantity: itemQty
+        quantity: itemQty,
+        addedDate: moment().format('MM-DD-YYYY'),
       });
 
       //Then add it to the shopping list and save both objects.
       const shoppingList = this.currentModel;
-      shoppingList.get('shoppingListItems').pushObject(newItem);
-      shoppingList.save().then(function () {
-        newItem.save();
+      this.store.findAll('pantry').then((pantries) => {
+        const pantry = pantries.filterBy("id", pantryID).objectAt(0);
+        pantry.get('shoppingItems').pushObject(newItem);
+        shoppingList.get('shoppingListItems').pushObject(newItem);
+        newItem.save().then(() => {
+          pantry.save();
+          shoppingList.save();
+        });
+
       });
+
+
 
     },
 
     selectItem(item){
       const selectedItems = this.get('selectedItems');
-      if(selectedItems.includes(item)){
+      if (selectedItems.includes(item)) {
         selectedItems.removeObject(item);
         console.log("removing object");
       }
-      else{
+      else {
         selectedItems.addObject(item);
         console.log('adding object');
       }
@@ -45,7 +57,7 @@ export default Ember.Route.extend({
     selectAll(){
       const shoppingList = this.currentModel;
       var checkboxes = document.getElementsByName('options');
-      for(var i=0; i<checkboxes.length; i++) {
+      for (var i = 0; i < checkboxes.length; i++) {
         checkboxes[i].checked = event.currentTarget.checked;
       }
 

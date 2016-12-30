@@ -20,6 +20,7 @@ Router.map(function() {
       this.route('index', {path: '/'});
     });
     this.route('view');
+    this.route('group-shopping-list');
   });
 });
 

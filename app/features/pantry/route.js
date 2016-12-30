@@ -1,16 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  pantryID: "",
   user: 0,
   pantryID: 0,
 
-  beforeModel(){
-  },
 
   model(){
     //Get the user from the application model and return their shopping list
-    if(this.get('user') === 0){
+    if (this.get('user') === 0) {
       const user = this.modelFor('application');
       this.set('user', user);
       this.set('pantryID', user.get('pantry.id'));
@@ -39,24 +36,28 @@ export default Ember.Route.extend({
       this.store.query('user', {
         orderBy: 'email', equalTo: email
       }).then((allUsers) => {
+        //TODO For now there is simply an alert if there is no user with that email. will change to be modal later.
         if (allUsers.get('length') === 0) {
           alert("no user found with that email.");
         }
-        const pantryID = allUsers.objectAt(0).get('pantry.id');
+        else {
+          //Get the pantryID of the pantry we are trying to join, NOT the current users pantry.
+          const pantryID = allUsers.objectAt(0).get('pantry.id');
 
+          //We then take the user that we found and their pantry id then find their pantry.
+          this.store.findAll('pantry').then((pantries) => {
+            const pantry = pantries.filterBy("id", pantryID).objectAt(0);
+            //We add the user to the pantry's unconfirmed user, and then update their pending pantry id so that
+            pantry.get('unconfirmedUsers').pushObject(this.get('user'));
 
-        //We then take= the user that we found, and find their pantry.
-        this.store.findAll('pantry').then((pantries) => {
-          const pantry = pantries.filterBy("id", pantryID).objectAt(0);
-          //We add the user to the pantry's unconfirmed user, and then update their pending pantry id so that
-          pantry.get('unconfirmedUsers').pushObject(this.get('user'));
+            //Both the pantry and the user can have some idea of the invite.
+            this.get('user').set('pendingPantry', pantry);
+            this.get('user').save();
 
-          //Both the pantry and the user can have some idea of their invite.
-          this.get('user').set('pendingPantry',pantry);
-          this.get('user').save();
+            pantry.save();
 
-          pantry.save();
-        });
+          });
+        }
 
       });
     },
@@ -68,29 +69,36 @@ export default Ember.Route.extend({
       this.store.query('user', {
         orderBy: 'email', equalTo: userEmail
       }).then((allUsers) => {
-        var pantry = this.currentModel;
-
         const user = allUsers.objectAt(0);
-        console.log(user.get('id'));
-        // //We then remove the pending user from the unconfirmed, and add them to the normal users.
+        const pantry = this.currentModel;
 
+        //It's most important to add the user to the new pantry, so we perform this first in case anything bad happens.
         pantry.get('users').then((users) => {
-          console.log(users);
+          //After getting all the users we now push our desired user to be a part of it.
           users.pushObject(user);
+
+          //We save the pantry just to be safe, and then continue on to the code for removing the user from pending.
           pantry.save().then((pantry) => {
             users.pushObject(user);
             pantry.get('unconfirmedUsers').then((users) => {
+              //Remove the now accepted user from the pending user list
               users.removeObject(user);
+              //That was the only action we performed on the pantry so we save it now
               pantry.save();
-              this.refresh();
-
+              //Now delete the pantry the user already had, since they are now part of a different one
+              user.get('pantry').remove();
+              //Update the users pantry to be the one that they just joined.
+              user.set('pantry', pantry);
+              //Set their pending pantry back to being null.
+              user.set('pendingPantry', null);
+              //Save the user and then refresh the page to make sure that the page updates.
+              user.save().then(() => {
+                this.refresh();
+              });
             });
           });
-          console.log(users);
-
         });
       });
-
     },
 
     // Allows the user to deny another users email,

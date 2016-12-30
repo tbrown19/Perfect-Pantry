@@ -4,6 +4,10 @@ export default Ember.Route.extend({
   session: Ember.inject.service('session'),
   authed: false,
 
+
+
+
+
   beforeModel: function() {
     return this.get('session').fetch().then(()=> {
       console.log('session fetched');
@@ -37,6 +41,7 @@ export default Ember.Route.extend({
   model: function () {
     //Make sure the user is authenticated before we attempt to return the model
     if(this.get('authed')){
+
       const userEmail = this.get('session').get('currentUser.email');
 
       //find the user based of their email and then return the model related to them
@@ -56,7 +61,13 @@ export default Ember.Route.extend({
     },
     accessDenied: function() {
       return this.transitionTo('/');
+    },
+    testAction(){
+      console.log("test");
+      alert("WAT U WANT?!");
     }
+
+
   }
 
 });

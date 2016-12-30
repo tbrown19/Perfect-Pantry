@@ -1,5 +1,46 @@
+<!--Model = user-->
 <div class="container">
   <div class='page-header'>
-    <h1>Expenses</h1>
+    <h1>Your Expenses</h1>
   </div>
+  <h2>You are: {{model.user.email}} </h2>
+  <h2>Items you've bought</h2>
+  <ul>
+    {{#each model.user.purchasedList.purchasedListItems as |item|}}
+      <li>{{item.name}} : {{item.price}}</li>
+    {{/each}}
+  </ul>
+
+  <ul>
+
+  </ul>
+
+
+  {{#paper-button onClick=(action "testAction")}}Button with action{{/paper-button}}
+
+
+
+  <div class="row">
+    {{#each model.users as |user|}}
+      <div class="col-md-4">
+        {{#paper-card as |card|}}
+          {{#card.title as |title|}}
+            {{#title.text as |text|}}
+              {{#text.headline}} {{user.firstName}} {{/text.headline}}
+              {{#text.subhead}} {{user.email}} {{/text.subhead}}
+            {{/title.text}}
+            {{#title.media size="sm"}}
+              <div class="card-media">Test</div>
+            {{/title.media}}
+          {{/card.title}}
+          {{#card.actions}}
+            {{#paper-button action="testAction"}}Action 1{{/paper-button}}
+            {{#paper-button}}Action 2{{/paper-button}}
+          {{/card.actions}}
+        {{/paper-card}}
+      </div>
+    {{/each}}
+
+  </div>
+
 </div>

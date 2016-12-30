@@ -6,6 +6,7 @@
     "firebase": "^3.0.0",
     "bootstrap": "~3.3.5",
     "font-awesome": "~4.5.0",
-    "materialize": "0.97.6"
+    "hammer.js": "^2.0.8",
+    "matchMedia": "0.2.0"
   }
 }
