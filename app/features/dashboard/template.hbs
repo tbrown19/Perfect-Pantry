@@ -19,7 +19,7 @@
 
         {{#card.content}}
           <div class="dashboard-col">
-            <!--{{dashboard-shopping-list items=model.shoppingListItems}}-->
+            {{dashboard-shopping-list items=model.shoppingItems}}
           </div>
           {{#each model.items as |item|}}
             {{item.name}}

@@ -69,8 +69,9 @@ export default Ember.Route.extend({
       this.store.query('user', {
         orderBy: 'email', equalTo: userEmail
       }).then((allUsers) => {
-        const user = allUsers.objectAt(0);
         const pantry = this.currentModel;
+        const user = allUsers.objectAt(0);
+        const delPantryID = user.get('pantry.id');
 
         //It's most important to add the user to the new pantry, so we perform this first in case anything bad happens.
         pantry.get('users').then((users) => {
@@ -78,25 +79,30 @@ export default Ember.Route.extend({
           users.pushObject(user);
 
           //We save the pantry just to be safe, and then continue on to the code for removing the user from pending.
-          pantry.save().then((pantry) => {
-            users.pushObject(user);
-            pantry.get('unconfirmedUsers').then((users) => {
-              //Remove the now accepted user from the pending user list
-              users.removeObject(user);
-              //That was the only action we performed on the pantry so we save it now
-              pantry.save();
-              //Now delete the pantry the user already had, since they are now part of a different one
-              user.get('pantry').remove();
+          users.pushObject(user);
+          pantry.get('unconfirmedUsers').then((users) => {
+            //Remove the now accepted user from the pending user list
+            users.removeObject(user);
+            //That was the only action we performed on the pantry so we save it now
+            //Now delete the pantry the user already had, since they are now part of a different one
+            this.store.findAll('pantry').then((pantries) => {
+
+              const delPantry = pantries.filterBy("id", delPantryID).objectAt(0);
+
+              delPantry.destroyRecord();
               //Update the users pantry to be the one that they just joined.
               user.set('pantry', pantry);
               //Set their pending pantry back to being null.
               user.set('pendingPantry', null);
               //Save the user and then refresh the page to make sure that the page updates.
               user.save().then(() => {
+                pantry.save();
                 this.refresh();
               });
             });
+
           });
+
         });
       });
     },
