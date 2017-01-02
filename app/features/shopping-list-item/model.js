@@ -10,5 +10,8 @@ export default DS.Model.extend({
   price: DS.attr('number'),
   quantity: DS.attr('number'),
   addedDate: DS.attr('String'),
+  formattedDate: DS.attr('String'),
+
+
 
 });

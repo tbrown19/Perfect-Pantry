@@ -1,6 +1,7 @@
-{{#each items as |item|}}
+
+{{#each sortedItems as |item|}}
   <li>
-    <h3>{{item.quantity}} - {{item.name}} - {{item.price}}</h3>
-    <p>{{item.addedDate}}</p>
+    <h3>{{item.quantity}} - {{item.name}}</h3>
+    <p>{{item.formattedDate}}</p>
   </li>
 {{/each}}

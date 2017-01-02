@@ -11,10 +11,6 @@
     {{/each}}
   </ul>
 
-  <ul>
-
-  </ul>
-
 
   {{#paper-button onClick=(action "testAction")}}Button with action{{/paper-button}}
 
@@ -33,6 +29,12 @@
               <div class="card-media">Test</div>
             {{/title.media}}
           {{/card.title}}
+          <h2>Items they've bought</h2>
+          <ul>
+            {{#each user.purchasedList.purchasedListItems as |item|}}
+              <li>{{item.name}} : {{item.price}}</li>
+            {{/each}}
+          </ul>
           {{#card.actions}}
             {{#paper-button action="testAction"}}Action 1{{/paper-button}}
             {{#paper-button}}Action 2{{/paper-button}}

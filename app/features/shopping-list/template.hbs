@@ -23,7 +23,56 @@
 
   </div>
 
+  <div class="layout-row layout-xs-column">
+    <div class="layout-column flex-xs flex-gt-xs-50">
+      {{#paper-card as |card|}}
+        {{#card.title as |title|}}
+          {{#title.text as |text|}}
+            {{#text.headline}}
+              {{fa-icon 'shopping-cart'}} Shopping List
+            {{/text.headline}}
+          {{/title.text}}
+          {{#card.actions class = "dashboard-card-buttons"}}
+            Sorting By
+            {{#paper-menu as |menu|}}
+              {{#menu.trigger}}
+                {{#paper-button iconButton=true}}
+                  Date
+                {{/paper-button}}
+              {{/menu.trigger}}
+              {{#menu.content width=4 as |content|}}
+                {{#each items as |item|}}
+                  {{#content.menu-item onClick="openSomething"}}
+                    {{paper-icon item.icon}}
+                    <span>{{item.title}}</span>
+                  {{/content.menu-item}}
+                {{/each}}
+              {{/menu.content}}
+            {{/paper-menu}}
+          {{/card.actions}}
+        {{/card.title}}
+        {{paper-divider}}
 
+        {{#card.content}}
+          {{#card.media size="xl"}}
+            <div class="card-media">
+              <div class="dashboard-col">
+                {{dashboard-shopping-list items=model.shoppingListItems}}
+              </div>
+              {{#each model.items as |item|}}
+                {{item.name}}
+                <br>
+              {{/each}}
+            </div>
+          {{/card.media}}
+
+        {{/card.content}}
+      {{/paper-card}}
+
+    </div>
   </div>
+
+
+</div>
 
 

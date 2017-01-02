@@ -22,7 +22,8 @@ export default Ember.Route.extend({
       const newItem = this.get('store').createRecord('shopping-list-item', {
         name: itemName,
         quantity: itemQty,
-        addedDate: moment().format('MM-DD-YYYY'),
+        addedDate: moment().format(),
+        formattedDate: moment().format('MM-DD-YYYY'),
       });
 
       //Then add it to the shopping list and save both objects.
@@ -32,7 +33,7 @@ export default Ember.Route.extend({
         pantry.get('shoppingItems').pushObject(newItem);
         shoppingList.get('shoppingListItems').pushObject(newItem);
         newItem.save().then(() => {
-          pantry.save();
+          pantry.save()
           shoppingList.save();
         });
 
