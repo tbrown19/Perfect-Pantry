@@ -1,15 +1,18 @@
 {{#paper-card as |card|}}
 
   {{#card.content}}
-    <h3>New Item</h3>
+    <h3 id = "new-shopping-list-item-header">New Item</h3>
 
     {{paper-divider}}
 
     {{#paper-form onSubmit=(action "addNewItems") as |form|}}
-      <div class="row layout-row">
-        {{form.input id = "new-shopping-list-item-qty" type="number" label="Quantity" value=quantity onChange=(action (mut quantity)) min=1 max=100 required=true}}
-
-        {{form.input id = "new-shopping-list-item" label="Item Name" value=itemName onChange=(action (mut itemName)) required=true minlength=3}}
+      <div class="row layout-row layout-xs-column layout-align-start-center">
+        <div class="flex-gt-sm-15">
+          {{form.input id = "new-shopping-list-item-qty" type="number" label="Quantity" value=quantity onChange=(action (mut quantity)) min=1 max=100 required=true}}
+        </div>
+        <div class="flex-gt-sm-30">
+          {{form.input id = "new-shopping-list-item-name" label="Item Name" value=itemName onChange=(action (mut itemName)) required=true minlength=3}}
+        </div>
         <div class = "col-md-1 pull-right">
           {{#form.submit-button id = "add-new-item" fab=true raised=true primary=false disabled=form.isInvalid}}
             {{fa-icon 'plus'}}

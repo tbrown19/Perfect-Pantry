@@ -9,7 +9,8 @@ export default Ember.Component.extend({
   sortBy: 'addedDate', // default sort by date items were added to the list
   sortByFormatted: "Day Added",
   checkedItems: [], //Items that have been checked by the user
-
+  itemsCheckedText: "ALL", //Default text that displays on the delete button.
+  showingAreYouSureMenu: false, //By default we don't want to show the user the are you sure modal
 
   //We determine here what we are sorting on, and the order in which we are sorting it.
   sortDefinition: Ember.computed('sortBy', 'reverseSort', function() {
@@ -19,7 +20,7 @@ export default Ember.Component.extend({
   }),
 
 
-  //This is where we simply sort all the items, we get sorted defintion from the computed property.
+  //This is where we simply sort all the items, we get sorted definition from the computed property.
   sortedItems: Ember.computed.sort('items', 'sortDefinition'),
 
   //We then can limit the sort items if needed, or simply return all of them.
@@ -33,14 +34,32 @@ export default Ember.Component.extend({
     }
   }),
 
+  changeInCheckedItems: Ember.observer('checkedItems.@each', function() {
+    // deal with the change
+    if( this.get('checkedItems').toArray().length > 0){
+      console.log("test?");
+      this.set('itemsCheckedText', 'Selected');
+    }
+    else{
+      this.set('itemsCheckedText', 'All');
+    }
+  }),
+
 
   actions: {
 
+    //Handles the un-checking and checking of shopping list items.
     itemChecked(item){
-      console.log("we in this action now boy.");
-      console.log(item);
+      //We simply check to see if the item is in the checked list, and if so remove it, otherwise add it.
+      if( !this.get('checkedItems').includes(item)){
+        this.get('checkedItems').addObject(item);
+      }
+      else{
+        this.get('checkedItems').removeObject(item);
+      }
     },
 
+    //Handles allowing the user to chose a property that they wish to sort by
     selectSortProperty(property){
       //Clean and process the property the user selected
       property = property.target.textContent.trim();
@@ -60,6 +79,7 @@ export default Ember.Component.extend({
 
     },
 
+    //Handles allowing the user to chose the order they wish to sort in
     selectSortOrder(order){
       //Clean and process the property the user selected
       order = order.target.textContent.trim();
@@ -74,6 +94,21 @@ export default Ember.Component.extend({
         this.set('reverseSort', true)
 
       }
+    },
+
+    //Handles the user clicking the delete button
+    deleteButtonClicked(){
+      //Show the are you sure menu if they clicked the delete menu.
+      this.set('showingAreYouSureMenu', true);
+    },
+
+    //Handles the delete action dialog, including closing it and processing the user's choice.
+    deleteDialogAction(param1,param2){
+      //Any action the user performs hides the menu so we make sure to hide it first.
+      this.set('showingAreYouSureMenu', false);
+
+      console.log(param1);
+      console.log(param2);
     }
 
   }

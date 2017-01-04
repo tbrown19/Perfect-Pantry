@@ -17,6 +17,11 @@ $divider-color: #BDBDBD;
 
 $primary-font: 'Ubuntu', sans-serif;
 
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
 #main-nav-bar {
   background-color: $primary-color-dark;
   border: 0;
@@ -25,6 +30,11 @@ $primary-font: 'Ubuntu', sans-serif;
 }
 
 body {
+
+  background-color: $primary-background-color;
+}
+
+body > .ember-view {
   background-color: $primary-background-color;
 }
 
@@ -326,3 +336,10 @@ textarea:focus, input:focus {
   margin-right: 15px;
 }
 
+#new-shopping-list-item-header{
+  margin-top: 5px;
+}
+
+.delete-button{
+  font-size: 1.2em;
+}
