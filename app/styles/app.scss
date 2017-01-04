@@ -309,7 +309,7 @@ textarea:focus, input:focus {
 .sort-header{
   font-size: 1.15em;
   font-weight: bold;
-  margin-left: 10px;
+  margin-left: 15px;
 }
 
 .sort-button{
@@ -342,4 +342,9 @@ textarea:focus, input:focus {
 
 .delete-button{
   font-size: 1.2em;
+}
+
+.select-all-button{
+  font-size: 1.2em;
+  margin-left: -5px;
 }

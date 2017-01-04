@@ -8,9 +8,15 @@ export default Ember.Component.extend({
   reverseSort: false, // default sort in ascending order
   sortBy: 'addedDate', // default sort by date items were added to the list
   sortByFormatted: "Day Added",
+
   checkedItems: [], //Items that have been checked by the user
   itemsCheckedText: "ALL", //Default text that displays on the delete button.
+
+  checkAll: false,
+  selectAllText: "Select", //Default is we want to show them they can select all
+
   showingAreYouSureMenu: false, //By default we don't want to show the user the are you sure modal
+
 
   //We determine here what we are sorting on, and the order in which we are sorting it.
   sortDefinition: Ember.computed('sortBy', 'reverseSort', function() {
@@ -50,6 +56,7 @@ export default Ember.Component.extend({
 
     //Handles the un-checking and checking of shopping list items.
     itemChecked(item){
+      console.log("you just chcked " + item.get('name'));
       //We simply check to see if the item is in the checked list, and if so remove it, otherwise add it.
       if( !this.get('checkedItems').includes(item)){
         this.get('checkedItems').addObject(item);
@@ -96,6 +103,21 @@ export default Ember.Component.extend({
       }
     },
 
+    selectAllItems(){
+      //Simply update the check all property and the handlebars template handles the rest
+      this.set('checkAll', !this.get('checkAll'));
+
+      //Also update the select all text so handlebars knows whether to display select or deselect.
+      if(this.get('checkAll') == true){
+        this.set('selectAllText', 'Deselect');
+      }
+      else{
+        this.set('selectAllText', 'Select');
+      }
+    },
+
+
+
     //Handles the user clicking the delete button
     deleteButtonClicked(){
       //Show the are you sure menu if they clicked the delete menu.
@@ -107,8 +129,20 @@ export default Ember.Component.extend({
       //Any action the user performs hides the menu so we make sure to hide it first.
       this.set('showingAreYouSureMenu', false);
 
-      console.log(param1);
-      console.log(param2);
+      if(param1 == "ok"){
+        console.log("so you want to delete some stuff.");
+        //If they have nothing checked and they still want to delete, then we will delete all the items for them.
+        if(this.get('checkAll')){
+            console.log("they have all items selected.")
+        }
+        else{
+          this.get('checkedItems').forEach(function (item) {
+            console.log(item.get('name'));
+          })
+
+        }
+      }
+
     }
 
   }
