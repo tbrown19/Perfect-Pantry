@@ -25,6 +25,13 @@
 
   <div class="layout-row layout-xs-column">
     <div class="layout-column flex-xs flex-gt-xs-50">
+      {{shopping-list-display items=model.shoppingListItems limit = false}}
+    </div>
+  </div>
+
+
+  <div class="layout-row layout-xs-column">
+    <div class="layout-column flex-xs flex-gt-xs-50">
       {{#paper-card as |card|}}
         {{#card.title as |title|}}
           {{#title.text as |text|}}
@@ -57,12 +64,7 @@
           {{#card.media size="xl"}}
             <div class="card-media">
               <div class="dashboard-col">
-                {{shopping-list-display items=model.shoppingListItems limit = false}}
               </div>
-              {{#each model.items as |item|}}
-                {{item.name}}
-                <br>
-              {{/each}}
             </div>
           {{/card.media}}
 
@@ -71,6 +73,7 @@
 
     </div>
   </div>
+
 
 
 </div>

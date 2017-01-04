@@ -3,12 +3,14 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   isChecked: false,
 
-  actions: {
-    selectItem(item) {
-      this.set('isChecked', !this.get('isChecked'));
-      this.sendAction('selectItem',item);
-      // do all the other things
-    }
-  }
+
+  changeInIsChecked: Ember.observer('isChecked', function() {
+    // deal with the change
+    console.log(`you checked ${this.get('shoppingItem.name')}`);
+    this.sendAction('itemChecked', this.get('shoppingItem'));
+
+  }),
+
+
 });
 

@@ -1,7 +1,35 @@
 
-{{#each limitedSortedItems as |item|}}
-  <li>
-    <h3>{{item.quantity}} - {{item.name}}</h3>
-    <p>{{item.formattedDate}}</p>
-  </li>
-{{/each}}
+
+{{#paper-card as |card|}}
+  {{#card.title as |title|}}
+    {{#title.text as |text|}}
+      {{#text.headline}}
+        {{fa-icon 'shopping-cart'}} Shopping List
+      {{/text.headline}}
+    {{/title.text}}
+    {{#card.actions class = "dashboard-card-buttons"}}
+      {{#paper-button iconButton=true}}{{paper-icon "favorite"}}{{/paper-button}}
+      {{#paper-button iconButton=true}}{{paper-icon "settings"}}{{/paper-button}}
+      {{#paper-button iconButton=true}}{{paper-icon "share"}}{{/paper-button}}
+    {{/card.actions}}
+  {{/card.title}}
+  {{paper-divider}}
+
+
+  {{#paper-checkbox value=checkedItem onChange=(action (mut checkedItem))}}
+    A checkbox: {{checkedItem}}
+  {{/paper-checkbox}}
+
+
+  {{#card.content}}
+    {{#paper-list}}
+      {{#each limitedSortedItems as |item|}}
+        {{shopping-list-item shoppingItem = item itemChecked = "itemChecked"}}
+      {{/each}}
+
+
+    {{/paper-list}}
+
+  {{/card.content}}
+{{/paper-card}}
+

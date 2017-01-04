@@ -1,6 +1,3 @@
-<li class="list-item-dash">
-  <form {{action 'selectItem' shoppingItem }}>
-    <input type="checkbox" class="filled-in" id="{{shoppingItem.name}}" checked={{isChecked}}/>
-    <label class = "shopping-list-item-label" for="{{shoppingItem.name}}">{{shoppingItem.name}}</label>
-  </form>
-</li>
+{{#paper-checkbox value=isChecked onChange=(action (mut isChecked))}}
+  {{isChecked}} {{shoppingItem.name}}
+{{/paper-checkbox}}
