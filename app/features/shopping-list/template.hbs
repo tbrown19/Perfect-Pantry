@@ -57,7 +57,7 @@
           {{#card.media size="xl"}}
             <div class="card-media">
               <div class="dashboard-col">
-                {{dashboard-shopping-list items=model.shoppingListItems}}
+                {{shopping-list-display items=model.shoppingListItems limit = false}}
               </div>
               {{#each model.items as |item|}}
                 {{item.name}}
