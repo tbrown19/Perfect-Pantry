@@ -222,19 +222,8 @@ body {
   background-color: #fff;
 }
 
-.shopping-list-item-label {
-  font-size: 1.15em !important;
-}
 
-#new-shopping-list-item-qty {
-  padding-bottom: 0px;
-  font-size: 1em;
-}
 
-#new-shopping-list-item {
-  padding-bottom: 0px;
-  font-size: 20px;
-}
 
 .list-item-dash {
   margin-top: 15px;
@@ -293,3 +282,47 @@ textarea:focus, input:focus {
 .padded{
   padding:10px;
 }
+
+.shopping-list-card-buttons{
+  font-size:1.25em;
+}
+
+.shopping-list-card-buttons button{
+  margin-left: 5px !important;
+}
+
+
+#shopping-list-header{
+  padding-bottom: 0;
+}
+
+.sort-header{
+  font-size: 1.15em;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.sort-button{
+  color: $accent-color;
+  font-weight: normal;
+  width: 100%;
+}
+
+#add-new-item{
+  background-color: $accent-color;
+  float: right;
+}
+
+#add-new-item i{
+  color: $primary-color-text;
+}
+
+#add-new-item:disabled{
+  background-color: $primary-color-light;
+}
+
+#new-shopping-list-item-qty{
+  margin-left: 10px;
+  margin-right: 15px;
+}
+

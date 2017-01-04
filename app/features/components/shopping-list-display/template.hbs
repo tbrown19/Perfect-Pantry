@@ -1,27 +1,54 @@
 
 
 {{#paper-card as |card|}}
-  {{#card.title as |title|}}
-    {{#title.text as |text|}}
+  {{#card.title id = "shopping-list-header" as |title|}}
+    {{#title.text  as |text|}}
       {{#text.headline}}
         {{fa-icon 'shopping-cart'}} Shopping List
       {{/text.headline}}
     {{/title.text}}
-    {{#card.actions class = "dashboard-card-buttons"}}
-      {{#paper-button iconButton=true}}{{paper-icon "favorite"}}{{/paper-button}}
-      {{#paper-button iconButton=true}}{{paper-icon "settings"}}{{/paper-button}}
-      {{#paper-button iconButton=true}}{{paper-icon "share"}}{{/paper-button}}
-    {{/card.actions}}
+
   {{/card.title}}
-  {{paper-divider}}
-
-
-  {{#paper-checkbox value=checkedItem onChange=(action (mut checkedItem))}}
-    A checkbox: {{checkedItem}}
-  {{/paper-checkbox}}
 
 
   {{#card.content}}
+    {{#card.actions class="layout-row layout-align-start-center"}}
+      <span class = "sort-header">Sorting By:</span>
+      {{#paper-menu offset="0 10 0 0" as |menu|}}
+        {{#menu.trigger}}
+          {{#paper-button}}
+            <span class="sort-button"> {{sortByFormatted}} </span>
+          {{/paper-button}}
+        {{/menu.trigger}}
+        {{#menu.content width=2 as |content|}}
+          {{#each sortableProperties as |item|}}
+            {{#content.menu-item  test = item onClick="selectSortProperty"}}
+              <span > {{item}} </span>
+            {{/content.menu-item}}
+          {{/each}}
+        {{/menu.content}}
+      {{/paper-menu}}
+
+      <span class = "sort-header">Sort Order:</span>
+      {{#paper-menu offset="15 10 0 0" as |menu|}}
+        {{#menu.trigger}}
+          {{#paper-button}}
+            <span class="sort-button"> {{sortOrder}} </span>
+          {{/paper-button}}
+        {{/menu.trigger}}
+        {{#menu.content width=2 as |content|}}
+          {{#each sortOrders as |item|}}
+            {{#content.menu-item  onClick="selectSortOrder"}}
+              <span> {{item}} </span>
+            {{/content.menu-item}}
+          {{/each}}
+        {{/menu.content}}
+      {{/paper-menu}}
+
+    {{/card.actions}}
+
+    {{paper-divider}}
+
     {{#paper-list}}
       {{#each limitedSortedItems as |item|}}
         {{shopping-list-item shoppingItem = item itemChecked = "itemChecked"}}

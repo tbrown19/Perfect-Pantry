@@ -1,23 +1,26 @@
-{{#if ivalidItemName}}
-  <div class="alert alert-danger" role="alert">
-    A shopping list item must be at least 3 characters long.
-  </div>
-{{/if}}
+{{#paper-card as |card|}}
+
+  {{#card.content}}
+    <h3>New Item</h3>
+
+    {{paper-divider}}
+
+    {{#paper-form onSubmit=(action "addNewItems") as |form|}}
+      <div class="row layout-row">
+        {{form.input id = "new-shopping-list-item-qty" type="number" label="Quantity" value=quantity onChange=(action (mut quantity)) min=1 max=100 required=true}}
+
+        {{form.input id = "new-shopping-list-item" label="Item Name" value=itemName onChange=(action (mut itemName)) required=true minlength=3}}
+        <div class = "col-md-1 pull-right">
+          {{#form.submit-button id = "add-new-item" fab=true raised=true primary=false disabled=form.isInvalid}}
+            {{fa-icon 'plus'}}
+          {{/form.submit-button}}
+        </div>
+
+      </div>
+      <div class="layout-row">
 
 
-
-
-
-<form {{action 'addNewItems' itemQty itemName on="submit"}}>
-  <div class="form-group">
-    <div class="col-xs-1">
-      {{input type="number" class='form-control' id = "new-shopping-list-item-qty" value=itemQty placeholder = 0 }}
-    </div>
-    <div class="col-xs-3">
-      {{input type="text" class='form-control' id = "new-shopping-list-item" value=itemName placeholder="Item Name"}}
-    </div>
-    <div class="col-xs-4">
-      <button {{action 'addNewItems' itemQty itemName}} type="button" class="btn-default btn"> {{fa-icon 'plus'}} Add to cart</button>
-    </div>
-  </div>
-</form>
+      </div>
+    {{/paper-form}}
+  {{/card.content}}
+{{/paper-card}}

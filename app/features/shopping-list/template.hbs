@@ -1,76 +1,13 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="dashboard-group basic-card" id="shopping-list-card">
-
-        <h2 class="dash-section-header">
-          {{fa-icon 'clock-o'}} Shopping list sorted by: Recently Added
-        </h2>
-        <div class="row add-new-shopping-list-item">
-          <div class="col-md-12">
-            {{shopping-list-add-item addItem='addNewItems'}}
-          </div>
-        </div>
-
-        <ul class="list-group" id="shopping-list-main">
-          {{#each model.shoppingListItems as |shoppingItem|}}
-            {{shopping-list-item shoppingItem = shoppingItem selectItem='selectItem'}}
-          {{/each}}
-        </ul>
-
-      </div>
-    </div>
-
-  </div>
-
   <div class="layout-row layout-xs-column">
-    <div class="layout-column flex-xs flex-gt-xs-50">
-      {{shopping-list-display items=model.shoppingListItems limit = false}}
+    <div class="layout-column flex-xs flex-gt-xs-100">
+      {{shopping-list-add-item addItem='addNewItems'}}
     </div>
   </div>
 
-
   <div class="layout-row layout-xs-column">
-    <div class="layout-column flex-xs flex-gt-xs-50">
-      {{#paper-card as |card|}}
-        {{#card.title as |title|}}
-          {{#title.text as |text|}}
-            {{#text.headline}}
-              {{fa-icon 'shopping-cart'}} Shopping List
-            {{/text.headline}}
-          {{/title.text}}
-          {{#card.actions class = "dashboard-card-buttons"}}
-            Sorting By
-            {{#paper-menu as |menu|}}
-              {{#menu.trigger}}
-                {{#paper-button iconButton=true}}
-                  Date
-                {{/paper-button}}
-              {{/menu.trigger}}
-              {{#menu.content width=4 as |content|}}
-                {{#each items as |item|}}
-                  {{#content.menu-item onClick="openSomething"}}
-                    {{paper-icon item.icon}}
-                    <span>{{item.title}}</span>
-                  {{/content.menu-item}}
-                {{/each}}
-              {{/menu.content}}
-            {{/paper-menu}}
-          {{/card.actions}}
-        {{/card.title}}
-        {{paper-divider}}
-
-        {{#card.content}}
-          {{#card.media size="xl"}}
-            <div class="card-media">
-              <div class="dashboard-col">
-              </div>
-            </div>
-          {{/card.media}}
-
-        {{/card.content}}
-      {{/paper-card}}
-
+    <div class="layout-column flex-xs flex-gt-xs-100">
+      {{shopping-list-display shoppingList=model items = model.shoppingListItems refreshModel = 'refreshModel' limit = false}}
     </div>
   </div>
 

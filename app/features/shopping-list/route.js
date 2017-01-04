@@ -39,6 +39,7 @@ export default Ember.Route.extend({
 
       });
 
+      this.refresh();
 
 
     },
@@ -62,6 +63,11 @@ export default Ember.Route.extend({
         checkboxes[i].checked = event.currentTarget.checked;
       }
 
+    },
+
+    refreshModel(){
+      console.log("refreshing that shiz");
+      //this.currentModel.reload();
     }
   }
 });
