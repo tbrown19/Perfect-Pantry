@@ -4,6 +4,8 @@ import RSVP from 'rsvp';
 export default Ember.Route.extend({
   user: 0,
 
+
+
   beforeModel(){
     //If we do it like this, we only have to query for the user after a page reload rather than transition within app
     if (this.get('user') === 0) {
@@ -15,6 +17,7 @@ export default Ember.Route.extend({
   },
 
   model(){
+
     const user = this.get('user');
     //Query all the users from the store that have the same pantry as the current user
     return this.store.query('user', {
@@ -24,17 +27,14 @@ export default Ember.Route.extend({
       const otherUsers = allUsers.without(this.get('user'));
       return Ember.RSVP.hash({
         user: this.get('user'),
-        users: otherUsers
+        users: otherUsers,
       });
     });
   },
 
 
   actions: {
-    testAction(){
-      console.log("test");
-      alert("WAT U WANT?!");
-    }
+
   },
 
 

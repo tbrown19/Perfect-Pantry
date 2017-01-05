@@ -1,13 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  store: Ember.inject.service(),
-  ivalidItemName: false,
   quantity: "",
   itemName: "",
 
   actions: {
-    addNewItems(itemQty, itemName){
+    addNewItems(){
       //TODO add validation so that the user has to enter a quantity greater than one for an item
 
       console.log();

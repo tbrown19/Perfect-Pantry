@@ -1,8 +1,21 @@
+
+
+
+
 <!--Model = user-->
 <div class="container">
   <div class='page-header'>
     <h1>Your Expenses</h1>
   </div>
+
+
+  <div class="row layout-row layout-xs-column layout-align-start-center">
+    <div class="flex-gt-sm-50 flex-70">
+      {{group-spending-by-user user = model.user}}
+    </div>
+  </div>
+
+
   <h2>You are: {{model.user.email}} </h2>
   <h2>Items you've bought</h2>
   <ul>
@@ -11,8 +24,6 @@
     {{/each}}
   </ul>
 
-
-  {{#paper-button onClick=(action "testAction")}}Button with action{{/paper-button}}
 
 
 

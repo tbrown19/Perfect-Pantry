@@ -1,3 +1,4 @@
+
 {{#paper-card id = "test" as |card|}}
   {{#card.title id = "shopping-list-header" as |title|}}
     {{#title.text  as |text|}}
@@ -10,13 +11,15 @@
 
   {{#card.content}}
     {{#card.actions class="layout-row layout-align-start-center layout-xs-column"}}
-      <div class="flex-gt-sm-20 flex-70">
-        {{#paper-button  onClick=(action "selectAllItems")}}
-          <span class="select-all-button">{{fa-icon 'check-square-o'}} {{selectAllText}} All </span>
-        {{/paper-button}}
-      </div>
+      {{#if deleteButton}}
+        <div class="flex-gt-sm-20 flex-70">
+          {{#paper-button  onClick=(action "selectAllItems")}}
+            <span class="select-all-button">{{fa-icon 'check-square-o'}} {{selectAllText}} All </span>
+          {{/paper-button}}
+        </div>
+      {{/if}}
 
-      <div class="flex-gt-sm-35 flex-70">
+      <div class="flex-gt-sm-40 flex-70">
         <span class="sort-header">Sorting By:</span>
         {{#paper-menu offset="0 10 0 0" as |menu|}}
           {{#menu.trigger}}
