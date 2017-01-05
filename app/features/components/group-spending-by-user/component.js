@@ -2,50 +2,93 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   graphColors: Ember.inject.service('theme-helper'),
-
+  graphOperations: Ember.inject.service('graph-operations'),
+  dataTest: [],
+  derp: [],
+  //user: this.get('user'),
 
   //We need to get all the users in the pantry in a nice format so we can use them to find the date and labels.
-  pantryUsers: Ember.computed('backgroundColorsArray', function() {
-    return this.get('graphColors').get('backgroundColorsArray');
-  }),
-  
-
-
-  backgroundColors: Ember.computed('backgroundColorsArray', function() {
-    return this.get('graphColors').get('backgroundColorsArray');
+  pantryUsers: Ember.computed('backgroundColorsArray', function () {
+    return this.get('user').get('pantry').get('users');
   }),
 
-  borderColors: Ember.computed('borderColorsArray', function() {
+
+  backgroundColors: Ember.computed('backgroundColorsArray', function () {
+    return this.get('graphColors').get('backgroundColorsArray');
+  }),
+
+  borderColors: Ember.computed('borderColorsArray', function () {
     return this.get('graphColors').get('borderColorsArray');
   }),
 
-  chartLabels: Ember.computed('chartLabels', function() {
-    return this.get('graphColors').get('backgroundColorsArray');
+  chartLabels: Ember.computed('chartLabels', function () {
+    //Create an array of labels, which will be the user name, and the get each users name and add it to it.
+    let labels = [];
+
+    //Constants that the helper method needds to find out how much the user has spent over the specified time.
+    const users = this.get('pantryUsers');
+
+    users.forEach((user) => {
+      labels.push(user.get('firstName'));
+    });
+
+    return labels;
   }),
 
-  chartLabel: Ember.computed('chartLabel', function() {
+  chartLabel: Ember.computed('chartLabel', function () {
     //For consistency sake this is a computed property, but doesn't actually have to be as of right now.
     return "Spending breakdown by user";
   }),
 
-  chartData: Ember.computed('chartData', function() {
-    return this.get('graphColors').get('backgroundColorsArray');
+
+
+
+
+
+
+  chartData: Ember.computed('chartDataArray', function () {
+    const users = this.get('pantryUsers');
+    let promises = [];
+    const numUsers = users.toArray().length;
+    let data = [];
+
+    users.forEach((user) => {
+      //We first need to resolve the promise of getting the users purchased items list, then we can move on
+      user.get('purchasedList').then((purchasedList) => {
+        //After we get that we can now call the helper function to sum their expenses over the time period.
+        //This is also a promise because it relies on a promise in the helper method that gets all the items that
+        //they have purchased by looking at their purchased list.
+        promises.push(this.get('graphOperations').sumUserExpenses(user, purchasedList, "ALL"));
+        if(promises.length == numUsers ){
+          Promise.all(promises).then((results) => {
+            console.log("All done", results);
+            this.set('dataTest', results);
+            console.log(this.get('dataTest'));
+          }).catch((e) => {
+              // Handle errors here
+          });
+        }
+      });
+    });
+
   }),
 
 
+  graphOptions: Ember.computed('data', function () {
+    console.log(this.get('chartLabels'));
+    console.log(this.get('dataTest'));
 
-  graphOptions: Ember.computed('data', function() {
     return {
-      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange", "Green Sea", "Wet Asphalt",
-        "idk", "dark red"],
+      labels: this.get('chartLabels'),
       datasets: [{
         label: this.get('chartLabel'),
-        data: [12, 19, 3, 5, 2, 3, 3, 10, 11, 7],
+        data: this.get('dataTest'),
         backgroundColor: this.get('backgroundColors'),
         borderColor: this.get('borderColors'),
         borderWidth: 1
       }]
-    };
+    }
   }),
+
 
 });

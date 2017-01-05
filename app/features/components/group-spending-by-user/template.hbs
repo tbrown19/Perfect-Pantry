@@ -13,6 +13,11 @@
   {{/card.title}}
   {{paper-divider}}
   {{#card.content}}
-    {{ember-chart type='pie' data=graphOptions width=200 height=400}}
+    {{chartData}}
+    {{#if dataTest}}
+      {{ember-chart type='pie' data=graphOptions width=200 height=400}}
+    {{else}}
+      Data Loading...
+    {{/if}}
   {{/card.content}}
 {{/paper-card}}

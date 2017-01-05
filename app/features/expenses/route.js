@@ -27,6 +27,7 @@ export default Ember.Route.extend({
       const otherUsers = allUsers.without(this.get('user'));
       return Ember.RSVP.hash({
         user: this.get('user'),
+        purchasedList: this.get('user').get('purchasedList'),
         users: otherUsers,
       });
     });
