@@ -18,7 +18,7 @@ export default Ember.Service.extend({
         console.log('resolving something lol..');
         console.log(totalSpent);
       }).then(() => {
-        console.log('resolving the total spent value and it is ' + totalSpent);
+        console.log('resolving the total spent value for ' + user.get('firstName') + ' and it is ' + totalSpent);
         resolve(totalSpent);
       });
 
