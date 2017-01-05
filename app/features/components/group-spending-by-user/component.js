@@ -3,9 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   graphColors: Ember.inject.service('theme-helper'),
   graphOperations: Ember.inject.service('graph-operations'),
-  dataTest: [],
-  derp: [],
-  //user: this.get('user'),
+  chartDataArray: [],
 
   //We need to get all the users in the pantry in a nice format so we can use them to find the date and labels.
   pantryUsers: Ember.computed('backgroundColorsArray', function () {
@@ -46,7 +44,7 @@ export default Ember.Component.extend({
 
 
 
-  chartData: Ember.computed('chartDataArray', function () {
+  chartData: Ember.computed('chartData', function () {
     const users = this.get('pantryUsers');
     let promises = [];
     const numUsers = users.toArray().length;
@@ -61,9 +59,7 @@ export default Ember.Component.extend({
         promises.push(this.get('graphOperations').sumUserExpenses(user, purchasedList, "ALL"));
         if(promises.length == numUsers ){
           Promise.all(promises).then((results) => {
-            console.log("All done", results);
-            this.set('dataTest', results);
-            console.log(this.get('dataTest'));
+            this.set('chartDataArray', results);
           }).catch((e) => {
               // Handle errors here
           });
@@ -75,14 +71,14 @@ export default Ember.Component.extend({
 
 
   graphOptions: Ember.computed('data', function () {
-    console.log(this.get('chartLabels'));
-    console.log(this.get('dataTest'));
 
     return {
+      animation : true,
       labels: this.get('chartLabels'),
+      indexLabelFontSize: 16,
       datasets: [{
         label: this.get('chartLabel'),
-        data: this.get('dataTest'),
+        data: this.get('chartDataArray'),
         backgroundColor: this.get('backgroundColors'),
         borderColor: this.get('borderColors'),
         borderWidth: 1

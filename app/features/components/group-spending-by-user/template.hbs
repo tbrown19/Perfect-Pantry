@@ -13,10 +13,12 @@
   {{/card.title}}
   {{paper-divider}}
   {{#card.content}}
-    {{chartData}}
-    {{#if dataTest}}
-      {{ember-chart type='pie' data=graphOptions width=200 height=400}}
+    {{#if chartDataArray}}
+      <div class = "chartDiv">
+        {{ember-chart type='pie' data=graphOptions width=200 height=400}}
+      </div>
     {{else}}
+      {{chartData}}
       Data Loading...
     {{/if}}
   {{/card.content}}

@@ -12,7 +12,7 @@ export default Ember.Service.extend({
         //console.log("in dat service");
         console.log(user.get('firstName'));
         purchasedItemsToSum.forEach((item) => {
-          totalSpent += item.get('price');
+          totalSpent += parseInt(item.get('price'));
           //console.log(item.get('price'));
         });
         console.log('resolving something lol..');
