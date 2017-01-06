@@ -18,7 +18,7 @@ export default Ember.Component.extend({
     return this.get('graphColors').get('backgroundColorsArray');
   }),
 
-  borderColors: Ember.computed('borderColorsArray', function () {
+  borderColors: Ember.computed('borderColors', function () {
     return this.get('graphColors').get('borderColorsArray');
   }),
 
@@ -31,7 +31,11 @@ export default Ember.Component.extend({
 
   resolveChartData: Ember.computed('resolveChartData', function () {
     const users = this.get('pantryUsers');
+    //We need an array of the promises, while we wait for them to resolve
     let promises = [];
+    //Then we need an array of labels and data which we eventually use to create the graph.
+    let labels = [];
+    let data = [];
     const numUsers = users.toArray().length;
 
     users.forEach((user) => {
@@ -47,19 +51,18 @@ export default Ember.Component.extend({
         //users purchased list and now we can wait for the promise to resovle.
         if(promises.length == numUsers ){
           Promise.all(promises).then((results) => {
+
             //Once the promise resolves we update our array of chart data.
-            let labels = [];
-            let data = [];
             results.forEach((result) => {
               labels.push(result[0]);
               data.push(result[1]);
-
             });
-
+            //After we finish handling every result we can update the global labels and data
             this.set('chartLabels',labels);
             this.set('chartData', data);
 
           }).catch((e) => {
+            console.log(e);
             // Handle errors here
           });
         }

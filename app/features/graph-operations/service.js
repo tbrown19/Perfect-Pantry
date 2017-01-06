@@ -9,17 +9,10 @@ export default Ember.Service.extend({
 
     return new Promise((resolve) => {
       this.getItemsWithinTimePeriod(user, purchasedList, timePeriod).then((purchasedItemsToSum) => {
-        //console.log("in dat service");
-        console.log(user.get('firstName'));
         purchasedItemsToSum.forEach((item) => {
           totalSpent += parseInt(item.get('price'));
-          //console.log(item.get('price'));
         });
-        console.log('resolving something lol..');
-        console.log(totalSpent);
       }).then(() => {
-        console.log('resolving the total spent value for ' + user.get('firstName') + ' and it is ' + totalSpent);
-        console.log("returning : " + [user.get('firstName'),totalSpent]);
         resolve([user.get('firstName'), totalSpent]);
       });
 

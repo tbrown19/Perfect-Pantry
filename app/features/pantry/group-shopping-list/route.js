@@ -23,8 +23,13 @@ export default Ember.Route.extend({
           name: item.get('name'),
           quantity: item.get('quantity'),
           price: price,
-          purchasedDate: moment().format('MM-DD-YYYY')
+          purchasedDate: moment().format(),
+          purchasedDateFormatted: moment().format('MM-DD-YYYY')
         });
+
+        const pantry = this.modelFor('pantry');
+        pantry.get('purchasedItems').pushObject(purchasedItem);
+        pantry.save();
         console.log(purchasedItem.get('purchasedDate'));
         //Then add it to the shopping list and save both objects.
         const purchasedList = this.currentModel;

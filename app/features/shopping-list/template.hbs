@@ -1,18 +1,14 @@
-<div class="container">
-  <div class="layout-row layout-xs-column">
-    <div class="layout-column flex-xs flex-gt-xs-100">
-      {{shopping-list-add-item addItem='addNewItems'}}
-    </div>
+<div class="layout-row layout-xs-column">
+  <div class="layout-column flex-xs flex-gt-xs-100">
+    {{shopping-list-add-item addItem='addNewItems'}}
   </div>
+</div>
 
-  <div class="layout-row layout-xs-column">
-    <div class="layout-column flex-xs flex-gt-xs-100">
-      {{shopping-list-display shoppingList=model items = model.shoppingListItems refreshModel = 'refreshModel' limit = false deleteButton = true}}
-    </div>
+<div class="layout-row layout-xs-column">
+  <div class="layout-column flex-xs flex-gt-xs-100">
+    {{shopping-list-display shoppingList=model items = model.shoppingListItems refreshModel = 'refreshModel'
+                            limit = false deleteButton = true}}
   </div>
-
-
-
 </div>
 
 

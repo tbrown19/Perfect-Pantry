@@ -10,13 +10,10 @@ export default Ember.Route.extend({
 
   beforeModel: function() {
     return this.get('session').fetch().then(()=> {
-      console.log('session fetched');
       //Get the the url the user is coming from
       //This is needed so if the user refreshes it redirects them back the page they were on.
       const url = window.location.href;
-      console.log(url);
       const split_url = url.split("/");
-      console.log(split_url);
       let redirect;
 
       if(split_url.length > 4){
@@ -26,14 +23,12 @@ export default Ember.Route.extend({
         redirect = split_url[split_url.length - 1] || "dashboard";
 
       }
-      console.log(redirect);
 
       //Get just the end item which is the current pageas
       this.set('authed',true);
       this.transitionTo(redirect);
 
     }, function() {
-      //this.set('authed',false);
       console.log('no session to fetch');
     });
   },
@@ -55,13 +50,16 @@ export default Ember.Route.extend({
   },
 
   actions: {
+
     signOut() {
       this.get("session").close();
       this.transitionTo('/');
     },
+
     accessDenied: function() {
       return this.transitionTo('/');
     },
+
     testAction(){
       console.log("test");
       alert("WAT U WANT?!");

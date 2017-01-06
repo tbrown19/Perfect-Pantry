@@ -2,7 +2,6 @@ import Ember from 'ember';
 import moment from 'moment';
 
 export default Ember.Route.extend({
-
   selectedItems: [],
   test: false,
 
@@ -16,6 +15,14 @@ export default Ember.Route.extend({
 
   actions: {
     addNewItems(itemQty, itemName){
+      var inflector = new Ember.Inflector(Ember.Inflector.defaultRules);
+
+      if(itemQty > 1){
+        if(itemName != inflector.pluralize(itemName)){
+          itemName = inflector.pluralize(itemName);
+        }
+      }
+
       console.log(moment().format());
       const pantryID = this.modelFor('application').get('pantry.id');
       //Create a new shopping list item

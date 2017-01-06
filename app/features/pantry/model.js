@@ -5,6 +5,16 @@ export default DS.Model.extend({
   name: DS.attr('String'),
   users: hasMany('user', {async: true , inverse: 'pantry'}),
   unconfirmedUsers: hasMany('user', {inverse: 'pendingPantry'}),
-  items: hasMany('purchased-list-item'),
-  shoppingItems: hasMany('shopping-list-item')
+  shoppingItems: hasMany('shopping-list-item'),
+  purchasedItems: hasMany('purchased-list-item'),
+
+  consumedItems: Ember.computed('purchasedItems', function() {
+    //Default is false so we sort in ascending order
+    const purchasedItems = this.get('purchasedItems');
+    purchasedItems.forEach((item) => {
+      console.log(item.get('name'));
+    });
+    return [ `${this.get('sortBy')}:${sortOrder}` ];
+  }),
+
 });

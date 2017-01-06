@@ -306,6 +306,10 @@ textarea:focus, input:focus {
   padding-bottom: 0;
 }
 
+#purchased-list-header{
+  padding-bottom: 0;
+}
+
 .sort-header{
   font-size: 1.15em;
   font-weight: bold;
@@ -347,4 +351,28 @@ textarea:focus, input:focus {
 .select-all-button{
   font-size: 1.2em;
   margin-left: -5px;
+}
+
+.shopping-item-quantity{
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.shopping-list-information{
+  font-size: 1.3em;
+  padding-left: 10px;
+  margin-bottom: 0px;
+}
+
+.shopping-list-checkbox{
+  margin-bottom: 1px;
+}
+
+.shopping-item-subtext{
+  font-size: .8em;
+  color: #757575;
+}
+
+.remove-item-button{
+  font-size: 1.2em;
 }

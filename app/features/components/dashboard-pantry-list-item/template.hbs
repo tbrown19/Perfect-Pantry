@@ -1,0 +1,17 @@
+<div class = "shopping-list-information">
+  <strong>
+    ${{purchasedItem.price}}.00
+  </strong>
+  {{purchasedItem.name}} (QTY: {{purchasedItem.quantity}})
+  <p class = "shopping-item-subtext">
+    <strong>
+      Added On:
+    </strong>
+    {{purchasedItem.purchasedDateFormatted}}
+    <strong>
+      Added By:
+    </strong>
+    {{purchasedItem.purchasedList.user.firstName}}
+  </p>
+</div>
+{{paper-divider}}

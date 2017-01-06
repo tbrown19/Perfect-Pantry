@@ -1,43 +1,43 @@
-<div class="container">
+<div class="layout-row layout-xs-column">
+  <div class="layout-column flex-xs flex-gt-xs-100">
+    {{#if model.unconfirmedUsers}}
+      <div>
+        The following users wish to join your pantry.
+        <ul class="list-group">
+          {{#each model.unconfirmedUsers as |user|}}
+            <li class="list-item-dash">
+              <input type="checkbox" class="list-checkbox"> {{user.email}}
+              <button class='btn btn-default' {{action 'addUserToPantry' user.email}}>
+                {{fa-icon 'plus'}} Add user
+              </button>
+              <button class='btn btn-default' {{action 'denyUserFromPantry' user.email}}>
+                {{fa-icon 'minus'}} Deny user
+              </button>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/if}}
 
-  {{#if model.unconfirmedUsers}}
-    <div>
-      The following users wish to join your pantry.
-      <ul class="list-group">
-        {{#each model.unconfirmedUsers as |user|}}
-          <li class="list-item-dash">
-            <input type="checkbox" class="list-checkbox"> {{user.email}}
-            <button class='btn btn-default' {{action 'addUserToPantry' user.email}}>
-              {{fa-icon 'plus'}} Add user
-            </button>
-            <button class='btn btn-default' {{action 'denyUserFromPantry' user.email}}>
-              {{fa-icon 'minus'}} Deny user
-            </button>
-          </li>
-        {{/each}}
-      </ul>
-    </div>
-  {{/if}}
+    <form class="new-item-form" {{action 'sendPantryRequest' pantryEmail on="submit"}}>
+      <div class="input-group">
+        <div class="row">
+          Enter the email of the pantry you wish to join.
+          <div class="input-field inline">
+            {{input type="email" class='form-control' id = "pantryRequest"  value=pantryEmail placeholder="Email"}}
 
-  <form class="new-item-form" {{action 'sendPantryRequest' pantryEmail on="submit"}}>
-    <div class="input-group">
-      <div class="row">
-        Enter the email of the pantry you wish to join.
-        <div class="input-field inline">
-          {{input type="email" class='form-control' id = "pantryRequest"  value=pantryEmail placeholder="Email"}}
-
+          </div>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
+</div>
 
-  <div class="col-md-12 padding">
+<div class="layout-row layout-xs-column">
+  <div class="layout-column flex-xs flex-gt-xs-100">
     {{outlet}}
-
   </div>
+</div>
 
 
 
-
-
-  </div>

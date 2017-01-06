@@ -1,0 +1,13 @@
+<div class="layout-row layout-align-start-center">
+  <div class="flex-90">
+    {{#paper-checkbox name="itemCheckbox" value=isCheckedComputed onChange=(action (mut isChecked))}}
+      {{shoppingItem.quantity}} {{shoppingItem.name}} Added By: {{shoppingItem.shoppingList.user.firstName}}
+    {{/paper-checkbox}}
+  </div>
+
+  <div class="flex-10">
+    <span class = "pull-right">
+      {{#paper-button }}Button with action{{/paper-button}}
+    </span>
+  </div>
+</div>
