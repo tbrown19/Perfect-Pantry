@@ -78,9 +78,11 @@
     {{#paper-list}}
       {{#each limitedSortedItems as |item|}}
         {{#if checkAll}}
-          {{needed-items-list-item shoppingItem = item itemChecked = "itemChecked" checkAll = true}}
+            {{needed-items-list-item shoppingItem = item itemChecked = "itemChecked"
+                                     purchaseItem = "purchaseItem" checkAll = true}}
         {{else}}
-            {{needed-items-list-item shoppingItem = item itemChecked = "itemChecked" checkAll = false}}
+            {{needed-items-list-item shoppingItem = item itemChecked = "itemChecked"
+                                     purchaseItem = "purchaseItem" checkAll = false}}
         {{/if}}
       {{else}}
         <h2>You don't have any items in your group shopping list</h2>

@@ -143,7 +143,12 @@ export default Ember.Component.extend({
         }
       }
 
-    }
+    },
+
+    purchaseItem(item){
+      console.log("were in the display now");
+      this.sendAction('purchaseItem', item);
+    },
 
   }
 

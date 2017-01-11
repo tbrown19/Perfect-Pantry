@@ -32,5 +32,17 @@ export default Ember.Component.extend({
     }
   }),
 
+  actions: {
+
+    purchaseItem(){
+      const item = this.get('shoppingItem');
+      console.log(item.get('name'));
+      this.sendAction('purchaseItem', item);
+    },
+
+
+
+  },
+
 });
 
