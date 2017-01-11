@@ -21,16 +21,10 @@ export default Ember.Route.extend({
     return this.store.findAll('pantry').then((pantries) => {
       const pantry = pantries.filterBy("id", user.get('pantry.id')).objectAt(0);
       console.log(pantry);
-      return pantry.get('shoppingItems').then((shoppingItems) => {
-        console.log(shoppingItems);
-        shoppingItems.forEach((item) => {
-          console.log(item.get('name'));
-        });
-        return Ember.RSVP.hash({
-          user: user,
-          shoppingItems: shoppingItems,
-          purchasedItems: pantry.get('purchasedItems')
-        });
+      return Ember.RSVP.hash({
+        user: user,
+        shoppingItems: pantry.get('shoppingItems'),
+        purchasedItems: pantry.get('purchasedItems')
       });
 
     });

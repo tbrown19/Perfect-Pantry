@@ -32,9 +32,12 @@ export default Ember.Component.extend({
   //We then can limit the sort items if needed, or simply return all of them.
   limitedPurchasedListItems: Ember.computed('sortedItems', function() {
     if(this.get('limit') == false){
+
       return this.get('sortedItems');
     }
     else{
+      console.log(this.get('sortedItems'));
+
       return this.get('sortedItems').splice(0,this.get('limit'));
     }
   }),

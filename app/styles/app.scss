@@ -376,3 +376,8 @@ textarea:focus, input:focus {
 .remove-item-button{
   font-size: 1.2em;
 }
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus{
+  background-color: $primary-color;
+  font-size: 1.2em;
+}
