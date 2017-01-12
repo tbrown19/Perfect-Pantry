@@ -29,8 +29,7 @@ export default Ember.Route.extend({
     // TODO add code so that a user cannot join a pantry they are already a member of.
     sendPantryRequest(email){
 
-      //Clear the input form first
-      document.getElementById("pantryRequest").value = "";
+      console.log('in da action');
 
       //We first need to see if their is a user that matches the email the user entered.
       this.store.query('user', {

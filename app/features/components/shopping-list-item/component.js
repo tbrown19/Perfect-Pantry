@@ -8,6 +8,8 @@ export default Ember.Component.extend({
   isCheckedComputed: Ember.computed('isChecked', function() {
     //Default is false so we sort in ascending order
     if(this.get('checkAll')){
+      this.set('checkAll',false);
+      this.set('isChecked', true);
       return true;
     }
     else{
@@ -16,21 +18,27 @@ export default Ember.Component.extend({
   }),
 
 
-  changeInIsChecked: Ember.observer('isCheckedComputed', function() {
+
+  changeInIsCheckedComputed: Ember.observer('isCheckedComputed', function() {
     // deal with the change
     console.log(`you checked ${this.get('shoppingItem.name')}`);
     this.sendAction('itemChecked', this.get('shoppingItem'));
 
   }),
 
+  actions: {
 
-  isAllChecked: Ember.computed('isAllChecked', function() {
-    //Default is false so we sort in ascending order
-    console.log(this.get('checkAll'));
-    if(this.get('checkAll') == true){
-      this.set('isChecked', true);
+    purchaseItem(){
+      this.sendAction('purchaseItem', this.get('shoppingItem'));
+    },
+
+    deleteItem(){
+      this.sendAction('deleteItem', this.get('shoppingItem'));
     }
-  }),
+
+
+
+  },
 
 });
 

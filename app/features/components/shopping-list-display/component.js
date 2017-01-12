@@ -32,7 +32,6 @@ export default Ember.Component.extend({
   //We then can limit the sort items if needed, or simply return all of them.
   limitedSortedItems: Ember.computed('sortedItems', function () {
     if (this.get('limit') == false) {
-      console.log(this.get('sortedItems'));
       return this.get('sortedItems');
     }
     else {
@@ -42,11 +41,12 @@ export default Ember.Component.extend({
 
   changeInCheckedItems: Ember.observer('checkedItems.@each', function () {
     // deal with the change
+    //If they have at least item checked, then we show the text selected
     if (this.get('checkedItems').toArray().length > 0) {
-      console.log("test?");
       this.set('itemsCheckedText', 'Selected');
     }
-    else {
+    if (this.get('checkedItems').length == this.get('items').toArray().length){
+      this.set('checkAll', true);
       this.set('itemsCheckedText', 'All');
     }
   }),
@@ -60,10 +60,17 @@ export default Ember.Component.extend({
       //We simply check to see if the item is in the checked list, and if so remove it, otherwise add it.
       if (!this.get('checkedItems').includes(item)) {
         this.get('checkedItems').addObject(item);
+
+        //If the lengths of checked items and items match, it means they have every item checked.
+        if(this.get('checkedItems').length == this.get('items').toArray().length){
+          this.set('checkAll', true);
+          this.set('itemsCheckedText', 'All');
+        }
       }
       else {
         this.get('checkedItems').removeObject(item);
       }
+      console.log(this.get('checkedItems').length);
     },
 
     //Handles allowing the user to chose a property that they wish to sort by
@@ -104,14 +111,20 @@ export default Ember.Component.extend({
     },
 
     selectAllItems(){
+      const items = this.get('items');
       //Simply update the check all property and the handlebars template handles the rest
       this.set('checkAll', !this.get('checkAll'));
 
       //Also update the select all text so handlebars knows whether to display select or deselect.
       if (this.get('checkAll') == true) {
+        this.set('checkAll', true);
         this.set('selectAllText', 'Deselect');
+        items.forEach((item) => {
+          this.get('checkedItems').pushObject(item);
+        })
       }
       else {
+        this.set('checkAll',false);
         this.set('checkedItems', []);
         this.set('selectAllText', 'Select');
       }
@@ -143,7 +156,16 @@ export default Ember.Component.extend({
         }
       }
 
-    }
+    },
+
+    purchaseItem(item){
+      console.log("were in the display now");
+      this.sendAction('purchaseItem', item);
+    },
+
+    deleteItem(item){
+      this.sendAction('deleteItem', item);
+    },
 
   }
 

@@ -8,18 +8,18 @@
   {{/card.title}}
 
   {{#card.content}}
-    {{#card.actions class="layout-row layout-align-start-center layout-xs-column"}}
+    {{#card.actions class="layout-row flex layout-align-start-center layout-sm-column layout-xs-column"}}
       {{#if deleteButton}}
-        <div class="flex-gt-sm-20 flex-70">
+        <div class="fix-flex flex-gt-sm-23">
           {{#paper-button  onClick=(action "selectAllItems")}}
             <span class="select-all-button">{{fa-icon 'check-square-o'}} {{selectAllText}} All </span>
           {{/paper-button}}
         </div>
       {{/if}}
 
-      <div class="flex-gt-sm-45 flex-70">
-        <span class="sort-header">Sorting By:</span>
-        {{#paper-menu offset="0 10 0 0" as |menu|}}
+      <div class="flex-gt-sm-50">
+        <span class="sort-header">Sort By:</span>
+        {{#paper-menu  as |menu|}}
           {{#menu.trigger}}
             {{#paper-button}}
               <span class="sort-button"> {{sortByFormatted}} </span>
@@ -36,8 +36,8 @@
       </div>
 
 
-      <div class="flex-gt-sm-50 flex-70">
-        <span class="sort-header">Sort Order:</span>
+      <div class="flex-gt-sm-50">
+        <span class="sort-header">Order:</span>
         {{#paper-menu offset="15 10 0 0" as |menu|}}
           {{#menu.trigger}}
             {{#paper-button}}

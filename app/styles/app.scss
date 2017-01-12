@@ -22,6 +22,8 @@ html, body {
   height: 100%;
 }
 
+
+
 #main-nav-bar {
   background-color: $primary-color-dark;
   border: 0;
@@ -349,8 +351,9 @@ textarea:focus, input:focus {
 }
 
 .select-all-button{
-  font-size: 1.2em;
+  font-size: 1.25em;
   margin-left: -5px;
+  margin-right: 5px;
 }
 
 .shopping-item-quantity{
@@ -368,6 +371,7 @@ textarea:focus, input:focus {
   margin-bottom: 1px;
 }
 
+
 .shopping-item-subtext{
   font-size: .8em;
   color: #757575;
@@ -381,6 +385,20 @@ textarea:focus, input:focus {
   background-color: $primary-color;
   font-size: 1.2em;
 }
+
 .buy-item-button{
 
 }
+
+.fix-flex{
+  -ms-flex: 0 0 auto;
+  -webkit-flex: 0 0 auto;
+  flex: 0 0 auto;
+}
+
+.no-wrap{
+  flex-shrink: 0;
+  min-width: 50% !important;
+}
+
+

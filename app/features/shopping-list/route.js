@@ -8,17 +8,22 @@ export default Ember.Route.extend({
   model(){
     //Get the user from the application model and return their shopping list
     const user = this.modelFor('application');
-    return user.get('shoppingList');
+
+    return Ember.RSVP.hash({
+      purchasedList: user.get('purchasedList'),
+      shoppingList: user.get('shoppingList'),
+      pantry: user.get('pantry')
+    });
 
   },
 
 
   actions: {
     addNewItems(itemQty, itemName){
-      var inflector = new Ember.Inflector(Ember.Inflector.defaultRules);
+      const inflector = new Ember.Inflector(Ember.Inflector.defaultRules);
 
-      if(itemQty > 1){
-        if(itemName != inflector.pluralize(itemName)){
+      if (itemQty > 1) {
+        if (itemName != inflector.pluralize(itemName)) {
           itemName = inflector.pluralize(itemName);
         }
       }
@@ -32,6 +37,7 @@ export default Ember.Route.extend({
         addedDate: moment().format(),
         formattedDate: moment().format('MM-DD-YYYY'),
       });
+
 
       //Then add it to the shopping list and save both objects.
       const shoppingList = this.currentModel;
@@ -51,31 +57,47 @@ export default Ember.Route.extend({
 
     },
 
-    selectItem(item){
-      const selectedItems = this.get('selectedItems');
-      if (selectedItems.includes(item)) {
-        selectedItems.removeObject(item);
-        console.log("removing object");
-      }
-      else {
-        selectedItems.addObject(item);
-        console.log('adding object');
+    purchaseItem(item){
+
+      const price = window.prompt("Enter the price of the item");
+      //Make sure the value is a digit only.
+      if (!isNaN(price) && price > 0) {
+        console.log("so you want to buy: " + item.get('name'));
+        console.log("And it costs: " + price);
+
+
+        //Create a new purchased list item taking attributes from the shopping list item object
+        const purchasedItem = this.get('store').createRecord('purchased-list-item', {
+          name: item.get('name'),
+          quantity: item.get('quantity'),
+          price: price,
+          purchasedDate: moment().format(),
+          purchasedDateFormatted: moment().format('MM-DD-YYYY')
+        });
+
+
+        this.currentModel.pantry.get('purchasedItems').pushObject(purchasedItem);
+        this.currentModel.pantry.save();
+
+
+        //Then add it to the shopping list and save both objects.
+        const purchasedList = this.currentModel.purchasedList;
+        purchasedList.get('purchasedListItems').pushObject(purchasedItem);
+
+        purchasedList.save().then(function () {
+          purchasedItem.save();
+        });
+
+
+        //Now that the item has been purchased, we no longer need the database object so we can delete it.
+        item.destroyRecord();
+
       }
     },
 
-    selectAll(){
-      const shoppingList = this.currentModel;
-      var checkboxes = document.getElementsByName('options');
-      for (var i = 0; i < checkboxes.length; i++) {
-        checkboxes[i].checked = event.currentTarget.checked;
-      }
-
+    deleteItem(item){
+      item.destroyRecord();
     },
-
-    refreshModel(){
-      console.log("refreshing that shiz");
-      //this.currentModel.reload();
-    }
   }
 });
 

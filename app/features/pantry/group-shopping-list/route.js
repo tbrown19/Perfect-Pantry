@@ -10,7 +10,8 @@ export default Ember.Route.extend({
     }).then((shoppingItems) => {
       return Ember.RSVP.hash({
         shoppingItems: shoppingItems,
-        purchasedList: user.get('purchasedList')
+        purchasedList: user.get('purchasedList'),
+        shoppingList: user.get('shoppingList')
       });
     });
 
@@ -20,7 +21,6 @@ export default Ember.Route.extend({
 
   actions: {
     purchaseItem(item){
-
       const price = window.prompt("Enter the price of the item");
       //Make sure the value is a digit only.
       if (!isNaN(price) && price > 0) {
@@ -37,22 +37,30 @@ export default Ember.Route.extend({
           purchasedDateFormatted: moment().format('MM-DD-YYYY')
         });
 
-        console.log(purchasedItem);
 
+        //First we add the new item to the user's pantry purchased items list
+        //This list makes it so we can easily seem the items purchased by all users.
         const pantry = this.modelFor('pantry');
         pantry.get('purchasedItems').pushObject(purchasedItem);
         pantry.save();
-        console.log(purchasedItem.get('purchasedDate'));
+
         //Then add it to the shopping list and save both objects.
         const purchasedList = this.currentModel.purchasedList;
         purchasedList.get('purchasedListItems').pushObject(purchasedItem);
+
         purchasedList.save().then(function () {
           purchasedItem.save();
         });
 
+
+        //Now that the item has been purchased, we no longer need the database object so we can delete it.
+        item.destroyRecord();
+
       }
+    },
 
-
-    }
+    deleteItem(item){
+      item.destroyRecord();
+    },
   }
 });
