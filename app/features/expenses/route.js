@@ -14,7 +14,8 @@ export default Ember.Route.extend({
         user: user,
         purchasedList: application.purchasedList,
         allUsers: allUsers,
-        otherUsers: allUsers.without(user)
+        otherUsers: allUsers.without(user),
+        pantry: pantry
       });
     });
 
