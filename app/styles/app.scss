@@ -83,14 +83,6 @@ body > .ember-view {
 
 }
 
-.dash-section-header {
-  font-size: 2em;
-  background-color: $primary-color;
-  color: white;
-  padding: 10px;
-  margin-bottom: -1px;
-}
-
 .page-header {
   color: black;
   padding-bottom: 0px;
@@ -401,4 +393,6 @@ textarea:focus, input:focus {
   min-width: 50% !important;
 }
 
-
+.md-headline{
+  font-size: 1.4em !important;
+}

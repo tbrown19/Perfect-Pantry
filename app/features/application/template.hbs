@@ -34,18 +34,20 @@
           {{#bs-nav-item}}{{#link-to "shopping-list"}}Shopping List{{/link-to}}{{/bs-nav-item}}
           {{#bs-nav-item}}{{#link-to "expenses"}}Expenses{{/link-to}}{{/bs-nav-item}}
 
+          {{#bs-navbar-nav class = "navbar-right"}}
+            {{#bs-dropdown class = "settings-drop-down" tagName="li"}}
+              {{#bs-dropdown-toggle}}
+                {{fa-icon 'gear'}} Settings <span class="caret"></span>
+              {{/bs-dropdown-toggle}}
+              {{#bs-dropdown-menu}}
+                <button type="button" class="btn btn-default remove_button_css" {{action 'signOut'}}>Sign Out</button>
+              {{/bs-dropdown-menu}}
+            {{/bs-dropdown}}
+          {{/bs-navbar-nav}}
+
         {{/bs-navbar-nav}}
 
-        {{#bs-navbar-nav class = "navbar-right"}}
-          {{#bs-dropdown class = "settings-drop-down" tagName="li"}}
-            {{#bs-dropdown-toggle}}
-              {{fa-icon 'gear'}} Settings <span class="caret"></span>
-            {{/bs-dropdown-toggle}}
-            {{#bs-dropdown-menu}}
-                <button type="button" class="btn btn-default remove_button_css" {{action 'signOut'}}>Sign Out</button>
-            {{/bs-dropdown-menu}}
-          {{/bs-dropdown}}
-        {{/bs-navbar-nav}}
+
 
       {{/bs-navbar-content}}
   {{/bs-navbar}}

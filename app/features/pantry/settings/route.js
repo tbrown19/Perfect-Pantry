@@ -6,18 +6,18 @@ export default Ember.Route.extend({
 
 
   model(){
-    //Get the user from the application model and return their shopping list
-    if (this.get('user') === 0) {
-      const user = this.modelFor('application');
-      this.set('user', user);
-      this.set('pantryID', user.get('pantry.id'));
-    }
-
-    //return this.get('pantry');
-    return this.store.findAll('pantry').then((pantries) => {
-      return pantries.filterBy("id", this.get('pantryID')).objectAt(0);
-    });
-
+    // //Get the user from the application model and return their shopping list
+    // if (this.get('user') === 0) {
+    //   const user = this.modelFor('application');
+    //   this.set('user', user);
+    //   this.set('pantryID', user.get('pantry.id'));
+    // }
+    //
+    // //return this.get('pantry');
+    // return this.store.findAll('pantry').then((pantries) => {
+    //   return pantries.filterBy("id", this.get('pantryID')).objectAt(0);
+    // });
+    return this.modelFor('pantry');
 
   },
 

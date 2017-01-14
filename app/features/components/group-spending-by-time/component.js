@@ -17,7 +17,7 @@ export default Ember.Component.extend({
 
   chartLabel: Ember.computed('chartLabel', function () {
     //For consistency sake this is a computed property, but doesn't actually have to be as of right now.
-    return "Spending breakdown by pantry member";
+    return "Total Pantry spending breakdown by time";
   }),
 
 
@@ -31,36 +31,7 @@ export default Ember.Component.extend({
     let data = [];
     const numUsers = users.toArray().length;
 
-    users.forEach((user) => {
-      //We first need to resolve the promise of getting the users purchased items list, then we can move on
-      user.get('purchasedList').then((purchasedList) => {
-
-        //After we get that we can now call the helper function to sum their expenses over the time period.
-        //This is also a promise because it relies on a promise in the helper method that gets all the items that
-        //they have purchased by looking at their purchased list.
-        promises.push(this.get('graphOperations').sumAllTimeUserExpenses(user, purchasedList));
-        this.get('graphOperations').sumTimePeriodUserExpenses(user, purchasedList, "Derp");
-
-        //If we have a list of promises equal to the size of the number of users we have, then we have gotten every
-        //users purchased list and now we can wait for the promise to resovle.
-        if(promises.length == numUsers ){
-          Promise.all(promises).then((results) => {
-            //Once the promise resolves we update our array of chart data.
-            results.forEach((result) => {
-              labels.push(result[0].get('firstName'));
-              data.push(result[1]);
-            });
-            //After we finish handling every result we can update the global labels and data
-            this.set('chartLabels',labels);
-            this.set('chartData', data);
-
-          }).catch((e) => {
-            console.log(e);
-            // Handle errors here
-          });
-        }
-      });
-    });
+    //this.get('graphOperations').generateLabelsForTimePeriod([1,'week']);
 
   }),
 

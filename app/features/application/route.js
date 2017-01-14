@@ -5,37 +5,34 @@ export default Ember.Route.extend({
   authed: false,
 
 
-
-
-
-  beforeModel: function() {
-    return this.get('session').fetch().then(()=> {
+  beforeModel: function () {
+    return this.get('session').fetch().then(() => {
       //Get the the url the user is coming from
       //This is needed so if the user refreshes it redirects them back the page they were on.
       const url = window.location.href;
       const split_url = url.split("/");
       let redirect;
 
-      if(split_url.length > 4){
+      if (split_url.length > 4) {
         //redirect = split_url[split_url.length - 2] + "/" + split_url[split_url.length - 1];
       }
-      else{
+      else {
         redirect = split_url[split_url.length - 1] || "dashboard";
 
       }
 
       //Get just the end item which is the current pageas
-      this.set('authed',true);
+      this.set('authed', true);
       this.transitionTo(redirect);
 
-    }, function() {
+    }, function () {
       console.log('no session to fetch');
     });
   },
 
   model: function () {
     //Make sure the user is authenticated before we attempt to return the model
-    if(this.get('authed')){
+    if (this.get('authed')) {
 
       const userEmail = this.get('session').get('currentUser.email');
 
@@ -43,7 +40,15 @@ export default Ember.Route.extend({
       return this.store.query('user', {
         orderBy: 'email', equalTo: userEmail
       }).then((allUsers) => {
-        return allUsers.objectAt(0);
+        const user = allUsers.objectAt(0);
+        const pantry = user.get('pantry');
+        return Ember.RSVP.hash({
+          user: user,
+          pantry: pantry,
+          pantryUsers: pantry.get('users'),
+          shoppingList: user.get('shoppingList'),
+          purchasedList: user.get('purchasedList')
+        });
       });
     }
 
@@ -56,14 +61,9 @@ export default Ember.Route.extend({
       this.transitionTo('/');
     },
 
-    accessDenied: function() {
+    accessDenied: function () {
       return this.transitionTo('/');
     },
-
-    testAction(){
-      console.log("test");
-      alert("WAT U WANT?!");
-    }
 
 
   }

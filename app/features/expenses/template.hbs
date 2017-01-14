@@ -1,7 +1,10 @@
 <!--Model = user-->
 <div class="layout-row layout-xs-column layout-align-start-center">
   <div class="flex-gt-sm-50 flex-70">
-    {{group-spending-by-user user = model.user purchasedList = model.purchasedList}}
+    {{group-spending-by-user user = model.user allUsers = model.allUsers}}
+  </div>
+  <div class="flex-gt-sm-50 flex-70">
+    {{group-spending-by-time user = model.user allUsers = model.allUsers}}
   </div>
 </div>
 
@@ -16,7 +19,7 @@
 
 
 <div class="row">
-  {{#each model.users as |user|}}
+  {{#each model.otherUsers as |user|}}
     <div class="col-md-4">
       {{#paper-card as |card|}}
         {{#card.title as |title|}}

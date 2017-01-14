@@ -4,16 +4,25 @@ import moment from 'moment';
 export default Ember.Route.extend({
 
   model: function () {
-    const user = this.modelFor('application');
-    return this.store.query('shoppingListItem', {
-      orderBy: 'pantry', equalTo: user.get('pantry.id')
-    }).then((shoppingItems) => {
-      return Ember.RSVP.hash({
-        shoppingItems: shoppingItems,
-        purchasedList: user.get('purchasedList'),
-        shoppingList: user.get('shoppingList')
-      });
+    const application = this.modelFor('application');
+    const pantry = application.pantry;
+
+    return Ember.RSVP.hash({
+      shoppingItems: pantry.get('shoppingItems'),
+      purchasedList: application.purchasedList,
+      shoppingList: application.shoppingList
     });
+
+
+    // return this.store.query('shoppingListItem', {
+    //   orderBy: 'pantry', equalTo: user.get('pantry.id')
+    // }).then((shoppingItems) => {
+    //   return Ember.RSVP.hash({
+    //     shoppingItems: shoppingItems,
+    //     purchasedList: user.get('purchasedList'),
+    //     shoppingList: user.get('shoppingList')
+    //   });
+    // });
 
 
   },

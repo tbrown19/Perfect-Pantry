@@ -7,12 +7,12 @@ export default Ember.Route.extend({
 
   model(){
     //Get the user from the application model and return their shopping list
-    const user = this.modelFor('application');
+    const application = this.modelFor('application');
 
     return Ember.RSVP.hash({
-      purchasedList: user.get('purchasedList'),
-      shoppingList: user.get('shoppingList'),
-      pantry: user.get('pantry')
+      purchasedList: application.purchasedList,
+      shoppingList: application.shoppingList,
+      pantry: application.pantry
     });
 
   },
