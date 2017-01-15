@@ -22,8 +22,6 @@ html, body {
   height: 100%;
 }
 
-
-
 #main-nav-bar {
   background-color: $primary-color-dark;
   border: 0;
@@ -32,7 +30,6 @@ html, body {
 }
 
 body {
-
   background-color: $primary-background-color;
 }
 
@@ -143,6 +140,11 @@ body > .ember-view {
   color: $primary-color-text !important;
 }
 
+.navbar-right {
+  font-family: $primary-font;
+  font-size: 1em;
+}
+
 .remove_button_css {
   outline: none;
   padding: 5px;
@@ -174,11 +176,12 @@ body > .ember-view {
 @media (max-width: 768px) {
 
   .landing-page-main-text > h1 {
-    font-size: 2.5em;
+    font-size: 3em;
   }
   .landing-page-main-text > h2 {
-    font-size: 2em;
+    font-size: 1rem;
     margin-bottom: 0px;
+    margin-top: 20px;
   }
 }
 
@@ -187,6 +190,42 @@ body > .ember-view {
   text-align: center;
   font-size: 2.25em;
   font-family: 'Raleway', sans-serif;
+}
+
+#sign-up-button, #sign-up-button:hover, #sign-up-button:focus {
+  margin-top: 20px;
+  box-shadow: 0 3px 0 0 $primary-color;
+  color: #fff;
+  background: $accent-color;
+  font-family: $primary-font;
+  border-color: $primary-text-color;
+}
+
+#sign-in-button, #sign-in-button:hover, #sign-in-button:focus {
+  margin-top: 20px;
+  box-shadow: 0 3px 0 0 $primary-color;
+  color: #fff;
+  background: $accent-color;
+  font-family: $primary-font;
+  border-color: $primary-text-color;
+}
+
+#sign-up-button:active, #sign-in-button:active {
+  box-shadow: none;
+  margin-bottom: -3px;
+  margin-top: 23px;
+}
+
+.sign-in-header {
+  color: $primary-color;
+}
+
+.sign-in-text {
+  margin-top: 6px;
+}
+
+.form-control::-webkit-input-placeholder {
+  font-family: $primary-font;
 }
 
 .landing-page-action-button {
@@ -201,15 +240,20 @@ body > .ember-view {
   display: block;
 }
 
+.landing-page-action-button:hover {
+  color: $primary-color-light;
+  border-color: $primary-color-light;
+  text-decoration: none;
+}
+
 .landing-page-nav-link > a {
   margin-right: 15px;
-  color: gray !important;
+  color: black !important;
 }
 
 .landing-page-nav-link > a:hover {
   margin-right: 15px;
-  color: lightgray !important;
-  background-color: transparent !important;
+  background-color: rgb(212, 212, 214) !important;
 }
 
 .landing-brand {
@@ -225,9 +269,6 @@ body > .ember-view {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.19), 0 3px 3px rgba(0, 0, 0, 0.23);
   background-color: #fff;
 }
-
-
-
 
 .list-item-dash {
   margin-top: 15px;
