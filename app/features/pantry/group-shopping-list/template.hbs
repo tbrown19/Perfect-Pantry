@@ -1,7 +1,8 @@
 
-{{needed-items-list-display items = model.shoppingItems
-                            deleteButton = true
-                            purchaseItem = "purchaseItem"
-                            deleteItem = "deleteItem"
-                            limit = false
+{{shopping-list-display shoppingList=model items = model.shoppingItems
+                        purchaseItem = "purchaseItem"
+                        deleteItem = "deleteItem"
+                        limit = false
+                        deleteButton = true
+                        group-listing = true
 }}

@@ -120,11 +120,11 @@ export default Ember.Component.extend({
 
 			if (this.get('checkAll') === true) {
 				this.checkAllItems(true);
-			} else {
+			}
+			else {
 				this.unCheckAllItems();
 			}
     },
-
 
     //Handles the user clicking the delete button
     deleteButtonClicked(){
@@ -182,9 +182,6 @@ export default Ember.Component.extend({
 				this.get('checkedItems').pushObject(item);
 			});
 		}
-
-
 	}
-
 
 });
