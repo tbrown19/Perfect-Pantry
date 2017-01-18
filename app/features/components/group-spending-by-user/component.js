@@ -40,7 +40,6 @@ export default Ember.Component.extend({
         //This is also a promise because it relies on a promise in the helper method that gets all the items that
         //they have purchased by looking at their purchased list.
         promises.push(this.get('graphOperations').sumAllTimeUserExpenses(user, purchasedList));
-        this.get('graphOperations').sumTimePeriodUserExpenses(user, purchasedList, "Derp");
 
         //If we have a list of promises equal to the size of the number of users we have, then we have gotten every
         //users purchased list and now we can wait for the promise to resovle.
