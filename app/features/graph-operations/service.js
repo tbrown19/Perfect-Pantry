@@ -383,6 +383,63 @@ export default Ember.Service.extend({
 
   },
 
+  generateAllUsersAllTimeExpenses(users){
+
+    //Return a new promise because we are dependent on getting each users items.
+    return new Promise((resolve) => {
+      // users.forEach((user) => {
+      //   //We first need to resolve the promise of getting the users purchased items list, then we can move on
+      //   user.get('purchasedList').then((purchasedList) => {
+      //
+      //     //After we get that we can now call the helper function to sum their expenses over the time period.
+      //     //This is also a promise because it relies on a promise in the helper method that gets all the items that
+      //     //they have purchased by looking at their purchased list.
+      //     this.sumAllTimeUserExpenses(user, purchasedList));
+      //
+      //     //If we have a list of promises equal to the size of the number of users we have, then we have gotten every
+      //     //users purchased list and now we can wait for the promise to resovle.
+      //     if(promises.length == numUsers ){
+      //       Promise.all(promises).then((results) => {
+      //         //Once the promise resolves we update our array of chart data.
+      //         results.forEach((result) => {
+      //           labels.push(result[0].get('firstName'));
+      //           data.push(result[1]);
+      //         });
+      //         //After we finish handling every result we can update the global labels and data
+      //         this.set('chartLabels',labels);
+      //         this.set('chartData', data);
+      //
+      //       }).catch((e) => {
+      //         console.log(e);
+      //         // Handle errors here
+      //       });
+      //     }
+      //   });
+      // });
+
+
+      let purchasedLists = users.map((user) => {
+        return user.get('purchasedList').then((purchasedList) => {
+          return [user, purchasedList];
+        });
+      });
+
+      Promise.all(purchasedLists).then((results) => {
+        let test = results.map((result) => {
+          return this.sumAllTimeUserExpenses(result[0],result[1]);
+        });
+        Promise.all(test).then((userSpending) => {
+          let spendingArray = userSpending.map((x) => x[1]);
+          let labelsArray = userSpending.map((x) => x[0].get('firstName'));
+          resolve([labelsArray,spendingArray]);
+        });
+      }).catch(function (err) {
+        console.log(err);
+      });
+
+    });
+  },
+
   //TODO add method header  - method is NOT DONE
   generateMomentObjects(timePeriod){
     let timeLength = timePeriod[0]; //Last, 1, 2, 3, 4, etc

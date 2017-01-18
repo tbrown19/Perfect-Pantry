@@ -15,8 +15,11 @@ export default Ember.Component.extend({
     return this.get('graphColors').get('borderColorsArray');
   }),
 
+  chartHead: Ember.computed('chartLabel', function () {
+    return "Total Pantry spending breakdown by time";
+  }),
+
   chartLabel: Ember.computed('chartLabel', function () {
-    //For consistency sake this is a computed property, but doesn't actually have to be as of right now.
     return "Total Pantry spending breakdown by time";
   }),
 

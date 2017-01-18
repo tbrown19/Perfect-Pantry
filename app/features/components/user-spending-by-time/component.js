@@ -15,9 +15,13 @@ export default Ember.Component.extend({
     return this.get('graphColors').get('borderColorsArray');
   }),
 
+
+  chartHead: Ember.computed('chartLabel', function () {
+    return "Your spending breakdown by time";
+  }),
+
   chartLabel: Ember.computed('chartLabel', function () {
-    //For consistency sake this is a computed property, but doesn't actually have to be as of right now.
-    return "Total Pantry spending breakdown by time";
+    return "Your spending breakdown by time";
   }),
 
 
@@ -41,7 +45,7 @@ export default Ember.Component.extend({
       labels: this.get('chartLabels'),
       indexLabelFontSize: 16,
       datasets: [{
-        label: this.get('chartLabel'),
+        label: "Week of",
         data: this.get('chartData'),
         backgroundColor: this.get('backgroundColors')[3],
         borderColor: this.get('borderColors')[3],
