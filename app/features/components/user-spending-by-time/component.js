@@ -47,8 +47,8 @@ export default Ember.Component.extend({
       datasets: [{
         label: "Week of",
         data: this.get('chartData'),
-        backgroundColor: this.get('backgroundColors')[3],
-        borderColor: this.get('borderColors')[3],
+        backgroundColor: this.get('backgroundColors')[6],
+        borderColor: this.get('borderColors')[6],
         borderWidth: 1,
         lineTension: 0,
         capBezierPoints: true,
@@ -58,13 +58,17 @@ export default Ember.Component.extend({
 
   CHARTOPTIONS: Ember.computed('data', function () {
     return {
+			legend: {
+				onClick: "" //Prevent the clicking of the label from doing anything, since right now it's useless to allow it.
+			},
       scales: {
         yAxes: [{
           ticks: {
             beginAtZero: true
           }
         }]
-      }
+      },
+
     };
   }),
 

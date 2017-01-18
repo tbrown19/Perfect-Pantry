@@ -46,8 +46,7 @@ export default Ember.Component.extend({
       this.set('itemsCheckedText', 'Selected');
     }
     if (this.get('checkedItems').length === this.get('items').toArray().length){
-      this.set('checkAll', true);
-      this.set('itemsCheckedText', 'All');
+			this.checkAllItems(false);
     }
   }),
 
@@ -63,14 +62,19 @@ export default Ember.Component.extend({
 
         //If the lengths of checked items and items match, it means they have every item checked.
         if(this.get('checkedItems').length === this.get('items').toArray().length){
-          this.set('checkAll', true);
-          this.set('itemsCheckedText', 'All');
+					this.checkAllItems(false);
         }
+
       }
       else {
         this.get('checkedItems').removeObject(item);
+
+				//If we have 0 items checked, then we want to call our un-check all items function so that everything can be updated.
+				if(this.get('checkedItems').length === 0){
+					this.unCheckAllItems();
+				}
       }
-      console.log(this.get('checkedItems').length);
+
     },
 
     //Handles allowing the user to chose a property that they wish to sort by
@@ -111,23 +115,14 @@ export default Ember.Component.extend({
     },
 
     selectAllItems(){
-      const items = this.get('items');
-      //Simply update the check all property and the handlebars template handles the rest
+      //Set the check all property to the opposite of what it currently is.
       this.set('checkAll', !this.get('checkAll'));
 
-      //Also update the select all text so handlebars knows whether to display select or deselect.
-      if (this.get('checkAll') === true) {
-        this.set('checkAll', true);
-        this.set('selectAllText', 'Deselect');
-        items.forEach((item) => {
-          this.get('checkedItems').pushObject(item);
-        });
-      }
-      else {
-        this.set('checkAll',false);
-        this.set('checkedItems', []);
-        this.set('selectAllText', 'Select');
-      }
+			if (this.get('checkAll') === true) {
+				this.checkAllItems(true);
+			} else {
+				this.unCheckAllItems();
+			}
     },
 
 
@@ -167,7 +162,29 @@ export default Ember.Component.extend({
       this.sendAction('deleteItem', item);
     },
 
-  }
+  },
+
+
+  unCheckAllItems(){
+		this.set('checkAll',false);
+		this.set('checkedItems', []);
+		this.set('selectAllText', 'Select');
+  },
+
+
+	checkAllItems(addItemsToCheckedItems){
+		this.set('checkAll', true);
+		this.set('itemsCheckedText', 'All');
+
+		if(addItemsToCheckedItems){
+			const items = this.get('items');
+			items.forEach((item) => {
+				this.get('checkedItems').pushObject(item);
+			});
+		}
+
+
+	}
 
 
 });

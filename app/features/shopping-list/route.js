@@ -29,7 +29,7 @@ export default Ember.Route.extend({
       }
 
       console.log(moment().format());
-      const pantryID = this.modelFor('application').get('pantry.id');
+      const pantryID = this.modelFor('application').pantry.get('id');
       //Create a new shopping list item
       const newItem = this.get('store').createRecord('shopping-list-item', {
         name: itemName,
@@ -40,7 +40,7 @@ export default Ember.Route.extend({
 
 
       //Then add it to the shopping list and save both objects.
-      const shoppingList = this.currentModel;
+      const shoppingList = this.currentModel.shoppingList;
       this.store.findAll('pantry').then((pantries) => {
         const pantry = pantries.filterBy("id", pantryID).objectAt(0);
         pantry.get('shoppingItems').pushObject(newItem);

@@ -26,7 +26,7 @@ export default Ember.Component.extend({
 
   //This chart is a pie graph that shows all the user's expenses relative to each other.
   resolveChartData: Ember.computed('resolveChartData', function () {
-    let timePeriod = ["1", "month", "week"];
+    let timePeriod = ["2", "month", "week"];
 
     this.get('graphOperations').generateAllUsersFormattedExpenses(this.get('user').get('pantry'), timePeriod).then((results) => {
       this.set('chartLabels', results[0]);
