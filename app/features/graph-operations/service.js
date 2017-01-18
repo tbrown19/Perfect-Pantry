@@ -126,7 +126,6 @@ export default Ember.Service.extend({
             return period.reduce((a, b) => a + b, 0);
           });
         });
-        console.log(periodTotals);
         periodTotals.then((results) => {
           console.log(periodTotals);
           let totals = results;
@@ -220,7 +219,8 @@ export default Ember.Service.extend({
           //The current, or minimum moment we are checking against.
           let curMoment = momentPeriods[curMomentIndex].format();
           //The next, or upper moment we are checking against.
-          let nextMoment = momentPeriods[curMomentIndex + 1].format();
+          let nextMoment = momentPeriods[curMomentIndex + 1] || moment();
+          nextMoment = nextMoment.format();
 
           //The current item we are checking is the one that is at index j, and then we also get its purchased date.
           let curItem = purchasedItems.objectAt(j);
@@ -230,12 +230,12 @@ export default Ember.Service.extend({
           //The array we add it to is keeping track of items that are purchased between the two dates,
           // this array will eventually be correlated to the lower date label in a different array.
           if (moment(curItemDate).isBetween(curMoment, nextMoment)) {
+            console.log(curMoment, " <= ", curItemDate, " <= ", nextMoment);
             itemsInOnePeriod.push(curItem.get('price'));
-            //If we are at the index of length  - 2 ( -2 because we add one at the END of the for loop,
-            //So if the curMomentIndex == momentsLength - 2 it means we are actually at the last index we will be checking.
-            if (curMomentIndex == momentsLength - 2) {
+            //If we are at the index of length  - 1 it means this is the last moment date, and therefore
+            if (j == purchasedItems.length - 1) {
               itemsInTimePeriod.push(itemsInOnePeriod);
-              itemsInOnePeriod = [];
+              break;
             }
           }
 
@@ -351,6 +351,7 @@ export default Ember.Service.extend({
 
       //Then we loop until the two dates equal each other, adding the dates along the way.
       while (startDate < endDate) {
+        console.log(startDate.format('MM-DD'), "<" ,endDate.format('MM-DD'));
         startDate.add(1, step);
         moments.push(startDate.clone());
 
@@ -359,6 +360,10 @@ export default Ember.Service.extend({
         moments.pop();
         moments.push(endDate);
       }
+      else{
+        moments.pop();
+      }
+      console.log(moments);
       return moments;
 
     }
@@ -370,7 +375,7 @@ export default Ember.Service.extend({
 
   generateLabelsForTimePeriod(timePeriod){
     let momentPeriods = this.generateMomentObjects(timePeriod);
-    let momentLabels = []
+    let momentLabels = [];
     momentPeriods.forEach((moment) => {
       momentLabels.push(moment.format('MM-DD'));
     });
