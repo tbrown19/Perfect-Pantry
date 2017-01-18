@@ -58,7 +58,6 @@ export default Ember.Service.extend({
       Promise.all(dailyTotals).then((results) => {
         let totals = results.map((x) => x[2]);
         let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
-        console.log(user.get("firstName"), totalSpentOverPeriod);
         resolve([user, timePeriod, totalSpentOverPeriod]);
       }).catch(function (err) {
         console.log(err);
@@ -75,9 +74,9 @@ export default Ember.Service.extend({
    * @return {Promise} allUserExpenses - ['Label','Total Spent']
    */
   sumAllTimeAllUsersExpenses(users){
-
   },
 
+  //TODO add method header
   sumSingleDayAllUsersExpenses(pantry, date){
 
     //Return a new promise because we are dependent on getting the pantry items
@@ -88,7 +87,7 @@ export default Ember.Service.extend({
         //Then sum them and return so that the we can move onto resolving the promise.
         return itemPrices.reduce((a, b) => a + b, 0);
       }).then((totalSpentOnDay) => {
-        console.log(date, totalSpentOnDay);
+        //console.log(date, totalSpentOnDay);
         resolve([pantry, date, totalSpentOnDay]);
       });
     });
@@ -96,24 +95,51 @@ export default Ember.Service.extend({
 
   //TODO add method header
   sumTimePeriodAllUsersExpenses(pantry, timePeriod){
-
     let momentPeriods = this.generateMomentObjects(timePeriod);
+    let step = timePeriod[2];
+
+
 
     //Return a new promise because we are dependent on summing the items for each day.
-    return new Promise((resolve) => {
-      //Create and array of sums for each day by mapping each moment object to the sum function.
-      let dailyTotals = momentPeriods.map((moment) => {
-        return this.sumSingleDayAllUsersExpenses(pantry, moment.format('MM-DD-YYYY'));
-      });
+    if(step == "day"){
+      return new Promise((resolve) => {
+        //Create and array of sums for each day by mapping each moment object to the sum function.
+        let dailyTotals = momentPeriods.map((moment) => {
+          return this.sumSingleDayAllUsersExpenses(pantry, moment.format('MM-DD-YYYY'));
+        });
 
-      Promise.all(dailyTotals).then((results) => {
-        let totals = results.map((x) => x[2]);
-        let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
-        resolve([timePeriod, totalSpentOverPeriod]);
-      }).catch(function (err) {
-        console.log(err);
-      })
-    });
+        Promise.all(dailyTotals).then((results) => {
+          let totals = results.map((x) => x[2]);
+          let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
+
+          resolve([timePeriod, totals, totalSpentOverPeriod]);
+        }).catch(function (err) {
+          console.log(err);
+        })
+      });
+    }
+    else{
+      return new Promise((resolve) => {
+        //Create and array of sums for each day by mapping each moment object to the sum function.
+        let periodTotals = this.getAllUsersItemsWithinTimePeriod(pantry, momentPeriods).then((itemsByPeriod) => {
+          return itemsByPeriod.map((period) => {
+            return period.reduce((a, b) => a + b, 0);
+          });
+        });
+        console.log(periodTotals);
+        periodTotals.then((results) => {
+          console.log(periodTotals);
+          let totals = results;
+          console.log(results);
+          let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
+          console.log(totalSpentOverPeriod);
+          resolve([timePeriod, totals, totalSpentOverPeriod]);
+        }).catch(function (err) {
+          console.log(err);
+        })
+      });
+    }
+
   },
 
   //TODO add method header
@@ -140,7 +166,7 @@ export default Ember.Service.extend({
   //TODO add method header
   getAllUsersItemsByDay(pantry, date){
     let itemsOnDate = [];
-     console.log(pantry.get('id'));
+
     //Return a new promise because we are dependent on getting the items from the purchased list.
     return new Promise((resolve) => {
       pantry.get('purchasedItems').then((purchasedItems) => {
@@ -163,12 +189,79 @@ export default Ember.Service.extend({
    * @param {String} timePeriod
    * @return {Array} itemsWithinPeriod - The items they bought over the time period
    */
-  getItemsWithinTimePeriod(user, purchasedList, timePeriod){
+  getSingleUserItemsWithinTimePeriod(user, purchasedList, timePeriod){
     //We will be returning this array of items that fell within the requested time period.
     let itemsWithinPeriod = [];
-    return purchasedList.get('purchasedListItems').then((purchasedItems) => {
 
+    //If array is say [1-4, 1-11, 1-18] we want to sum all values less than 1-4, and put in that first spot in our result.
+    return purchasedList.get('purchasedListItems').then((purchasedItems) => {
       return itemsWithinPeriod;
+    });
+
+  },
+
+
+  //TODO add method header
+  getAllUsersItemsWithinTimePeriod(pantry, momentPeriods){
+
+    //Return a new promise because we are dependent on getting the items from the purchased list.
+    return new Promise((resolve) => {
+      pantry.get('purchasedItems').then((purchasedItems) => {
+        //Start off at index 0 on our list of moments
+        let curMomentIndex = 0;
+        let momentsLength = momentPeriods.length;
+        let itemsInOnePeriod = [];
+        let itemsInTimePeriod = [];
+
+        //We then loop through every purchased item. Since the purchased items are already in order of when they were bought,
+        // we are able to make a few assumptions inside of the for loop.
+        for (let j = 0; j < purchasedItems.length; j++) {
+
+          //The current, or minimum moment we are checking against.
+          let curMoment = momentPeriods[curMomentIndex].format();
+          //The next, or upper moment we are checking against.
+          let nextMoment = momentPeriods[curMomentIndex + 1].format();
+
+          //The current item we are checking is the one that is at index j, and then we also get its purchased date.
+          let curItem = purchasedItems.objectAt(j);
+          let curItemDate = curItem.get('purchasedDate');
+
+          //If the moment is between the lower and upper moment, then we want to add it to a array.
+          //The array we add it to is keeping track of items that are purchased between the two dates,
+          // this array will eventually be correlated to the lower date label in a different array.
+          if (moment(curItemDate).isBetween(curMoment, nextMoment)) {
+            itemsInOnePeriod.push(curItem.get('price'));
+            //If we are at the index of length  - 2 ( -2 because we add one at the END of the for loop,
+            //So if the curMomentIndex == momentsLength - 2 it means we are actually at the last index we will be checking.
+            if (curMomentIndex == momentsLength - 2) {
+              itemsInTimePeriod.push(itemsInOnePeriod);
+              itemsInOnePeriod = [];
+            }
+          }
+
+          //If the date we are checking is AFTER the later date, then we update the moments index by 1, so that we our now
+          //1 time period further ahead. We decrement j by one because we want to recheck that item against the newly updated
+          //moments.
+          else if (moment(curItemDate).isAfter(nextMoment)) {
+            curMomentIndex += 1;
+            j--;
+
+            //If we reached this else it means that all the items are now after the current moment. Therefore we want to add
+            //what we currently have to the array thats keeping track of the items over every moment.
+            //Then we want to reset the items in one period array because we are about to start checking a new time period.
+            itemsInTimePeriod.push(itemsInOnePeriod);
+            itemsInOnePeriod = [];
+
+          }
+        }
+        return itemsInTimePeriod;
+      }).then((itemsInTimePeriod) => {
+        console.log(itemsInTimePeriod);
+        //console.log(itemsWithinPeriod);
+        resolve(itemsInTimePeriod);
+      }).catch(function (err) {
+        console.log(err);
+      })
     });
 
   },
@@ -181,10 +274,33 @@ export default Ember.Service.extend({
    * @param {Array} timePeriod [timeLength, timeSpan] ex [1, week] [3, months], [last,week], etc
    * @return {Promise} [user, totalSpent]
    */
-  generateFormattedUserExpenses(user, purchasedList, timePeriod){},
+  generateFormattedUserExpenses(user, purchasedList, timePeriod){
+  },
 
-  generateAllUsersFormattedExpenses(users, timePeriod){},
+  //TODO Add method header - Generates the labels and the data for all users expenses over a time period.
+  generateAllUsersFormattedExpenses(pantry, timePeriod){
+    console.log("derp");
+    let spendingArray = [];
+    let labelsArray = [];
+    labelsArray = this.generateLabelsForTimePeriod(timePeriod);
 
+
+    //Return a new promise because we are dependent on summing items over a time period.
+    return new Promise((resolve) => {
+      //Create and array of sums for each day by mapping each moment object to the sum function.
+      this.sumTimePeriodAllUsersExpenses(pantry, timePeriod).then((expensesArray) => {
+        spendingArray = expensesArray[1];
+        resolve([labelsArray, spendingArray]);
+      }).catch(function (err) {
+
+        console.log(err);
+      });
+    });
+
+
+  },
+
+  //TODO add method header
   generateMomentObjects(timePeriod){
     let timeLength = timePeriod[0]; //Last, 1, 2, 3, 4, etc
     const timeSpan = timePeriod[1].toLowerCase(); //Day, Month, Week, Year
@@ -196,7 +312,7 @@ export default Ember.Service.extend({
 
     }
     else if (timeSpan == 'week') {
-      if (timeLength == 'Last') {
+      if (timeLength == 'last') {
         startDate = moment().subtract(1, 'weeks').startOf('isoWeek');
         endDate = moment().subtract(1, 'weeks').endOf('isoWeek').add(1);
       }
@@ -214,14 +330,36 @@ export default Ember.Service.extend({
         moments.push(startDate.clone());
 
       }
-      if (timeLength == 'Last') {
+      if (timeLength == 'last') {
         moments.pop();
       }
-
       return moments;
 
     }
     else if (timeSpan == 'month') {
+      if (timeLength == 'last') {
+        startDate = moment().subtract(1, 'months').startOf('month');
+        endDate = moment().subtract(1, 'months').endOf('month');
+      }
+      else {
+        endDate = moment();
+        startDate = moment().subtract(timeLength, 'months');
+      }
+
+      //We want to make the first object in the moments array the original start date
+      moments.push(startDate.clone());
+
+      //Then we loop until the two dates equal each other, adding the dates along the way.
+      while (startDate < endDate) {
+        startDate.add(1, step);
+        moments.push(startDate.clone());
+
+      }
+      if (timeLength == 'last') {
+        moments.pop();
+        moments.push(endDate);
+      }
+      return moments;
 
     }
     else if (timeSpan == 'year') {
@@ -231,39 +369,14 @@ export default Ember.Service.extend({
   },
 
   generateLabelsForTimePeriod(timePeriod){
-    const timeLength = timePeriod[0];
-    const timeSpan = timePeriod[1];
-    //this.generateWeeklyLabels('last');
+    let momentPeriods = this.generateMomentObjects(timePeriod);
+    let momentLabels = []
+    momentPeriods.forEach((moment) => {
+      momentLabels.push(moment.format('MM-DD'));
+    });
+    return momentLabels;
   },
-  //
-  // generateWeeklyLabels(timeLength)
-  // {
-  //   let labels = [];
-  //   let startDate, endDate;
-  //
-  //   if (timeLength == 'last') {
-  //     startDate = moment().subtract(1, 'weeks').startOf('isoWeek');
-  //     endDate = moment().subtract(1, 'weeks').endOf('isoWeek');
-  //     timeLength = 1;
-  //   }
-  //
-  //   else {
-  //
-  //   }
-  //   console.log(startDate.format('MM-DD'));
-  //   console.log(startDate.format('dddd'));
-  //   for (let i = 7 * timeLength - 1; i > 0; i--) {
-  //     console.log(startDate.add(1, 'days').format('MM-DD'));
-  //     console.log(startDate.format('dddd'));
-  //   }
-  //
-  // }
-  // ,
-  //
-  // generateMonthlyLabels(timeLength)
-  // {
-  //
-  // },
+
 
   formatMoment(moment){
     console.log(`${moment.format('dddd')} - ${moment.format('MM-DD')}`);

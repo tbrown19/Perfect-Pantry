@@ -31,7 +31,6 @@ export default Ember.Component.extend({
     let data = [];
     const numUsers = users.toArray().length;
     let timePeriod = [1,"week", "day"];
-    this.get('graphOperations').sumTimePeriodAllUsersExpenses(this.get('user').get('pantry'), timePeriod);
 
     users.forEach((user) => {
       //We first need to resolve the promise of getting the users purchased items list, then we can move on
