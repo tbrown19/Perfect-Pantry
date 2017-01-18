@@ -30,7 +30,7 @@ export default Ember.Component.extend({
 
     this.get('graphOperations').generateAllUsersFormattedExpenses(this.get('user').get('pantry'), timePeriod).then((results) => {
       this.set('chartLabels', results[0]);
-      this.set('chartData', results[1])
+      this.set('chartData', results[1]);
     });
 
 
@@ -51,7 +51,7 @@ export default Ember.Component.extend({
         lineTension: 0,
         capBezierPoints: true,
       }],
-    }
+    };
   }),
 
   CHARTOPTIONS: Ember.computed('data', function () {
@@ -63,7 +63,7 @@ export default Ember.Component.extend({
           }
         }]
       }
-    }
+    };
   }),
 
 });

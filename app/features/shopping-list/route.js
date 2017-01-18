@@ -23,7 +23,7 @@ export default Ember.Route.extend({
       const inflector = new Ember.Inflector(Ember.Inflector.defaultRules);
 
       if (itemQty > 1) {
-        if (itemName != inflector.pluralize(itemName)) {
+        if (itemName !== inflector.pluralize(itemName)) {
           itemName = inflector.pluralize(itemName);
         }
       }
@@ -46,7 +46,7 @@ export default Ember.Route.extend({
         pantry.get('shoppingItems').pushObject(newItem);
         shoppingList.get('shoppingListItems').pushObject(newItem);
         newItem.save().then(() => {
-          pantry.save()
+          pantry.save();
           shoppingList.save();
         });
 

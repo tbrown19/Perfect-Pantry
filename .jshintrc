@@ -2,7 +2,7 @@
   "predef": [
     "document",
     "window",
-    "-Promise"
+    "Promise"
   ],
   "browser": true,
   "boss": true,
@@ -28,5 +28,8 @@
   "white": false,
   "eqnull": true,
   "esversion": 6,
-  "unused": true
+  "unused": true,
+  "globals"      : {
+    "Promise"   : true
+  }
 }

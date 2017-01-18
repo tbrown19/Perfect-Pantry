@@ -8,13 +8,5 @@ export default DS.Model.extend({
   shoppingItems: hasMany('shopping-list-item'),
   purchasedItems: hasMany('purchased-list-item'),
 
-  consumedItems: Ember.computed('purchasedItems', function() {
-    //Default is false so we sort in ascending order
-    const purchasedItems = this.get('purchasedItems');
-    purchasedItems.forEach((item) => {
-      console.log(item.get('name'));
-    });
-    return [ `${this.get('sortBy')}:${sortOrder}` ];
-  }),
 
 });

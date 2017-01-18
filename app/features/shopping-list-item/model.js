@@ -1,7 +1,4 @@
 import DS from 'ember-data';
-import { belongsTo } from 'ember-data/relationships';
-import moment from 'moment';
-
 
 export default DS.Model.extend({
   name: DS.attr('String'),

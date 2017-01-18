@@ -110,7 +110,7 @@ export default Ember.Route.extend({
     // Should probably have a blocked users list or something so that they cant keep sending requests..
     // But that could just be fixed by rewriting the way we add a user like previously suggested.
     denyUserFromPantry(userEmail){
-
+      console.log(userEmail);
     },
 
 

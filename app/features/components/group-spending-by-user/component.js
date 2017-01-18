@@ -48,7 +48,7 @@ export default Ember.Component.extend({
         borderColor: this.get('borderColors'),
         borderWidth: 1
       }]
-    }
+    };
   }),
 
 });

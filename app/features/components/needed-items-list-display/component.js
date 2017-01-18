@@ -31,7 +31,7 @@ export default Ember.Component.extend({
 
   //We then can limit the sort items if needed, or simply return all of them.
   limitedSortedItems: Ember.computed('sortedItems', function () {
-    if (this.get('limit') == false) {
+    if (this.get('limit') === false) {
       return this.get('sortedItems');
     }
     else {
@@ -45,7 +45,7 @@ export default Ember.Component.extend({
     if (this.get('checkedItems').toArray().length > 0) {
       this.set('itemsCheckedText', 'Selected');
     }
-    if (this.get('checkedItems').length == this.get('items').toArray().length){
+    if (this.get('checkedItems').length === this.get('items').toArray().length){
       this.set('checkAll', true);
       this.set('itemsCheckedText', 'All');
     }
@@ -62,7 +62,7 @@ export default Ember.Component.extend({
         this.get('checkedItems').addObject(item);
 
         //If the lengths of checked items and items match, it means they have every item checked.
-        if(this.get('checkedItems').length == this.get('items').toArray().length){
+        if(this.get('checkedItems').length === this.get('items').toArray().length){
           this.set('checkAll', true);
           this.set('itemsCheckedText', 'All');
         }
@@ -81,13 +81,13 @@ export default Ember.Component.extend({
       //Set the formatted sort to what they selected, and then update the actual sort order by what they picked.
       this.set('sortByFormatted', property);
 
-      if (property == 'Date Added') {
+      if (property === 'Date Added') {
         this.set('sortBy', 'addedDate');
       }
-      else if (property == 'Name') {
+      else if (property === 'Name') {
         this.set('sortBy', 'name');
       }
-      else if (property == 'Quantity') {
+      else if (property === 'Quantity') {
         this.set('sortBy', 'quantity');
       }
 
@@ -99,13 +99,13 @@ export default Ember.Component.extend({
       order = order.target.textContent.trim();
 
       //Set the formatted sort to what they selected, and then update the actual sort order by what they picked.
-      if (order == 'Asc') {
+      if (order === 'Asc') {
         this.set('sortOrder', 'Asc');
         this.set('reverseSort', false);
       }
-      else if (order == 'Desc') {
+      else if (order === 'Desc') {
         this.set('sortOrder', 'Desc');
-        this.set('reverseSort', true)
+        this.set('reverseSort', true);
 
       }
     },
@@ -116,12 +116,12 @@ export default Ember.Component.extend({
       this.set('checkAll', !this.get('checkAll'));
 
       //Also update the select all text so handlebars knows whether to display select or deselect.
-      if (this.get('checkAll') == true) {
+      if (this.get('checkAll') === true) {
         this.set('checkAll', true);
         this.set('selectAllText', 'Deselect');
         items.forEach((item) => {
           this.get('checkedItems').pushObject(item);
-        })
+        });
       }
       else {
         this.set('checkAll',false);
@@ -138,20 +138,20 @@ export default Ember.Component.extend({
     },
 
     //Handles the delete action dialog, including closing it and processing the user's choice.
-    deleteDialogAction(param1, param2){
+    deleteDialogAction(param1){
       //Any action the user performs hides the menu so we make sure to hide it first.
       this.set('showingAreYouSureMenu', false);
 
-      if (param1 == "ok") {
+      if (param1 === "ok") {
         console.log("so you want to delete some stuff.");
         //If they have nothing checked and they still want to delete, then we will delete all the items for them.
         if (this.get('checkAll')) {
-          console.log("they have all items selected.")
+          console.log("they have all items selected.");
         }
         else {
           this.get('checkedItems').forEach(function (item) {
             console.log(item.get('name'));
-          })
+          });
 
         }
       }
