@@ -3,11 +3,17 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans:700i');
 @import url('https://fonts.googleapis.com/css?family=Ubuntu:400,700');
 @import url('https://fonts.googleapis.com/css?family=Raleway');
-@import 'ember-paper';
+// Import the rest of ember-paper.
+@import "ember-paper";
+@import "pod-styles";
+@import 'agency';
+@import 'mixins';
+@import 'variables';
 
 $primary-background-color: #f3f3f3;
 $primary-color-dark: #303F9F;
 $primary-color: #3F51B5;
+$header-color: #3949AB;
 $primary-color-light: #C5CAE9;
 $primary-color-text: #FFFFFF;
 $accent-color: #536DFE;
@@ -24,13 +30,6 @@ html, body {
 
 
 
-#main-nav-bar {
-  background-color: $primary-color-dark;
-  border: 0;
-  border-radius: 0;
-  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12), 0 1px 8px 0 rgba(0, 0, 0, 0.2);
-}
-
 body {
 
   background-color: $primary-background-color;
@@ -38,49 +37,6 @@ body {
 
 body > .ember-view {
   background-color: $primary-background-color;
-}
-
-.container {
-  width: 90%;
-  height: 100%;
-  background-color: $primary-background-color;
-  font-family: $primary-font;
-
-}
-
-.navbar {
-  margin-bottom: 0px;
-}
-
-#nav-branding {
-  color: $primary-color-text;
-  font-size: 2.4em;
-  font-family: 'PT Sans', sans-serif;
-  padding-bottom: 4px;
-  font-weight: lighter;
-}
-
-#landing-page-nav-branding {
-  padding-left: 10px;
-  color: black;
-  font-size: 3em;
-  font-family: 'PT Sans', sans-serif;
-  font-weight: lighter;
-}
-
-#nav-link-items > li > a {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1.5em;
-  //margin-left: 2%;
-  font-family: $primary-font;
-}
-
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-  border-bottom: 5px solid $accent-color;
-  padding-bottom: 10px;
-  background-color: inherit;
-  color: $primary-color-text !important;
-
 }
 
 .page-header {
@@ -127,21 +83,6 @@ body > .ember-view {
   color: $primary-color-text;
 }
 
-.navbar-default .navbar-nav > li > a {
-  color: $primary-color-text;
-  font-size: 1.5em;
-}
-
-.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
-  color: $primary-color-text;
-  background-color: $primary-color-dark;
-
-}
-
-.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-  background-color: $primary-color-dark;
-  color: $primary-color-text !important;
-}
 
 .remove_button_css {
   outline: none;
@@ -150,84 +91,6 @@ body > .ember-view {
   box-sizing: none;
   background-color: transparent;
 }
-
-.landing-page-container {
-  background: linear-gradient(rgba(0, 0, 0, .2), rgba(0, 0, 0, .2)), url('/assets/images/bg2.jpg') no-repeat center center;
-  padding-top: 20px;
-  padding-bottom: 50px;
-  text-align: center;
-  color: #f8f8f8;
-  background-size: cover;
-  max-height: 93.5vh;
-  min-height: 93.5vh;
-
-}
-
-.landing-page-main-text {
-  width: 100%;
-  color: $primary-color-text;
-  font-family: 'Raleway', sans-serif;
-  text-align: center;
-
-}
-
-@media (max-width: 768px) {
-
-  .landing-page-main-text > h1 {
-    font-size: 2.5em;
-  }
-  .landing-page-main-text > h2 {
-    font-size: 2em;
-    margin-bottom: 0px;
-  }
-}
-
-.landing-page-signin {
-  margin-top: 22vh;
-  text-align: center;
-  font-size: 2.25em;
-  font-family: 'Raleway', sans-serif;
-}
-
-.landing-page-action-button {
-  background-color: transparent;
-  border: 2px solid ghostwhite;
-  opacity: 50%;
-  color: ghostwhite;
-  padding: 14px 25px;
-  margin-bottom: 4vh;
-  text-align: center;
-  text-decoration: none;
-  display: block;
-}
-
-.landing-page-nav-link > a {
-  margin-right: 15px;
-  color: gray !important;
-}
-
-.landing-page-nav-link > a:hover {
-  margin-right: 15px;
-  color: lightgray !important;
-  background-color: transparent !important;
-}
-
-.landing-brand {
-  color: black !important;
-}
-
-.landing-page-padding {
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.basic-card {
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.19), 0 3px 3px rgba(0, 0, 0, 0.23);
-  background-color: #fff;
-}
-
-
-
 
 .list-item-dash {
   margin-top: 15px;
@@ -283,116 +146,119 @@ textarea:focus, input:focus {
   margin-top: -5px;
 }
 
-.padded{
-  padding:10px;
+.padded {
+  padding: 10px;
 }
 
-.shopping-list-card-buttons{
-  font-size:1.25em;
+.shopping-list-card-buttons {
+  font-size: 1.25em;
 }
 
-.shopping-list-card-buttons button{
+.shopping-list-card-buttons button {
   margin-left: 5px !important;
 }
 
-
-#shopping-list-header{
+#shopping-list-header {
   padding-bottom: 0;
 }
 
-#purchased-list-header{
+#purchased-list-header {
   padding-bottom: 0;
 }
 
-.sort-header{
+.sort-header {
   font-size: 1.15em;
   font-weight: bold;
   margin-left: 5px;
 }
 
-.sort-button{
+.sort-button {
   color: $accent-color;
   font-weight: normal;
   width: 100%;
 }
 
-#add-new-item{
+#add-new-item {
   background-color: $accent-color;
   float: right;
 }
 
-#add-new-item i{
+#add-new-item i {
   color: $primary-color-text;
 }
 
-#add-new-item:disabled{
+#add-new-item:disabled {
   background-color: $primary-color-light;
 }
 
-#new-shopping-list-item-qty{
+#new-shopping-list-item-qty {
   margin-left: 10px;
   margin-right: 15px;
 }
 
-#new-shopping-list-item-header{
+#new-shopping-list-item-header {
   margin-top: 5px;
 }
 
-.delete-button{
+.delete-button {
   font-size: 1.2em;
 }
 
-.select-all-button{
+.select-all-button {
   font-size: 1.25em;
   margin-left: -5px;
   margin-right: 5px;
 }
 
-.shopping-item-quantity{
+.shopping-item-quantity {
   font-size: 1.3em;
   font-weight: bold;
 }
 
-.shopping-list-information{
+.shopping-list-information {
   font-size: 1.3em;
   padding-left: 10px;
   margin-bottom: 0px;
 }
 
-.shopping-list-checkbox{
+.shopping-list-checkbox {
   margin-bottom: 1px;
 }
 
-
-.shopping-item-subtext{
+.shopping-item-subtext {
   font-size: .8em;
   color: #757575;
 }
 
-.remove-item-button{
+.remove-item-button {
   font-size: 1.2em;
 }
 
-.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus{
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
   background-color: $primary-color;
   font-size: 1.2em;
 }
 
-.buy-item-button{
+.buy-item-button {
 
 }
 
-.fix-flex{
+.fix-flex {
   -ms-flex: 0 0 auto;
   -webkit-flex: 0 0 auto;
   flex: 0 0 auto;
 }
 
-.no-wrap{
+.no-wrap {
   flex-shrink: 0;
   min-width: 50% !important;
 }
 
-.md-headline{
+.md-headline {
   font-size: 1.4em !important;
+}
+
+md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar) {
+  background-color: $header-color;
+  color: white;
 }

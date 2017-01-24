@@ -29,7 +29,7 @@
           {{/menu.trigger}}
           {{#menu.content width=2 as |content|}}
             {{#each sortableProperties as |item|}}
-              {{#content.menu-item  test = item onClick="selectSortProperty"}}
+              {{#content.menu-item onClick="selectSortProperty"}}
                 <span> {{item}} </span>
               {{/content.menu-item}}
             {{/each}}

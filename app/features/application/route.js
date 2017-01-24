@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   session: Ember.inject.service('session'),
   authed: false,
-
+  landingPage: false,
 
   beforeModel: function () {
     return this.get('session').fetch().then(() => {
@@ -51,6 +51,10 @@ export default Ember.Route.extend({
         });
       });
     }
+    else{
+			this.set('landingPage', true);
+			console.log("test");
+		}
 
   },
 
@@ -62,7 +66,7 @@ export default Ember.Route.extend({
     },
 
     accessDenied: function () {
-      return this.transitionTo('/');
+      return this.transitionTo('landing-page');
     },
 
 

@@ -1,12 +1,9 @@
 
-<div class="row">
-  <div class="col-xs-6">
-    {{join-pantry-request-form}}
-  </div>
-  <div class="col-xs-6">
-    <h3>The people in your pantry:</h3>
-    {{#each model.users as |user|}}
-      {{user.email}}
-    {{/each}}
-  </div>
+<div class="layout-row layout-xs-column">
+	<div class="layout-column flex-50 flex-gt-xs-100">
+		{{join-pantry-request-form}}
+	</div>
+	<div class="layout-column flex-50 flex-gt-xs-100">
+		{{users-in-pantry users = model.users}}
+	</div>
 </div>

@@ -1,58 +1,11 @@
+{{landing-page/navbar}}
 
-  <!--<nav class="navbar navbar-default navbar-fixed-top landing-page-nav">-->
-    <!--<div class="navbar-header" id = "landing-page-nav-branding">-->
-      <!--<span>Perfect Pantry</span>-->
-    <!--</div>-->
-    <!--<ul class="nav navbar-nav navbar-right">-->
-      <!--<li class = "landing-page-nav-link"><a href="#">wat wat</a></li>-->
-    <!--</ul>-->
-  <!--</nav>-->
+{{landing-page/header}}
 
-  {{#bs-navbar id = "landing-nav-bar"}}
-    <div class="navbar-header">
-      {{#bs-navbar-toggle class = "hide-the-button"}}
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      {{/bs-navbar-toggle}}
-      <a class="navbar-brand landing-brand" id = "nav-branding" href="dashboard">Perfect Pantry</a>
-    </div>
+{{landing-page/features}}
 
-    {{#bs-navbar-content}}
-      {{#bs-navbar-nav class = "navbar-right"}}
-        {{#bs-nav-item class = "landing-page-nav-link"}}{{#link-to "dashboard"}}About{{/link-to}}{{/bs-nav-item}}
-      {{/bs-navbar-nav}}
+{{landing-page/about}}
 
-    {{/bs-navbar-content}}
-  {{/bs-navbar}}
+{{landing-page/footer}}
 
-
-  <div class="landing-page-container">
-    <div class="landing-page-padding">
-      <div class="row">
-        <div class="col-md-12">
-          <div class = "landing-page-main-text">
-            <h1>Welcome to Perfect Pantry</h1>
-            <h2>Group shopping made simple.</h2>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-2 col-md-offset-5">
-          <div class = "landing-page-signin">
-            {{#link-to 'sign-up' class='landing-page-action-button'}}
-              Sign Up
-            {{/link-to}}
-            {{#link-to 'sign-in' class='landing-page-action-button'}}
-              Sign In
-            {{/link-to}}
-          </div>
-        </div>
-      </div>
-    </div>
-</div>
-
-
-
-
+{{landing-page/modals}}

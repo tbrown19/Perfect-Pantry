@@ -1,0 +1,12 @@
+<div class="layout-row layout-xs-column">
+	<div class="flex-gt-sm-50 flex-70">
+		{{graphs/group-spending-by-user user = model.user allUsers = model.allUsers}}
+		{{graphs/user-spending-by-time user = model.user allUsers = model.allUsers}}
+
+	</div>
+	<div class="flex-gt-sm-50 flex-70">
+		{{graphs/group-spending-by-time user = model.user allUsers = model.allUsers}}
+	</div>
+
+
+</div>

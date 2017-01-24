@@ -15,13 +15,17 @@ Router.map(function() {
   this.authenticatedRoute('expenses');
 
   this.route('pantry', function() {
-    this.route('index', {path: '/'});
-    this.route('settings', { path: '/settings' }, function(){
-      this.route('index', {path: '/'});
-    });
-    this.route('view');
+    this.route('settings');
     this.route('group-shopping-list');
+    this.route('current-items');
   });
+
+  this.route('expenses', function() {
+    this.route('expense-splitting');
+    this.route('visualizations');
+    this.route('overview');
+  });
+  this.route('landing-page');
 });
 
 export default Router;

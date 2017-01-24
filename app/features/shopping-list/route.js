@@ -17,7 +17,6 @@ export default Ember.Route.extend({
 
   },
 
-
   actions: {
     addNewItems(itemQty, itemName){
       const inflector = new Ember.Inflector(Ember.Inflector.defaultRules);

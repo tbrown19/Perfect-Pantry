@@ -18,45 +18,54 @@
       {{#bs-navbar-content}}
         {{#bs-navbar-nav id = "nav-link-items"}}
           {{#bs-nav-item}}{{#link-to "dashboard"}}Dashboard{{/link-to}}{{/bs-nav-item}}
+
           {{#bs-dropdown class = "settings-drop-down" tagName="li"}}
             {{#bs-dropdown-toggle}}
               Pantry <span class="caret"></span>
             {{/bs-dropdown-toggle}}
             {{#bs-dropdown-menu}}
-              {{#bs-nav-item}}{{#link-to "pantry.view"}}Current Items{{/link-to}}{{/bs-nav-item}}
+              {{#bs-nav-item}}{{#link-to "pantry.current-items"}}Current Items{{/link-to}}{{/bs-nav-item}}
               {{#bs-nav-item}}{{#link-to "pantry.group-shopping-list"}}Needed Items{{/link-to}}{{/bs-nav-item}}
               {{#bs-nav-item}}{{#link-to "pantry.settings"}}Settings{{/link-to}}{{/bs-nav-item}}
-
             {{/bs-dropdown-menu}}
           {{/bs-dropdown}}
 
 
           {{#bs-nav-item}}{{#link-to "shopping-list"}}Shopping List{{/link-to}}{{/bs-nav-item}}
-          {{#bs-nav-item}}{{#link-to "expenses"}}Expenses{{/link-to}}{{/bs-nav-item}}
 
-          {{#bs-navbar-nav class = "navbar-right"}}
-            {{#bs-dropdown class = "settings-drop-down" tagName="li"}}
-              {{#bs-dropdown-toggle}}
-                {{fa-icon 'gear'}} Settings <span class="caret"></span>
-              {{/bs-dropdown-toggle}}
-              {{#bs-dropdown-menu}}
-                <button type="button" class="btn btn-default remove_button_css" {{action 'signOut'}}>Sign Out</button>
-              {{/bs-dropdown-menu}}
-            {{/bs-dropdown}}
-          {{/bs-navbar-nav}}
+          {{#bs-dropdown class = "settings-drop-down" tagName="li"}}
+	          {{#bs-dropdown-toggle}}
+		          Expenses <span class="caret"></span>
+	          {{/bs-dropdown-toggle}}
+	          {{#bs-dropdown-menu}}
+		          {{#bs-nav-item}}{{#link-to "expenses.overview"}}Overview{{/link-to}}{{/bs-nav-item}}
+		          {{#bs-nav-item}}{{#link-to "expenses.expense-splitting"}}Expense Splitting{{/link-to}}{{/bs-nav-item}}
+		          {{#bs-nav-item}}{{#link-to "expenses.visualizations"}}Visualizations{{/link-to}}{{/bs-nav-item}}
+	          {{/bs-dropdown-menu}}
+          {{/bs-dropdown}}
 
         {{/bs-navbar-nav}}
 
-
+        {{#bs-navbar-nav class = "navbar-right"}}
+	        {{#bs-dropdown class = "settings-drop-down" tagName="li"}}
+		        {{#bs-dropdown-toggle}}
+			        {{fa-icon 'gear'}} Settings <span class="caret"></span>
+		        {{/bs-dropdown-toggle}}
+		        {{#bs-dropdown-menu}}
+			        <button type="button" class="btn btn-default remove_button_css" {{action 'signOut'}}>Sign Out</button>
+		        {{/bs-dropdown-menu}}
+	        {{/bs-dropdown}}
+        {{/bs-navbar-nav}}
 
       {{/bs-navbar-content}}
   {{/bs-navbar}}
-
-
-
 {{/if}}
 
-<div class="container padded">
-  {{outlet}}
-</div>
+{{#if session.isAuthenticated}}
+	<div class="container padded">
+		{{outlet}}
+	</div>
+{{else}}
+	{{outlet}}
+{{/if}}
 

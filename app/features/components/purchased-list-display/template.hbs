@@ -1,99 +1,135 @@
-{{#paper-card as |card|}}
-  {{#card.title id = "purchased-list-header" as |title|}}
-    {{#title.text as |text|}}
-      {{#text.headline}}
-        {{fa-icon 'cutlery'}} Pantry
-      {{/text.headline}}
-    {{/title.text}}
-  {{/card.title}}
 
-  {{#card.content}}
-    {{#card.actions class="layout-row flex layout-align-start-center layout-sm-column layout-xs-column"}}
-      {{#if deleteButton}}
-        <div class="fix-flex flex-gt-sm-23">
-          {{#paper-button  onClick=(action "selectAllItems")}}
-            <span class="select-all-button">{{fa-icon 'check-square-o'}} {{selectAllText}} All </span>
-          {{/paper-button}}
-        </div>
-      {{/if}}
+{{#paper-card id = "purchased-list-comp" as |card|}}
+	{{#card.title id = "purchased-list-header" as |title|}}
+		{{#title.text  as |text|}}
+			{{#text.headline}}
+				{{fa-icon 'cutlery'}} Pantry
+			{{/text.headline}}
+		{{/title.text}}
 
-      <div class="flex-gt-sm-27">
-        <span class="sort-header">Sort By:</span>
-        {{#paper-menu  as |menu|}}
-          {{#menu.trigger}}
-            {{#paper-button}}
-              <span class="sort-button"> {{sortByFormatted}} </span>
-            {{/paper-button}}
-          {{/menu.trigger}}
-          {{#menu.content width=2 as |content|}}
-            {{#each sortableProperties as |item|}}
-              {{#content.menu-item  test = item onClick="selectSortProperty"}}
-                <span> {{item}} </span>
-              {{/content.menu-item}}
-            {{/each}}
-          {{/menu.content}}
-        {{/paper-menu}}
-      </div>
+	{{/card.title}}
+
+	{{#card.content}}
+		{{#card.actions class="layout-row layout-align-start-center layout-xs-column layout-sm-column"}}
+			{{#if deleteButton}}
+				<div class="fix-flex flex-gt-sm-23">
+					{{#paper-button  onClick=(action "selectAllItems")}}
+						<span class="select-all-button">{{fa-icon 'check-square-o'}} {{selectAllText}} All </span>
+					{{/paper-button}}
+				</div>
+			{{/if}}
+
+			<div class="flex-gt-sm-27">
+				<span class="sort-header">Sort By:</span>
+				{{#paper-menu as |menu|}}
+					{{#menu.trigger}}
+						{{#paper-button}}
+							<span class="sort-button"> {{sortByFormatted}} </span>
+						{{/paper-button}}
+					{{/menu.trigger}}
+					{{#menu.content width=2 as |content|}}
+						{{#each sortableProperties as |item|}}
+							{{#content.menu-item onClick="selectSortProperty"}}
+								<span> {{item}} </span>
+							{{/content.menu-item}}
+						{{/each}}
+					{{/menu.content}}
+				{{/paper-menu}}
+			</div>
 
 
-      <div class="flex-gt-sm-50">
-        <span class="sort-header">Order:</span>
-        {{#paper-menu offset="15 10 0 0" as |menu|}}
-          {{#menu.trigger}}
-            {{#paper-button}}
-              <span class="sort-button"> {{sortOrder}} </span>
-            {{/paper-button}}
-          {{/menu.trigger}}
-          {{#menu.content width=2 as |content|}}
-            {{#each sortOrders as |item|}}
-              {{#content.menu-item  onClick="selectSortOrder"}}
-                <span> {{item}} </span>
-              {{/content.menu-item}}
-            {{/each}}
-          {{/menu.content}}
-        {{/paper-menu}}
-      </div>
+			<div class="flex-gt-sm-50 flex">
+				<span class="sort-header">Order:</span>
+				{{#paper-menu as |menu|}}
+					{{#menu.trigger}}
+						{{#paper-button}}
+							<span class="sort-button"> {{sortOrder}} </span>
+						{{/paper-button}}
+					{{/menu.trigger}}
+					{{#menu.content width=2 as |content|}}
+						{{#each sortOrders as |item|}}
+							{{#content.menu-item  onClick="selectSortOrder"}}
+								<span> {{item}} </span>
+							{{/content.menu-item}}
+						{{/each}}
+					{{/menu.content}}
+				{{/paper-menu}}
+			</div>
 
-      {{#if deleteButton}}
-        <div class="flex-70">
-          {{#if checkedItems}}
-            {{#paper-button class = "pull-right" onClick=(action "deleteButtonClicked")}}
-              <span class="delete-button">{{fa-icon 'trash-o'}} Delete  {{itemsCheckedText}} </span>
-            {{/paper-button}}
-          {{else if checkAll}}
-            {{#paper-button class = "pull-right" onClick=(action "deleteButtonClicked")}}
-              <span class="delete-button">{{fa-icon 'trash-o'}} Delete  {{itemsCheckedText}} </span>
-            {{/paper-button}}
-          {{/if}}
-        </div>
-      {{/if}}
+			{{#if deleteButton}}
+				<div class="flex">
+					{{#if checkedItems}}
+						{{#paper-button class = "pull-right" onClick=(action "deleteButtonClicked")}}
+							<span class="delete-button">{{fa-icon 'trash-o'}} Delete  {{itemsCheckedText}} </span>
+						{{/paper-button}}
+					{{else if checkAll}}
+						{{#paper-button class = "pull-right" onClick=(action "deleteButtonClicked")}}
+							<span class="delete-button">{{fa-icon 'trash-o'}} Delete  {{itemsCheckedText}} </span>
+						{{/paper-button}}
+					{{/if}}
+				</div>
+			{{/if}}
 
-    {{/card.actions}}
 
-    {{paper-divider}}
 
-    {{#paper-list}}
-      {{#each limitedPurchasedListItems as |item|}}
-        {{#if item.consumed}}
-        {{else}}
-          {{#if checkAll}}
-            {{shopping-list-item purchasedItem = item itemChecked = "itemChecked" checkAll = true}}
-          {{else}}
-            {{#if deteButton}}
-              {{shopping-list-item purchasedItem = item itemChecked = "itemChecked" checkAll = false}}
-            {{else}}
-              {{dashboard-pantry-list-item purchasedItem = item}}
-            {{/if}}
-          {{/if}}
-        {{/if}}
-      {{else}}
-        <h2>You don't have any items in your pantry.</h2>
-        <small> Once you buy something it will show up here.</small>
-      {{/each}}
-    {{/paper-list}}
 
-  {{/card.content}}
 
+		{{/card.actions}}
+
+		{{paper-divider}}
+
+		{{#paper-list}}
+			{{#each limitedSortedItems as |item|}}
+				{{#if checkAll}}
+					{{purchased-list-item purchasedItem = item itemChecked = "itemChecked"
+					                     deleteItem = "deleteItem" purchaseItem = "purchaseItem" checkAll = true}}
+				{{else}}
+					{{#if deleteButton}}
+						{{purchased-list-item purchasedItem = item itemChecked = "itemChecked"
+						                     deleteItem = "deleteItem" purchaseItem = "purchaseItem" checkAll = false}}
+					{{else}}
+						{{dashboard-pantry-list-item purchasedItem = item}}
+					{{/if}}
+
+				{{/if}}
+			{{else}}
+				<h2>You don't have any items in your shopping list</h2>
+				<small> Once you add something it will show up here.</small>
+			{{/each}}
+
+
+		{{/paper-list}}
+
+	{{/card.content}}
+
+
+	{{#if showingAreYouSureMenu}}
+		{{#paper-dialog class="flex-50" onClose=(action "deleteDialogAction" "cancel") parent="#shopping-list-comp"
+		                origin=dialogOrigin clickOutsideToClose=true}}
+			<form>
+				{{#paper-toolbar}}
+					{{#paper-toolbar-tools}}
+						<h2>Are you sure you want to delete these items?</h2>
+						<span class="flex"></span>
+						{{#paper-button iconButton=true onClick=(action "deleteDialogAction" "cancel")}}{{paper-icon
+								icon="close"}}{{/paper-button}}
+					{{/paper-toolbar-tools}}
+				{{/paper-toolbar}}
+
+				{{#paper-dialog-content}}
+					<p>
+						Click delete to continue deleting the selected items. You cannot undo this action.
+					</p>
+				{{/paper-dialog-content}}
+
+				{{#paper-dialog-actions class="layout-row"}}
+					<span class="flex"></span>
+					{{#paper-button onClick=(action "deleteDialogAction" "cancel")}}Cancel{{/paper-button}}
+					{{#paper-button onClick=(action "deleteDialogAction" "ok")}}Delete{{/paper-button}}
+				{{/paper-dialog-actions}}
+			</form>
+		{{/paper-dialog}}
+	{{/if}}
 
 {{/paper-card}}
 

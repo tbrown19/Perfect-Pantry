@@ -120,7 +120,6 @@ export default Ember.Component.extend({
 
 			if (this.get('checkAll') === true) {
 				this.checkAllItems(true);
-				console.log("hello");
 			}
 			else {
 				this.unCheckAllItems();

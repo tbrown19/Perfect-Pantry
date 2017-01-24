@@ -1,0 +1,24 @@
+{{#paper-card as |card|}}
+  {{#card.title as |title|}}
+    {{#title.text as |text|}}
+      {{#text.headline}}
+        {{fa-icon 'users'}} {{chartHead}}
+      {{/text.headline}}
+    {{/title.text}}
+    {{#card.actions class = "dashboard-card-buttons"}}
+	    {{graph-menu-dropdown}}
+    {{/card.actions}}
+  {{/card.title}}
+  {{paper-divider}}
+  {{#card.content}}
+    {{resolveChartData}}
+    {{#if chartData}}
+      <div class = "chartDiv">
+        {{ember-chart type='line' data=graphOptions options=CHARTOPTIONS width=200 height=400}}
+      </div>
+    {{else}}
+      Data Loading...
+    {{/if}}
+
+  {{/card.content}}
+{{/paper-card}}

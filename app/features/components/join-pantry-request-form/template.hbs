@@ -1,40 +1,26 @@
-<form class="new-item-form" {{action 'sendPantryRequest' pantryEmail on="submit"}}>
-  <div class="input-group">
-    <div class="row">
-      Enter the email of the pantry you wish to join.
-      <div class="input-field inline">
-        {{input type="email" class='form-control' id = "pantryRequest"  value=pantryEmail placeholder="Email"}}
+{{#paper-card as |card|}}
+	{{#paper-toolbar}}
+		{{#paper-toolbar-tools}}
+			<h2>Want to join a pantry?</h2>
+		{{/paper-toolbar-tools}}
+	{{/paper-toolbar}}
+	{{#card.title as |title|}}
+		{{#title.text as |text|}}
+			{{#text.headline}}Enter the email of a member in the pantry you wish to join.{{/text.headline}}
+		{{/title.text}}
+	{{/card.title}}
+	{{#card.content}}
+		{{#paper-form onSubmit=(action "sendPantryRequest" pantryEmail) as |form|}}
+			<div class="layout-row">
+				<div class="layout-column flex-50">
 
-      </div>
-    </div>
-  </div>
-</form>
+					{{form.input icon="email" type="email" label="Email" value=pantryEmail onChange=(action (mut pantryEmail)) required=true}}
+				</div>
 
-
-
-<div class="layout-row layout-xs-column">
-  <div class="layout-column flex-xs flex-gt-xs-100">
-    {{#paper-card as |card|}}
-      {{#card.title as |title|}}
-        {{#title.text as |text|}}
-          {{#text.headline}}Want to join a pantry?{{/text.headline}}
-          {{#text.subhead}}Enter the email of a member in the pantry you wish to join.{{/text.subhead}}
-        {{/title.text}}
-      {{/card.title}}
-      {{#card.content}}
-        {{#paper-form onSubmit=(action "sendPantryRequest" pantryEmail) as |form|}}
-          <div class="layout-row">
-            <div class="layout-column flex-50">
-
-              {{form.input icon="email" type="email" label="Email" value=pantryEmail onChange=(action (mut pantryEmail)) required=true}}
-            </div>
-
-          </div>
-          <div class="layout-row">
-            {{#form.submit-button disabled=form.isInvalid raised=true primary=true}}Submit{{/form.submit-button}}
-          </div>
-        {{/paper-form}}
-      {{/card.content}}
-    {{/paper-card}}
-  </div>
-</div>
+			</div>
+			<div class="layout-row">
+				{{#form.submit-button disabled=form.isInvalid raised=true primary=true}}Submit{{/form.submit-button}}
+			</div>
+		{{/paper-form}}
+	{{/card.content}}
+{{/paper-card}}

@@ -1,0 +1,11 @@
+{{#paper-card as |card|}}
+	{{#card.title as |title|}}
+		{{#title.text as |text|}}
+			{{#text.headline}}Current expense splits for the users in your pantry{{/text.headline}}
+			{{#text.subhead}}The suggested payments owed to each person are shown below that user.{{/text.subhead}}
+		{{/title.text}}
+	{{/card.title}}
+	{{#card.content}}
+		{{expenses/user-expenses user = model.user users = model.allUsers otherUsers = model.otherUsers}}
+	{{/card.content}}
+{{/paper-card}}
