@@ -1,8 +1,6 @@
-@import 'https://fonts.googleapis.com/css?family=Archivo+Black';
 @import url('https://fonts.googleapis.com/css?family=Raleway:600');
-@import url('https://fonts.googleapis.com/css?family=PT+Sans:700i');
 @import url('https://fonts.googleapis.com/css?family=Ubuntu:400,700');
-@import url('https://fonts.googleapis.com/css?family=Raleway');
+
 // Import the rest of ember-paper.
 @import "ember-paper";
 @import "pod-styles";
@@ -27,6 +25,7 @@ html, body {
   margin: 0;
   height: 100%;
 }
+
 
 
 
@@ -234,10 +233,6 @@ textarea:focus, input:focus {
   font-size: 1.2em;
 }
 
-.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
-  background-color: $primary-color;
-  font-size: 1.2em;
-}
 
 .buy-item-button {
 

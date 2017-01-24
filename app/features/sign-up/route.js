@@ -10,14 +10,15 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    signUp(firstName,email,password) {
+    signUpRequest(email, firstName, lastName, password) {
       const auth = this.get('firebaseApp').auth();
       auth.createUserWithEmailAndPassword(email, password).
       then((userResponse) => {
         const user = this.store.createRecord('user', {
-          firstName: firstName,
           email: userResponse.email,
-        });
+					firstName: firstName,
+					lastName: lastName,
+				});
         // First we save the user, then we can go about updating their pantry and shopping list.
         user.save().then(() => {
           //Create a new empty pantry

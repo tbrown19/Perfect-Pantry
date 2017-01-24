@@ -1,0 +1,45 @@
+{{#paper-card as |card|}}
+	{{#paper-toolbar}}
+		{{#paper-toolbar-tools}}
+			<h2>Sign Up</h2>
+		{{/paper-toolbar-tools}}
+	{{/paper-toolbar}}
+	{{#card.title as |title|}}
+	{{/card.title}}
+	{{#card.content}}
+		{{#paper-form onSubmit=(action "signUpRequest") as |form|}}
+
+			<div class="layout-row">
+				<div class="layout-column flex-50">
+					{{form.input class = "sign-up-input" icon="email" type="email"
+					             label="Email"value=userEmail
+					             onChange=(action (mut userEmail)) required=true
+					             customValidations=emailValidation}}
+				</div>
+			</div>
+
+			<div class="layout-row">
+				<div class="layout-column flex-50">
+					{{form.input icon ="lock" type="password" label="Password" value=userPassword onChange=(action (mut userPassword)) required=true}}
+				</div>
+			</div>
+
+			<div class="layout-row">
+				<div class="layout-column flex-50">
+					{{form.input icon="person" type="text" label="First Name" value=userFirstName onChange=(action (mut userFirstName)) required=true}}
+				</div>
+			</div>
+			<div class="layout-row">
+				<div class="layout-column flex-50">
+					{{form.input icon ="person" type="text" label="Last Name" value=userLastName onChange=(action (mut userLastName)) required=true}}
+				</div>
+			</div>
+
+			<div class="layout-row">
+				<div class="layout-column flex-100">
+					{{#form.submit-button disabled=form.isInvalid raised=true primary=true}}Sign Up{{/form.submit-button}}
+				</div>
+			</div>
+		{{/paper-form}}
+	{{/card.content}}
+{{/paper-card}}

@@ -6,7 +6,7 @@ export default Ember.Component.extend({
 	scrollPage: function () {
 		var sy = this.get('scrollY')(),
 			classie = window.classie,
-			header = document.querySelector('.navbar-default'),
+			header = document.querySelector('.navbar-custom'),
 			changeHeaderOn = 200;
 
 		if (sy >= changeHeaderOn) {

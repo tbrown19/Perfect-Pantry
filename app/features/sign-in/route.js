@@ -10,7 +10,7 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    signIn(email,password) {
+		signInRequest(email,password) {
       //var controller = this.get('controller');
       //var email = controller.get('email');
       //var password = controller.get('password');

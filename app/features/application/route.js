@@ -1,11 +1,14 @@
 import Ember from 'ember';
+import FirebaseAdapter from 'emberfire/adapters/firebase';
 
 export default Ember.Route.extend({
   session: Ember.inject.service('session'),
   authed: false,
   landingPage: false,
+	firebase: Ember.inject.service(),
 
   beforeModel: function () {
+    console.log("are we in this crap");
     return this.get('session').fetch().then(() => {
       //Get the the url the user is coming from
       //This is needed so if the user refreshes it redirects them back the page they were on.
@@ -32,8 +35,8 @@ export default Ember.Route.extend({
 
   model: function () {
     //Make sure the user is authenticated before we attempt to return the model
-    if (this.get('authed')) {
-
+    if (this.get('session').get('isAuthenticated')) {
+      console.log("are we here?");
       const userEmail = this.get('session').get('currentUser.email');
 
       //find the user based of their email and then return the model related to them
@@ -61,12 +64,14 @@ export default Ember.Route.extend({
   actions: {
 
     signOut() {
-      this.get("session").close();
-      this.transitionTo('/');
+			return this.get("session").close().then(() => {
+				this.transitionTo('index');
+			});
+
     },
 
     accessDenied: function () {
-      return this.transitionTo('landing-page');
+      return this.transitionTo('index');
     },
 
 

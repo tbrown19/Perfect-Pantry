@@ -14,18 +14,18 @@ Router.map(function() {
   this.authenticatedRoute('shopping-list');
   this.authenticatedRoute('expenses');
 
-  this.route('pantry', function() {
-    this.route('settings');
-    this.route('group-shopping-list');
-    this.route('current-items');
+  this.authenticatedRoute('pantry', function() {
+    this.authenticatedRoute('settings');
+    this.authenticatedRoute('group-shopping-list');
+    this.authenticatedRoute('current-items');
   });
 
-  this.route('expenses', function() {
-    this.route('expense-splitting');
-    this.route('visualizations');
-    this.route('overview');
+  this.authenticatedRoute('expenses', function() {
+    this.authenticatedRoute('expense-splitting');
+    this.authenticatedRoute('visualizations');
+    this.authenticatedRoute('overview');
   });
-  this.route('landing-page');
+
 });
 
 export default Router;

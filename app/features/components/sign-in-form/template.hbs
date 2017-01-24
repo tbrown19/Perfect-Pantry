@@ -1,6 +1,40 @@
-<div class="test">
-	derp
-</div>
-<div class="test2">
-	derp herp
-</div>
+{{#paper-card as |card|}}
+	{{#paper-toolbar}}
+		{{#paper-toolbar-tools}}
+			<h2>Sign In</h2>
+		{{/paper-toolbar-tools}}
+	{{/paper-toolbar}}
+	{{#card.title as |title|}}
+	{{/card.title}}
+	{{#card.content}}
+		{{#paper-form onSubmit=(action "signInRequest") as |form|}}
+
+			<div class="layout-row">
+				<div class="layout-column flex-50">
+					{{form.input class = "sign-up-input" icon="email" type="email"
+					             label="Email"value=userEmail
+					             onChange=(action (mut userEmail)) required=true}}
+				</div>
+			</div>
+
+			<div class="layout-row">
+				<div class="layout-column flex-50">
+					{{form.input icon ="lock" type="password" label="Password" value=userPassword onChange=(action (mut userPassword)) required=true}}
+				</div>
+			</div>
+
+			<div class="layout-row">
+				<div class="layout-column flex-100">
+					{{#if session.isWorking}}
+						{{#form.submit-button disabled=true raised=true primary=true}}
+							{{fa-icon 'spinner' spin=true}} Signing in...
+						{{/form.submit-button}}
+					{{else}}
+						{{#form.submit-button disabled=form.isInvalid raised=true primary=true}}Sign In{{/form.submit-button}}
+					{{/if}}
+
+				</div>
+			</div>
+		{{/paper-form}}
+	{{/card.content}}
+{{/paper-card}}

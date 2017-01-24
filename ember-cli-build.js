@@ -4,25 +4,7 @@ var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
-    // Add options here
-    fingerprint: {
-         prepend: 'https://perfect-pantry.firebaseapp.com'
-       },
-		SRI: {
-			enabled: false
-		},
-		fingerprint: {
-			enabled: false
-		},
-		minifyJS: {
-			enabled: false
-		},
-		minifyCSS: {
-			enabled: true
-		},
-		sourcemaps: {
-			enabled: false
-		},
+
   });
 
   // Use `app.import` to add additional libraries to the generated
