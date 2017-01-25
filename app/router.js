@@ -9,6 +9,8 @@ const Router = Ember.Router.extend({
 Router.map(function() {
   this.route('sign-up');
   this.route('sign-in');
+	this.route('landing-page', { path: '/' });
+
   this.authenticatedRoute('dashboard');
   //this.authenticatedRoute('pantry');
   this.authenticatedRoute('shopping-list');
