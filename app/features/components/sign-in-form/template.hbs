@@ -8,9 +8,8 @@
 	{{/card.title}}
 	{{#card.content}}
 		{{#paper-form onSubmit=(action "signInRequest") as |form|}}
-
 			<div class="layout-row">
-				<div class="layout-column flex-50">
+				<div class="layout-column flex-gt-sm-50 flex-100">
 					{{form.input class = "sign-up-input" icon="email" type="email"
 					             label="Email"value=userEmail
 					             onChange=(action (mut userEmail)) required=true}}
@@ -18,7 +17,7 @@
 			</div>
 
 			<div class="layout-row">
-				<div class="layout-column flex-50">
+				<div class="layout-column flex-gt-sm-50 flex-100">
 					{{form.input icon ="lock" type="password" label="Password" value=userPassword onChange=(action (mut userPassword)) required=true}}
 				</div>
 			</div>

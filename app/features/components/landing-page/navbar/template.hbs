@@ -1,38 +1,27 @@
-<!-- Navigation -->
-<nav class="navbar navbar-custom navbar-fixed-top">
-	<div class="container">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header page-scroll">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand page-scroll" href="#page-top">Perfect Pantry</a>
-		</div>
 
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav navbar-right">
-				<li class="hidden">
-					<a href="#page-top"></a>
-				</li>
-				<li>
-					<a class="page-scroll" href="#features">Features</a>
-				</li>
-				<li>
-					<a class="page-scroll" href="#about">About</a>
-				</li>
-				<li>
-					{{#link-to "sign-up"}}Sign Up{{/link-to}}
-				</li>
-				<li>
-					{{#link-to "sign-in"}}Sign In{{/link-to}}
-				</li>
-			</ul>
-		</div>
-		<!-- /.navbar-collapse -->
+{{#bs-navbar class="navbar navbar-custom navbar-fixed-top" }}
+	<div class="container">
+
+		<div class="navbar-header page-scroll">
+		{{#bs-navbar-toggle}}
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		{{/bs-navbar-toggle}}
+		<a class="navbar-brand " id = "nav-branding">Perfect Pantry</a>
 	</div>
-	<!-- /.container-fluid -->
-</nav>
+
+	{{#bs-navbar-content}}
+		{{#bs-navbar-nav class = "nav navbar-nav navbar-right"}}
+			{{#bs-nav-item class = "hidden"}}<a href="#page-top"></a>{{/bs-nav-item}}
+			{{#bs-nav-item}}<a class="page-scroll" href="#features">Features</a>{{/bs-nav-item}}
+			{{#bs-nav-item}}<a class="page-scroll" href="#about">About</a>{{/bs-nav-item}}
+			{{#bs-nav-item}}{{#link-to "sign-up"}}Sign Up{{/link-to}}{{/bs-nav-item}}
+			{{#bs-nav-item}}{{#link-to "sign-in"}}Sign In{{/link-to}}{{/bs-nav-item}}
+
+
+		{{/bs-navbar-nav}}
+	{{/bs-navbar-content}}
+	</div>
+{{/bs-navbar}}

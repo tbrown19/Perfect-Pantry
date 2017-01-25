@@ -12,8 +12,7 @@ export default Ember.Route.extend({
   actions: {
     signUpRequest(email, firstName, lastName, password) {
       const auth = this.get('firebaseApp').auth();
-      auth.createUserWithEmailAndPassword(email, password).
-      then((userResponse) => {
+      auth.createUserWithEmailAndPassword(email, password).then((userResponse) => {
         const user = this.store.createRecord('user', {
           email: userResponse.email,
 					firstName: firstName,
@@ -41,7 +40,9 @@ export default Ember.Route.extend({
             this.transitionTo('sign-in');
           });
         });
-      });
+      }).catch(function (err) {
+				console.log(err);
+			});
     }
   }
 });

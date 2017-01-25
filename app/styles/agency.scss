@@ -98,14 +98,14 @@ h1, h2, h3, h4, h5, h6 {
         border-color: fade-out(white, .02);
     }
     .navbar-toggle {
-        background-color: $theme-primary;
+        background-color: white;
         border-color: $theme-primary;
         @include heading-font;
         color: white;
         font-size: 12px;
         &:hover,
         &:focus {
-            background-color: $theme-primary;
+            background-color: white;
         }
     }
     .nav {
