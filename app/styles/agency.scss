@@ -206,7 +206,7 @@ header {
         }
         .intro-heading {
             @include heading-font;
-            font-weight: 700;
+            font-weight: 400;
             font-size: 22px;
             line-height: 22px;
             margin-bottom: 25px;
@@ -228,7 +228,7 @@ header {
             }
             .intro-heading {
                 @include heading-font;
-                font-weight: 700;
+                font-weight: 400;
                 font-size: 50px;
                 line-height: 50px;
                 margin-bottom: 50px;

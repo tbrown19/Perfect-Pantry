@@ -85,3 +85,14 @@ $divider-color: #BDBDBD;
   }
 
 }
+
+@media (min-width: 760px) {
+  #nav-branding{
+    font-size: 2em;
+  }
+
+  .navbar-default .navbar-nav > li > a {
+    font-size: 1.25em;
+  }
+
+}

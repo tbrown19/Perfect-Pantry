@@ -2,6 +2,7 @@
 
 // Bootstrap Button Variant
 @import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
 
 @mixin button-variant($color, $background, $border) {
   color: $color;
@@ -72,7 +73,7 @@
 }
 
 @mixin script-font {
-  font-family: 'PT Sans', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 @mixin body-font {

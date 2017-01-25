@@ -2,13 +2,12 @@ import Ember from 'ember';
 import FirebaseAdapter from 'emberfire/adapters/firebase';
 
 export default Ember.Route.extend({
-  session: Ember.inject.service('session'),
+	derp: false,
+	session: Ember.inject.service('session'),
   authed: false,
-  landingPage: false,
-	firebase: Ember.inject.service(),
+  landingPage: true,
 
   beforeModel: function () {
-    console.log("are we in this crap");
     return this.get('session').fetch().then(() => {
       //Get the the url the user is coming from
       //This is needed so if the user refreshes it redirects them back the page they were on.
@@ -24,16 +23,18 @@ export default Ember.Route.extend({
 
       }
 
-      //Get just the end item which is the current pageas
+      //Get just the end item which is the current pages
       this.set('authed', true);
       this.transitionTo(redirect);
 
-    }, function () {
-      console.log('no session to fetch');
+    }, () => {
+
+			console.log('no session to fetch');
     });
   },
 
   model: function () {
+
     //Make sure the user is authenticated before we attempt to return the model
     if (this.get('session').get('isAuthenticated')) {
       console.log("are we here?");
@@ -54,21 +55,17 @@ export default Ember.Route.extend({
         });
       });
     }
-    else{
-			this.set('landingPage', true);
-			console.log("test");
-		}
 
   },
 
   actions: {
 
     signOut() {
-			return this.get("session").close().then(() => {
-				this.transitionTo('index');
-			});
-
-    },
+			//Reload the page first so that all the models unload since the user session has ended, they won't repopulate.
+      //Then we can transition to index. otherwise it leads to weird permission errors.
+			window.location.reload(true);
+			this.transitionTo('index');
+		},
 
     accessDenied: function () {
       return this.transitionTo('index');

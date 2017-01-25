@@ -25,43 +25,46 @@ export default Ember.Component.extend({
 	},
 
 	didInsertElement: function () {
-		var didScroll = this.get('didScroll');
+		if (!(this.get('isDestroyed') || this.get('isDestroying'))) {
+			var didScroll = this.get('didScroll') || false;
 
-		/*jshint unused:false*/
-		window.addEventListener('scroll', function (event) {
-			if (!didScroll) {
-				this.set('didScroll', true);
-				setTimeout(this.get('scrollPage').bind(this), 150);
-			}
-		}.bind(this), false);
+			/*jshint unused:false*/
+			window.addEventListener('scroll', function (event) {
+				if (!didScroll) {
+					this.set('didScroll', true);
+					setTimeout(this.get('scrollPage').bind(this), 150);
+				}
+			}.bind(this), false);
 
 
-		/*!
-		 * Start Bootstrap - Agency Bootstrap Theme (http://startbootstrap.com)
-		 * Code licensed under the Apache License v2.0.
-		 * For details, see http://www.apache.org/licenses/LICENSE-2.0.
-		 */
+			/*!
+			 * Start Bootstrap - Agency Bootstrap Theme (http://startbootstrap.com)
+			 * Code licensed under the Apache License v2.0.
+			 * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+			 */
 
-		// jQuery for page scrolling feature - requires jQuery Easing plugin
-		$(function () {
-			$('a.page-scroll').bind('click', function (event) {
-				var $anchor = $(this);
-				$('html, body').stop().animate({
-					scrollTop: $($anchor.attr('href')).offset().top
-				}, 1000, 'easeInOutExpo');
-				event.preventDefault();
+			// jQuery for page scrolling feature - requires jQuery Easing plugin
+			$(function () {
+				$('a.page-scroll').bind('click', function (event) {
+					var $anchor = $(this);
+					$('html, body').stop().animate({
+						scrollTop: $($anchor.attr('href')).offset().top
+					}, 1000, 'easeInOutExpo');
+					event.preventDefault();
+				});
 			});
-		});
 
-		// Highlight the top nav as scrolling occurs
-		$('body').scrollspy({
-			target: '.navbar-fixed-top'
-		});
+			// Highlight the top nav as scrolling occurs
+			$('body').scrollspy({
+				target: '.navbar-fixed-top'
+			});
 
-		// Closes the Responsive Menu on Menu Item Click
-		$('.navbar-collapse ul li a').click(function () {
-			$('.navbar-toggle:visible').click();
-		});
+			// Closes the Responsive Menu on Menu Item Click
+			$('.navbar-collapse ul li a').click(function () {
+				$('.navbar-toggle:visible').click();
+			});
+		}
+
 
 	}
 });

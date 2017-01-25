@@ -1,11 +1,10 @@
 {{#if session.isAuthenticated}}
-	{{primary-nav-bar}}
+	{{primary-nav-bar signOut = "signOut"}}
 	<div class="layout-row layout-xs-column layout-align-center-center">
 		<div class="flex-90 flex-gt-md-80">
-			{{outlet}}
+			{{liquid-outlet}}
 		</div>
 	</div>
 {{else}}
 	{{outlet}}
 {{/if}}
-

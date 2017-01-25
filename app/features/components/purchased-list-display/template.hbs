@@ -1,6 +1,6 @@
 
-{{#paper-card id = "purchased-list-comp" as |card|}}
-	{{#card.title id = "purchased-list-header" as |title|}}
+{{#paper-card class = "purchased-list-comp" as |card|}}
+	{{#card.title class = "purchased-list-header" as |title|}}
 		{{#title.text  as |text|}}
 			{{#text.headline}}
 				{{fa-icon 'cutlery'}} Pantry
@@ -104,7 +104,7 @@
 
 
 	{{#if showingAreYouSureMenu}}
-		{{#paper-dialog class="flex-50" onClose=(action "deleteDialogAction" "cancel") parent="#shopping-list-comp"
+		{{#paper-dialog class="flex-50" onClose=(action "deleteDialogAction" "cancel") parent=".purchase-list-comp"
 		                origin=dialogOrigin clickOutsideToClose=true}}
 			<form>
 				{{#paper-toolbar}}
