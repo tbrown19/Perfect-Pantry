@@ -1,0 +1,42 @@
+{{#paper-checkbox name="itemCheckbox" class = "purple shopping-list-checkbox" value=isCheckedComputed
+                  onChange=(action (mut isChecked))}}
+
+  <div class="shopping-list-information">
+    <strong>
+      {{shoppingItem.quantity}}
+    </strong>
+
+    {{shoppingItem.name}}
+
+    <p class="shopping-item-subtext">
+      <strong>
+        Added By:
+      </strong>
+      {{shoppingItem.shoppingList.user.firstName}}
+      <strong>
+        Added On:
+      </strong>
+      {{shoppingItem.formattedDate}}
+    </p>
+
+  </div>
+
+{{/paper-checkbox}}
+<div class="pull-right">
+
+  {{#paper-button onClick=(action "purchaseItem")}}
+    <span class="remove-item-button">{{fa-icon 'plus'}} Buy</span>
+  {{/paper-button}}
+
+  {{#paper-button onClick=(action "deleteItem")}}
+    <span class="remove-item-button">{{fa-icon 'trash-o'}} Remove</span>
+  {{/paper-button}}
+
+
+
+</div>
+{{paper-divider}}
+
+
+
+

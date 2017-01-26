@@ -1,6 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  loading: true,
+
+	beforeModel() {
+		console.log("loading the model");
+	},
 
   model() {
     const application = this.modelFor('application');
@@ -12,5 +17,15 @@ export default Ember.Route.extend({
       purchasedItems: pantry.get('purchasedItems')
     });
 
-  }
+  },
+
+	afterModel() {
+    this.set('loading', false);
+	},
+
+
+	actions: {
+
+	}
+
 });

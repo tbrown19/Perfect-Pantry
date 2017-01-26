@@ -8,7 +8,7 @@ export default DS.Model.extend({
   quantity: DS.attr('number'),
   addedDate: DS.attr('String'),
   formattedDate: DS.attr('String'),
-  tags: DS.attr(),
+  tags: DS.hasMany('tags'),
 
 
 });

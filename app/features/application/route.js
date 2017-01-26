@@ -4,7 +4,9 @@ import FirebaseAdapter from 'emberfire/adapters/firebase';
 export default Ember.Route.extend({
 	derp: false,
 	session: Ember.inject.service('session'),
-  authed: false,
+	firebaseApp: Ember.inject.service(),
+
+	authed: false,
   landingPage: true,
 
   beforeModel: function () {
@@ -37,7 +39,6 @@ export default Ember.Route.extend({
 
     //Make sure the user is authenticated before we attempt to return the model
     if (this.get('session').get('isAuthenticated')) {
-      console.log("are we here?");
       const userEmail = this.get('session').get('currentUser.email');
 
       //find the user based of their email and then return the model related to them
@@ -64,11 +65,11 @@ export default Ember.Route.extend({
 			//Reload the page first so that all the models unload since the user session has ended, they won't repopulate.
       //Then we can transition to index. otherwise it leads to weird permission errors.
 			window.location.reload(true);
-			this.transitionTo('index');
+			this.transitionTo('landing-page');
 		},
 
     accessDenied: function () {
-      return this.transitionTo('index');
+      return this.transitionTo('landing-page');
     },
 
 

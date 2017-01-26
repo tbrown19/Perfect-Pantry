@@ -1,12 +1,12 @@
 <div class="layout-row layout-xs-column">
-  <div class="layout-column flex-xs flex-gt-xs-100">
-    {{shopping-list-add-item addItem='addNewItems'}}
+  <div class="layout-column flex-xs-100 flex-50 flex-gt-sm-40 flex-gt-md-30">
+    {{shopping-list/add-item addItem='addNewItems'}}
   </div>
 </div>
 
 <div class="layout-row layout-xs-column">
   <div class="layout-column flex-xs flex-gt-xs-100">
-    {{shopping-list-display shoppingList=model items = model.shoppingList.shoppingListItems
+    {{shopping-list/display shoppingList=model items = model.shoppingList.shoppingListItems
                             purchaseItem = "purchaseItem"
                             deleteItem = "deleteItem"
                             limit = false

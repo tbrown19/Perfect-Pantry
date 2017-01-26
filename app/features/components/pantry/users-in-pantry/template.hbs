@@ -1,0 +1,28 @@
+<div class="layout-row layout-xs-column">
+	<div class="layout-column flex-xs flex-gt-xs-100">
+		{{#paper-card as |card|}}
+			{{#card.title as |title|}}
+				{{#title.text as |text|}}
+					{{#text.headline}}Members of your pantry:{{/text.headline}}
+				{{/title.text}}
+			{{/card.title}}
+			{{paper-divider}}
+			{{#card.content}}
+				{{#paper-list}}
+					{{#each users as |user|}}
+						{{#paper-item class="md-2-line"}}
+							{{paper-icon "person outline" class="md-avatar-icon"}}
+							<div class="md-list-item-text">
+								<h3>{{user.firstName}}</h3>
+								<p>{{user.email}}</p>
+							</div>
+						{{/paper-item}}
+
+					{{/each}}
+				{{/paper-list}}
+			{{/card.content}}
+		{{/paper-card}}
+	</div>
+</div>
+
+

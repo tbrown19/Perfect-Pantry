@@ -48,10 +48,7 @@ export default Ember.Route.extend({
           pantry.save();
           shoppingList.save();
         });
-
       });
-
-      this.refresh();
 
 
     },

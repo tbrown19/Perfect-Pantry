@@ -15,6 +15,7 @@ module.exports = function(environment) {
       storageBucket: "perfect-pantry.appspot.com",
       messagingSenderId: "385354777639"
     },
+
     torii: {
       sessionServiceName: 'session'
     },

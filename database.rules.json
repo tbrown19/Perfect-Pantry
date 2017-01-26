@@ -1,19 +1,50 @@
 {
-   "rules":{
-      ".read":"auth != null",
-      ".write":"auth != null",
-      "users":{
-         ".indexOn":[
-            "email"
-         ]
-      },
-      "shoppingListItems":{
-         "$shoppingListItem":{
-            "name":{
-               ".validate":"newData.val().length > 2"
-            },
-            ".validate":"newData.hasChildren(['name','shoppingList'])"
-         }
+  "rules": {
+    ".read": "auth != null",
+    "users": {
+      ".read": "auth != null",
+      ".indexOn": [
+        "email"
+      ],
+      "$user": {
+        ".write": "!data.exists() || auth.uid === $user"
       }
-   }
+    },
+    "pantries": {
+      ".read": "auth != null",
+      "$pantry": {
+        ".write": "!data.exists() ||  auth != null"
+      }
+    },
+    "shoppingLists": {
+      ".read": "auth != null",
+      "$shoppingList": {
+        ".write": "!data.exists() ||  auth != null"
+      },
+      "purchasedLists": {
+        ".read": "auth != null",
+        ".write": "!data.exists() ||  auth != null",
+
+        "$purchasedList": {
+          ".write": "!data.exists() ||  auth != null"
+        }
+      },
+      "purchasedListItems": {
+        ".read": "auth !== null",
+        "$purchasedListItem": {
+          ".write": "!data.exists() ||  auth != null"
+        }
+      },
+      "shoppingListItems": {
+        ".read": "auth != null",
+        "$shoppingListItem": {
+          ".write": "!data.exists() ||  auth != null",
+          "name": {
+            ".validate": "newData.val().length > 2"
+          },
+          ".validate": "newData.hasChildren(['name','shoppingList'])"
+        }
+      }
+    }
+  }
 }

@@ -1,0 +1,56 @@
+
+md-input-container.md-default-theme .md-input, md-input-container .md-input{
+  border-color: dimgray;
+}
+
+md-input-container.md-default-theme.md-input-invalid .md-input, md-input-container.md-input-invalid .md-input{
+  border-color: red;
+}
+
+a.md-button.md-default-theme.md-raised, a.md-button.md-raised, .md-button.md-default-theme.md-raised, .md-button.md-raised {
+  background-color: #3F51B5;
+  color: white;
+  &:hover{
+    background-color: darken(#3F51B5, 5%);
+  }
+}
+
+#collapse-button{
+  background-color: transparent;
+  border: none;
+}
+
+#toolbar{
+  background-color: #3949AB;
+}
+
+#add-new-item i {
+  color: $primary-color-text;
+}
+
+#add-new-item:disabled {
+  background-color: $primary-color-light;
+}
+
+#qty-input{
+  max-width: 125px;
+}
+
+@media (min-width: 768px) {
+  .input-box{
+    font-size: 1.5em;
+    margin-right: 10px;
+  }
+
+}
+
+@media (min-width: 980px) {
+  #nav-branding{
+    font-size: 2.5em;
+  }
+
+  .navbar-default .navbar-nav > li > a {
+    font-size: 1.475em;
+  }
+
+}

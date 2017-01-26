@@ -6,6 +6,19 @@
 		{{/title.text}}
 	{{/card.title}}
 	{{#card.content}}
+		<div>
+			<div class="testHead">
+				<h1> this is a test heading</h1>
+			</div>
+
+			<div class="testSubHead">
+				<h5> this isnt as big. this isnt as big. this isnt as big. this isnt as big. this isnt as big.this isnt as big.this isnt as big.</h5>
+			</div>
+		</div>
+
+
+
+
 		{{expenses/user-expenses user = model.user users = model.allUsers otherUsers = model.otherUsers}}
 	{{/card.content}}
 {{/paper-card}}

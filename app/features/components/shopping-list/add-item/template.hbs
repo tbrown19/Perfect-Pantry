@@ -1,0 +1,39 @@
+{{#paper-card as |card|}}
+	{{#paper-toolbar id = "toolbar"}}
+		{{#paper-toolbar-tools}}
+			<h2>Add a new item</h2>
+			<span class="flex"></span>
+			<button id="collapse-button" data-toggle="collapse" data-target="#card-content" {{action 'collapseButton'}}>{{paper-icon currentIcon}}</button>
+		{{/paper-toolbar-tools}}
+	{{/paper-toolbar}}
+
+	<div id="card-content" class="collapse in">
+		{{#card.content}}
+			{{#paper-form onSubmit=(action "addNewItems") as |form|}}
+				<div class="layout-row layout-xs-column">
+					<div id="qty-input" class="flex-xs-100 flex-gt-md-35">
+						{{form.input class="input-box" type="number" label="Quantity" default = "1"
+						             value=quantity onChange=(action (mut quantity)) min=1 max=100 required=true}}
+					</div>
+					<div class="flex-70 flex-xs-100">
+						{{form.input class = "input-box" label="Item Name" value=itemName onChange=(action (mut itemName)) minlength=3}}
+					</div>
+
+				</div>
+
+				<div class="layout-row">
+					<div class="layout-column flex-100">
+						{{#form.submit-button id = "add-new-item" raised=true primary=false disabled=form.isInvalid}}
+							Add Item
+						{{/form.submit-button}}
+					</div>
+				</div>
+			{{/paper-form}}
+		{{/card.content}}
+	</div>
+{{/paper-card}}
+
+
+<div id="demo" class="collapse">
+	Lorem ipsum dolor text....
+</div>

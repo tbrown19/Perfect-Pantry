@@ -1,96 +1,23 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:600');
-@import url('https://fonts.googleapis.com/css?family=Ubuntu:400,700');
+//Import fonts
 
-// Import the rest of ember-paper.
+//Import style sheets from modules and other assorted style sheet helper files.
 @import "ember-paper";
+
+@import 'partials/variables';
+@import 'mixins/all';
+@import 'partials/typography';
+
 @import "pod-styles";
-@import 'agency';
-@import 'mixins';
-@import 'variables';
 
-$primary-background-color: #f3f3f3;
-$primary-color-dark: #303F9F;
-$primary-color: #3F51B5;
-$header-color: #3949AB;
-$primary-color-light: #C5CAE9;
-$primary-color-text: #FFFFFF;
-$accent-color: #536DFE;
-$primary-text-color: #212121;
-$secondary-text-color: #757575;
-$divider-color: #BDBDBD;
 
-$primary-font: 'Ubuntu', sans-serif;
 
 html, body {
+  font-family:$primary-text-font;
   margin: 0;
   height: 100%;
 }
 
-
-
-
-body {
-
-  background-color: $primary-background-color;
-}
-
-body > .ember-view {
-  background-color: $primary-background-color;
-}
-
-.page-header {
-  color: black;
-  padding-bottom: 0px;
-  border-bottom: 3px solid black;
-}
-
-.page-header > h1 {
-  font-weight: bold;
-}
-
-.dashboard-list-group {
-  font-size: 1em;
-  padding: 2.5px;
-}
-
-.shopping-list-add-btn {
-  border-radius: 10px;
-}
-
-.new-item-form > .input-group {
-  margin: 0 auto;
-  min-width: 90%;
-}
-
-#shopping-list-main {
-  font-size: 1.3em;
-}
-
-#shopping-list-main > .list-group-item {
-  border: 0px;
-}
-
-#shopping-list-main > .list-group-item > input {
-  margin-right: 10px;
-}
-
-.dashboard-col {
-  background-color: white;
-}
-
-.settings-drop-down {
-  color: $primary-color-text;
-}
-
-
-.remove_button_css {
-  outline: none;
-  padding: 5px;
-  border: 0px;
-  box-sizing: none;
-  background-color: transparent;
-}
-
+//This can be removed after implementing a new pantry join request notifcation
 .list-item-dash {
   margin-top: 15px;
   font-size: 1.25em;
@@ -101,68 +28,14 @@ body > .ember-view {
   border-bottom: 1px solid #ddd;
 }
 
+//This can be removed after implementing a new pantry join request notifcation
 .list-item-dash:last-child {
   border-bottom: 0px;
 }
 
-textarea:focus, input:focus {
-  outline: none;
-}
-
-.btn:focus {
-  color: white;
-}
-
-@media (min-width: 768px) {
-  .hide-the-button {
-    display: none;
-  }
-}
-
-@media (max-width: 768px) {
-  .hide-the-button {
-    background-color: transparent;
-  }
-}
-
-.form-inline {
-  padding: 10px;
-}
-
-.add-new-shopping-list-item {
-  margin-bottom: 0;
-}
-
-.add-new-shopping-list-item .row {
-  margin-bottom: 0;
-}
-
-#group-shopping-list tr td {
-  font-size: 1.25em;
-}
-
-.dashboard-card-buttons {
-  margin-top: -5px;
-}
 
 .padded {
   padding: 10px;
-}
-
-.shopping-list-card-buttons {
-  font-size: 1.25em;
-}
-
-.shopping-list-card-buttons button {
-  margin-left: 5px !important;
-}
-
-.shopping-list-header {
-  padding-bottom: 0;
-}
-
-.purchased-list-header {
-  padding-bottom: 0;
 }
 
 .sort-header {
@@ -177,28 +50,6 @@ textarea:focus, input:focus {
   width: 100%;
 }
 
-#add-new-item {
-  background-color: $accent-color;
-  float: right;
-}
-
-#add-new-item i {
-  color: $primary-color-text;
-}
-
-#add-new-item:disabled {
-  background-color: $primary-color-light;
-}
-
-#new-shopping-list-item-qty {
-  margin-left: 10px;
-  margin-right: 15px;
-}
-
-#new-shopping-list-item-header {
-  margin-top: 5px;
-}
-
 .delete-button {
   font-size: 1.2em;
 }
@@ -207,11 +58,6 @@ textarea:focus, input:focus {
   font-size: 1.25em;
   margin-left: -5px;
   margin-right: 5px;
-}
-
-.shopping-item-quantity {
-  font-size: 1.3em;
-  font-weight: bold;
 }
 
 .shopping-list-information {
@@ -231,11 +77,6 @@ textarea:focus, input:focus {
 
 .remove-item-button {
   font-size: 1.2em;
-}
-
-
-.buy-item-button {
-
 }
 
 .fix-flex {
@@ -258,3 +99,13 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
   color: white;
 }
 
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+  font-family: $primary-head-font;
+  font-weight: 600;
+}

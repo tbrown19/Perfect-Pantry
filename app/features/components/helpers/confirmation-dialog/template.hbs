@@ -1,0 +1,25 @@
+{{#paper-dialog class="flex-50" onClose=(action "deleteDialogAction" "cancel") parent=".purchased-list-comp"
+                origin=dialogOrigin clickOutsideToClose=true}}
+	<form>
+		{{#paper-toolbar}}
+			{{#paper-toolbar-tools}}
+				<h2>Are you sure you want to delete these items?</h2>
+				<span class="flex"></span>
+				{{#paper-button iconButton=true onClick=(action "deleteDialogAction" "cancel")}}{{paper-icon
+						icon="close"}}{{/paper-button}}
+			{{/paper-toolbar-tools}}
+		{{/paper-toolbar}}
+
+		{{#paper-dialog-content}}
+			<p>
+				Click delete to continue deleting the selected items. You cannot undo this action.
+			</p>
+		{{/paper-dialog-content}}
+
+		{{#paper-dialog-actions class="layout-row"}}
+			<span class="flex"></span>
+			{{#paper-button onClick=(action "deleteDialogAction" "cancel")}}Cancel{{/paper-button}}
+			{{#paper-button onClick=(action "deleteDialogAction" "ok")}}Delete{{/paper-button}}
+		{{/paper-dialog-actions}}
+	</form>
+{{/paper-dialog}}

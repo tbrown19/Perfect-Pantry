@@ -1,6 +1,6 @@
 <div class="layout-row layout-xs-column">
   <div class="layout-column flex-xs flex-gt-xs-50">
-    {{shopping-list-display items = model.shoppingItems limit = 8 deleteButton = false}}
+    {{shopping-list/display items = model.shoppingItems limit = 8 deleteButton = false}}
   </div>
 
   <div class="layout-column flex-xs flex-gt-xs-50">
@@ -8,3 +8,7 @@
   </div>
 
 </div>
+
+{{#if loading}}
+	test
+{{/if}}
