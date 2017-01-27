@@ -1,0 +1,22 @@
+.purchase-button {
+  &:focus {
+    background-color: #C8E6C9;
+    border-color: #81C784;
+    color: #1B5E20;
+  }
+
+  &:hover {
+    background-color: #E8F5E9;
+    border-color: #81C784;
+    color: #1B5E20;
+  }
+  &:active:focus{
+    background-color: #66BB6A;
+    color: white;
+    border-color: #00C853;
+  }
+
+  border-color: #4CAF50;
+  color: #1B5E20;
+
+}

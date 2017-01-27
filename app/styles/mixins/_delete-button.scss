@@ -1,0 +1,22 @@
+.delete-button {
+  &:focus {
+    background-color: #FFCDD2;
+    border-color: #E57373;
+    color: #B71C1C;
+  }
+
+  &:hover {
+    background-color: #FFEBEE;
+    border-color: #E57373;
+    color: #B71C1C;
+  }
+  &:active:focus{
+    background-color: #EF5350;
+    color: white;
+    border-color: #D50000;
+  }
+
+  border-color: #F44336;
+  color: #B71C1C;
+
+}

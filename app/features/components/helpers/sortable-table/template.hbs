@@ -1,73 +1,76 @@
-<!--<table class="shopping-list-table table table-hover table-responsive">-->
-	<!--<thead>-->
-	<!--<tr id="table-headers">-->
-		<!--<th {{action "sortBy" "linkID"}}>#</th>-->
-		<!--<th>First Name</th>-->
-		<!--<th>Last Name</th>-->
-		<!--<th>Username</th>-->
-	<!--</tr>-->
-	<!--</thead>-->
-	<!--<tbody>-->
-	<!--<tr class="table-danger">-->
-		<!--<th scope="row">1</th>-->
-		<!--<td>Mark</td>-->
-		<!--<td>Otto</td>-->
-		<!--<td>@mdo</td>-->
-	<!--</tr>-->
-	<!--<tr>-->
-		<!--<th scope="row">2</th>-->
-		<!--<td>Jacob</td>-->
-		<!--<td>Thornton</td>-->
-		<!--<td>@fat</td>-->
-	<!--</tr>-->
-	<!--<tr>-->
-		<!--<th scope="row">3</th>-->
-		<!--<td>Larry</td>-->
-		<!--<td>the Bird</td>-->
-		<!--<td>@twitter</td>-->
-	<!--</tr>-->
-	<!--</tbody>-->
-<!--</table>-->
-
 <div id="check-all-content" class="collapse">
-	{{#bs-button type="success" icon="glyphicon glyphicon-plus"}}
-		Purchase All
-	{{/bs-button}}
-	{{#bs-button type="danger" icon="glyphicon glyphicon-trash"}}
-		Delete All
-	{{/bs-button}}
+
+	{{#each allSelectedActionButtons as |button|}}
+		{{#bs-button type=button.type icon=button.icon}}
+			{{button.text}}
+		{{/bs-button}}
+	{{/each}}
+
 	{{paper-divider}}
 </div>
 
 <table class="shopping-list-table table table-hover table-responsive">
 	<thead>
-	<tr id="table-headers">
-		<th width="10%">
-			{{#paper-checkbox name="itemCheckbox" class = "purple shopping-list-checkbox" value=checkAllIsChecked
-			                  onChange=(action (mut checkAllIsChecked))}}
-			{{/paper-checkbox}}
-		</th>
+		<tr id="table-headers">
+			<th width="10%">
+				{{#paper-checkbox name="itemCheckbox" class = "purple shopping-list-checkbox" value=checkAllIsChecked
+				                  onChange=(action (mut checkAllIsChecked))}}
+				{{/paper-checkbox}}
+			</th>
 
-		{{#each colDisplayNamesWithToggles as |colDisplayName|}}
-			<th>{{colDisplayName}}</th>
-		{{/each}}
+			{{#each colDisplayNames as |colDisplayName index|}}
 
-		<th width="10%">
-			<h3>
-				{{fa-icon 'trash-o'}}
-			</h3>
-		</th>
+				{{#if (eq index sortIndex)}}
+					<th class="noselect th-sorted-on" {{action "sortBy" this index}}>
+						{{colDisplayName}} <i class={{sortIcon}}></i>
+					</th>
+				{{else}}
+					<th class="noselect" {{action "sortBy" this index}}>
+						{{colDisplayName}}<i class="glyphicon glyphicon-menu-up glyphicon-none"></i>
+					</th>
+				{{/if}}
 
-	</tr>
-	</thead>
+			{{/each}}
+
+
+			{{#each tableRowActionHeaders as |header|}}
+
+				<th width="10%">
+					<h3>
+						{{fa-icon header}}
+					</h3>
+				</th>
+
+			{{/each}}
+
+			</tr>
+		</thead>
+
 	<tbody>
 
-	{{#each rowData as |rowItem|}}
+	{{#each rowDataSorted as |rowItem|}}
+
 		{{#if checkAllIsChecked}}
-			{{helpers/sortable-table/row rowItem = rowItem columnPropertyNames = columnPropertyNames checkAll=true}}
+
+			{{helpers/sortable-table/row
+					rowItem = rowItem
+					colPropertyNames = colPropertyNames
+					tableRowActions = tableRowActions
+					checkAll=true
+			}}
+
 		{{else}}
-			{{helpers/sortable-table/row rowItem = rowItem columnPropertyNames = columnPropertyNames checkAll=false}}
+
+			{{helpers/sortable-table/row
+					rowItem = rowItem
+					colPropertyNames = colPropertyNames
+					tableRowActions = tableRowActions
+					checkAll=false
+			}}
+
 		{{/if}}
 	{{/each}}
+
 	</tbody>
+
 </table>

@@ -12,26 +12,16 @@ export default Ember.Component.extend({
 
 	changeInIsChecked: Ember.observer('isChecked', function() {
 		//If the item is checked then we display the hover background color.
-		if(this.get('isChecked')){
-			this.set('hoverBackground', true);
-		}
-		else{
-			this.set('hoverBackground', false);
-		}
-		console.log(`you checked ${this.get('shoppingItem.name')}`);
+		this.set('hoverBackground', this.get('isChecked'));
+
+		console.log(`you checked ${this.get('rowItem.name')}`);
 		this.sendAction('itemChecked', this.get('shoppingItem'));
 	}),
 
 
 	isCheckedComputed: Ember.computed('isChecked', function() {
-		//Default is false so we sort in ascending order
-		if(this.get('checkAll')){
-			this.set('checkAll',false);
-			this.set('isChecked', true);
-			return true;
-		}
-		else{
-			return this.get('isChecked');
-		}
+		//If checkAll is true then we return true since we want it checked, otherwise we return based on what is checked is
+		return this.get('checkAll') || this.get('isChecked');
+
 	}),
 });

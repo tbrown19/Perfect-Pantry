@@ -30,6 +30,8 @@
   "esversion": 6,
   "unused": true,
   "globals"      : {
-    "Promise"   : true
+    "Promise"   : true,
+    "$": false
+
   }
 }

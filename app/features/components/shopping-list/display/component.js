@@ -1,138 +1,45 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  test: false,
-  sortableProperties: ['Date Added', 'Name', 'Quantity'], //The options the user can sort by
-  sortOrders: ['Asc', 'Desc'], //The orders the user can sort in
-  sortOrder: 'Asc', // default sort in ascending order
-  reverseSort: false, // default sort in ascending order
-  sortBy: 'addedDate', // default sort by date items were added to the list
-  sortByFormatted: "Date Added",
 
-  checkedItems: [], //Items that have been checked by the user
-  itemsCheckedText: "ALL", //Default text that displays on the delete button.
+  //What buttons to display when all items have been selected.
+	allSelectedActionButtons:[
+    {
+      "type":"success",
+      "icon":"glyphicon glyphicon-plus",
+      "text":"Purchase All"
+    },
 
-  checkAll: false,
-  selectAllText: "Select", //Default is we want to show them they can select all
+		{
+			"type":"danger",
+			"icon":"glyphicon glyphicon-trash",
+			"text":"Delete All"
+		},
+  ],
 
-  showingAreYouSureMenu: false, //By default we don't want to show the user the are you sure modal
+// {{#bs-button class="delete-button" type="default"}}
+// Delete
+// {{/bs-button}}
 
+  tableRowActions:[
+		{
+			"class": "purchase-button",
+			"text": "Purchase"
+		},
 
-  //We determine here what we are sorting on, and the order in which we are sorting it.
-  sortDefinition: Ember.computed('sortBy', 'reverseSort', function () {
-    //Default is false so we sort in ascending order
-    let sortOrder = this.get('reverseSort') ? 'desc' : 'asc';
-    return [`${this.get('sortBy')}:${sortOrder}`];
-  }),
+		{
+			"class": "delete-button",
+			"text": "Delete"
+		}
 
+  ],
 
-  //This is where we simply sort all the items, we get sorted definition from the computed property.
-  sortedItems: Ember.computed.sort('items', 'sortDefinition'),
-
-  //We then can limit the sort items if needed, or simply return all of them.
-  limitedSortedItems: Ember.computed('sortedItems', function () {
-    if (this.get('limit') === false) {
-      return this.get('sortedItems');
-    }
-    else {
-      return this.get('sortedItems').splice(0, this.get('limit'));
-    }
-  }),
-
-  changeInCheckedItems: Ember.observer('checkedItems.@each', function () {
-    // deal with the change
-    //If they have at least item checked, then we show the text selected
-    if (this.get('checkedItems').toArray().length > 0) {
-      this.set('itemsCheckedText', 'Selected');
-    }
-    if (this.get('checkedItems').length === this.get('items').toArray().length){
-			this.checkAllItems(false);
-    }
-  }),
-
+  tableRowActionHeaders: [
+    'money',
+    'trash-o'
+  ],
 
   actions: {
-
-    //Handles the un-checking and checking of shopping list items.
-    itemChecked(item){
-      console.log("you just chcked " + item.get('name'));
-      //We simply check to see if the item is in the checked list, and if so remove it, otherwise add it.
-      if (!this.get('checkedItems').includes(item)) {
-        this.get('checkedItems').addObject(item);
-
-        //If the lengths of checked items and items match, it means they have every item checked.
-        if(this.get('checkedItems').length === this.get('items').toArray().length){
-					this.checkAllItems(false);
-        }
-
-      }
-      else {
-        this.get('checkedItems').removeObject(item);
-
-				//If we have 0 items checked, then we want to call our un-check all items function so that everything can be updated.
-				if(this.get('checkedItems').length === 0){
-					this.unCheckAllItems();
-				}
-      }
-
-    },
-
-    //Handles allowing the user to chose a property that they wish to sort by
-    selectSortProperty(property){
-      //Clean and process the property the user selected
-      property = property.target.textContent.trim();
-
-      //Set the formatted sort to what they selected, and then update the actual sort order by what they picked.
-      this.set('sortByFormatted', property);
-
-      if (property === 'Date Added') {
-        this.set('sortBy', 'addedDate');
-      }
-      else if (property === 'Name') {
-        this.set('sortBy', 'name');
-      }
-      else if (property === 'Quantity') {
-        this.set('sortBy', 'quantity');
-      }
-
-    },
-
-    //Handles allowing the user to chose the order they wish to sort in
-    selectSortOrder(order){
-      //Clean and process the property the user selected
-      order = order.target.textContent.trim();
-
-      //Set the formatted sort to what they selected, and then update the actual sort order by what they picked.
-      if (order === 'Asc') {
-        this.set('sortOrder', 'Asc');
-        this.set('reverseSort', false);
-      }
-      else if (order === 'Desc') {
-        this.set('sortOrder', 'Desc');
-        this.set('reverseSort', true);
-
-      }
-    },
-
-    selectAllItems(){
-      //Set the check all property to the opposite of what it currently is.
-      this.set('checkAll', !this.get('checkAll'));
-
-			if (this.get('checkAll') === true) {
-				this.checkAllItems(true);
-			}
-			else {
-				this.unCheckAllItems();
-			}
-    },
-
-    //Handles the user clicking the delete button
-    deleteButtonClicked(){
-      //Show the are you sure menu if they clicked the delete menu.
-      this.set('showingAreYouSureMenu', true);
-    },
-
-
 
     purchaseItem(item){
       console.log("were in the display now");
@@ -145,24 +52,5 @@ export default Ember.Component.extend({
 
   },
 
-
-  unCheckAllItems(){
-		this.set('checkAll',false);
-		this.set('checkedItems', []);
-		this.set('selectAllText', 'Select');
-  },
-
-
-	checkAllItems(addItemsToCheckedItems){
-		this.set('checkAll', true);
-		this.set('itemsCheckedText', 'All');
-
-		if(addItemsToCheckedItems){
-			const items = this.get('items');
-			items.forEach((item) => {
-				this.get('checkedItems').pushObject(item);
-			});
-		}
-	}
 
 });

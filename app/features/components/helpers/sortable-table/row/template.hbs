@@ -2,18 +2,38 @@
 
 
 <td>
-	{{#paper-checkbox name="itemCheckbox" class = "purple shopping-list-checkbox" value=isCheckedComputed
-	                  onChange=(action (mut isChecked))}}
+
+	{{#paper-checkbox
+			name="itemCheckbox"
+			class = "purple shopping-list-checkbox"
+			value=isCheckedComputed
+			onChange=(action (mut isChecked))
+	}}
 	{{/paper-checkbox}}
+
 </td>
-{{#each columnPropertyNames as |columnPropertyName|}}
+
+{{#each colPropertyNames as |colPropertyName|}}
+
 	<td>
-		{{get rowItem columnPropertyName}}
+		{{get rowItem colPropertyName}}
 	</td>
+
 {{/each}}
+
 <td>
 	$0.00
 </td>
-<td>
-	Delete
-</td>
+
+
+
+{{#each tableRowActions as |action|}}
+
+	<td>
+		{{#bs-button class=action.class}}
+			{{action.text}}
+		{{/bs-button}}
+	</td>
+
+{{/each}}
+

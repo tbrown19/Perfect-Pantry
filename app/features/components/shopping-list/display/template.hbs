@@ -9,7 +9,12 @@
 	{{/paper-toolbar}}
   {{#card.content}}
 
-    {{shopping-list/display-table items = items}}
+    {{shopping-list/display-table
+		    items = items
+		    allSelectedActionButtons = allSelectedActionButtons
+		    tableRowActions = tableRowActions
+		    tableRowActionHeaders = tableRowActionHeaders
+    }}
 
 
   {{/card.content}}
