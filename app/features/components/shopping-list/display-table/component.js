@@ -2,8 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 	actions:{
-		sortBy(sortParam){
-			console.log(sortParam);
-		}
+
+		sendActionUp(action, item){
+			this.sendAction('sendActionUp', action, item);
+		},
+
 	}
 });

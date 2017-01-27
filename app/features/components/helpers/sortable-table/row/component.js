@@ -22,6 +22,18 @@ export default Ember.Component.extend({
 	isCheckedComputed: Ember.computed('isChecked', function() {
 		//If checkAll is true then we return true since we want it checked, otherwise we return based on what is checked is
 		return this.get('checkAll') || this.get('isChecked');
-
 	}),
+
+
+	actions: {
+		sendActionUp(action, item){
+			this.sendAction('sendActionUp', action, item);
+		},
+
+		deleteItem(item){
+			this.sendAction('deleteItem', item);
+		},
+
+	}
+
 });

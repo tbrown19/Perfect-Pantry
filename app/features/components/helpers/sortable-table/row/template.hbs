@@ -21,16 +21,11 @@
 
 {{/each}}
 
-<td>
-	$0.00
-</td>
-
-
 
 {{#each tableRowActions as |action|}}
 
 	<td>
-		{{#bs-button class=action.class}}
+		{{#bs-button onClick=(action "sendActionUp" action.action rowItem) class=action.class}}
 			{{action.text}}
 		{{/bs-button}}
 	</td>

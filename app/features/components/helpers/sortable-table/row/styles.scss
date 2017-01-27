@@ -12,3 +12,16 @@ md-checkbox.md-default-theme.md-checked.purple .md-ink-ripple, md-checkbox.md-ch
 }
 
 
+button{
+  font-size: 1em;
+}
+
+@media (max-width: 768px) {
+  &{
+    font-size: 10px;
+  }
+  button {
+    font-size:11px;
+    padding:4px 6px;
+  }
+}

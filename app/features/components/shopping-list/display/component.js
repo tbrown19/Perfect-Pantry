@@ -24,12 +24,14 @@ export default Ember.Component.extend({
   tableRowActions:[
 		{
 			"class": "purchase-button",
-			"text": "Purchase"
+			"text": "Purchase",
+			"action": "purchaseItem"
 		},
 
 		{
 			"class": "delete-button",
-			"text": "Delete"
+			"text": "Delete",
+			"action": "deleteItem"
 		}
 
   ],
@@ -40,15 +42,10 @@ export default Ember.Component.extend({
   ],
 
   actions: {
-
-    purchaseItem(item){
-      console.log("were in the display now");
-      this.sendAction('purchaseItem', item);
-    },
-
-    deleteItem(item){
-      this.sendAction('deleteItem', item);
-    },
+		sendActionUp(action, item){
+    	console.log(action, item);
+			this.sendAction(action, item);
+		},
 
   },
 

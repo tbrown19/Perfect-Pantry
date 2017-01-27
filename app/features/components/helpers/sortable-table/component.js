@@ -7,7 +7,7 @@ export default Ember.Component.extend({
 	isActive: true,
 
 	//What name to show in the column headers.
-	colDisplayNames: ['Qty', 'Name', 'Date Added', 'Price'],
+	colDisplayNames: ['Qty', 'Name', 'Date Added'],
 
 	//What property to display within that column.
 	colPropertyNames: ['quantity', 'name', 'formattedDate'],
@@ -54,7 +54,6 @@ export default Ember.Component.extend({
 		sortBy(element, sortParamIndex){
 			this.set('sortIndex', sortParamIndex);
 
-
 			const sortProperty = this.get('colSortPropertyNames')[sortParamIndex];
 
 			if (this.get('sortBy') === sortProperty) {
@@ -73,6 +72,18 @@ export default Ember.Component.extend({
 				this.set('sortBy', sortProperty);
 
 			}
+		},
+
+		sendActionUp(action, item){
+			this.sendAction('sendActionUp', action, item);
+		},
+
+		deleteItem(item){
+			this.sendAction('deleteItem', item);
+		},
+
+		click(){
+			console.log("derp");
 		}
 	}
 
