@@ -1,6 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+
+
+	test: "<div> test </div>",
+
+
 	//What name to show in the column headers.
 	colDisplayNames: ['Qty','Name','Date Added', 'Price'],
 
@@ -28,5 +33,15 @@ export default Ember.Component.extend({
 
 	checkAllIsChecked: false,
 
+	changeIncheckAll: Ember.observer('checkAllIsChecked', function() {
+		if(this.get('checkAllIsChecked')){
+			console.log("derp");
+			$('#check-all-content').collapse('show');
+		}
+		else{
+			$('#check-all-content').collapse('hide');
+		}
+
+	}),
 
 });

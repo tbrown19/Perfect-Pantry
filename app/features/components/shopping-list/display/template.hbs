@@ -8,37 +8,6 @@
 		{{/paper-toolbar-tools}}
 	{{/paper-toolbar}}
   {{#card.content}}
-    {{#card.actions class="layout-row layout-xs-column"}}
-      {{#if deleteButton}}
-        <div class="fix-flex flex-gt-sm-23">
-          {{#paper-button  onClick=(action "selectAllItems")}}
-            <span class="select-all-button">{{fa-icon 'check-square-o'}} {{selectAllText}} All </span>
-          {{/paper-button}}
-        </div>
-      {{/if}}
-
-
-      {{#if deleteButton}}
-        <div class="flex">
-          {{#if checkedItems}}
-            {{#paper-button class = "pull-right" onClick=(action "deleteButtonClicked")}}
-              <span class="delete-button">{{fa-icon 'trash-o'}} Delete  {{itemsCheckedText}} </span>
-            {{/paper-button}}
-          {{else if checkAll}}
-            {{#paper-button class = "pull-right" onClick=(action "deleteButtonClicked")}}
-              <span class="delete-button">{{fa-icon 'trash-o'}} Delete  {{itemsCheckedText}} </span>
-            {{/paper-button}}
-          {{/if}}
-        </div>
-      {{/if}}
-
-
-
-
-
-    {{/card.actions}}
-
-    {{paper-divider}}
 
     {{shopping-list/display-table items = items}}
 

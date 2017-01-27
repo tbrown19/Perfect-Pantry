@@ -29,11 +29,20 @@
 	<!--</tbody>-->
 <!--</table>-->
 
+<div id="check-all-content" class="collapse">
+	{{#bs-button type="success" icon="glyphicon glyphicon-plus"}}
+		Purchase All
+	{{/bs-button}}
+	{{#bs-button type="danger" icon="glyphicon glyphicon-trash"}}
+		Delete All
+	{{/bs-button}}
+	{{paper-divider}}
+</div>
 
 <table class="shopping-list-table table table-hover table-responsive">
 	<thead>
 	<tr id="table-headers">
-		<th>
+		<th width="10%">
 			{{#paper-checkbox name="itemCheckbox" class = "purple shopping-list-checkbox" value=checkAllIsChecked
 			                  onChange=(action (mut checkAllIsChecked))}}
 			{{/paper-checkbox}}
@@ -42,12 +51,23 @@
 		{{#each colDisplayNamesWithToggles as |colDisplayName|}}
 			<th>{{colDisplayName}}</th>
 		{{/each}}
+
+		<th width="10%">
+			<h3>
+				{{fa-icon 'trash-o'}}
+			</h3>
+		</th>
+
 	</tr>
 	</thead>
 	<tbody>
 
 	{{#each rowData as |rowItem|}}
-		{{helpers/sortable-table/row rowItem = rowItem columnPropertyNames = columnPropertyNames}}
+		{{#if checkAllIsChecked}}
+			{{helpers/sortable-table/row rowItem = rowItem columnPropertyNames = columnPropertyNames checkAll=true}}
+		{{else}}
+			{{helpers/sortable-table/row rowItem = rowItem columnPropertyNames = columnPropertyNames checkAll=false}}
+		{{/if}}
 	{{/each}}
 	</tbody>
 </table>

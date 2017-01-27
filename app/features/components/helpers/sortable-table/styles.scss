@@ -5,9 +5,24 @@
   th:hover{
     cursor: pointer;
   }
-
+  :last-child{
+    cursor: default;
+  }
 }
 
+#check-all-content{
+  button{
+    font-family: 'Quicksand', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-left:10px;
+    margin-bottom: 5px;
+  }
+}
+
+.hover-background{
+  background-color: #f5f5f5;
+}
 
 @media (min-width: 760px) {
   &{
