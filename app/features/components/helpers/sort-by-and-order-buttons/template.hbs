@@ -1,0 +1,32 @@
+
+
+<!--<div class="layout-row layout-xs-column">-->
+	<!--<div class="flex">-->
+	<!--</div>-->
+	<!--<div class="flex">-->
+		<!---->
+	<!--</div>-->
+	<!---->
+	<!--<div class="flex">-->
+		<!--<span>Order: </span>-->
+		<!--<button type="button" class="btn sort-order-btn remove_button_css">{{fa-icon 'sort-numeric-asc'}}</button>-->
+	<!--</div>-->
+<!--</div>-->
+
+
+{{#bs-form as |form|}}
+	{{#form.group}}
+		<label class="form-label">-&nbsp;Sorted By:</label>
+		{{#bs-dropdown class="drop-down-main" as |dd|}}
+			{{#dd.button class="drop-down-main-button"}}Date Added <span class="caret"></span>{{/dd.button}}
+			{{#dd.menu as |ddm|}}
+				{{#ddm.item}}
+					<button type="button" class="btn btn-default drop-down-button remove_button_css">Date Added</button>
+				{{/ddm.item}}
+				{{#ddm.item}}Something different{{/ddm.item}}
+			{{/dd.menu}}
+		{{/bs-dropdown}}
+		<label class="form-label">Order: </label>
+		<button type="button" class="btn sort-order-btn remove_button_css">{{fa-icon 'sort-numeric-asc'}}</button>
+	{{/form.group}}
+{{/bs-form}}

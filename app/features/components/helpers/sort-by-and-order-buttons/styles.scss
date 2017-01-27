@@ -1,0 +1,49 @@
+
+.drop-down-option{
+  color: $primary-color;
+}
+
+.drop-down-main{
+  margin-left: -5px;
+}
+
+
+.drop-down-main-button{
+  background-color: transparent;
+  color: $primary-color-text;
+  border: none;
+  font-size: 10px;
+  font-weight: bold;
+  margin-top:-7px;
+}
+
+.sort-order-btn{
+  color: $primary-color-text;
+  margin-top: -7px;
+  font-size: 10px;
+}
+
+
+
+.form-label{
+  font-weight: normal;
+}
+
+&{
+  font-size: .75em;
+}
+
+@media (min-width: 760px) {
+  &{
+    font-size: 1em;
+  }
+
+  .drop-down-main-button{
+    font-size: 1.2em;
+  }
+
+  .sort-order-btn{
+    font-size: 1.2em;
+  }
+
+}

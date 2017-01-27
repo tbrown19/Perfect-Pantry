@@ -1,0 +1,17 @@
+
+
+
+#table-headers{
+  th:hover{
+    cursor: pointer;
+  }
+
+}
+
+
+@media (min-width: 760px) {
+  &{
+    font-size: 1.25em;
+  }
+
+}

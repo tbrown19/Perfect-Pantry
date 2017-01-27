@@ -2,6 +2,7 @@
 
 //Import style sheets from modules and other assorted style sheet helper files.
 @import "ember-paper";
+@import "ember-bootstrap/bootstrap";
 
 @import 'partials/variables';
 @import 'mixins/all';
@@ -33,6 +34,10 @@ html, body {
   border-bottom: 0px;
 }
 
+.remove_button_css{
+  border:none;
+  background-color: transparent;
+}
 
 .padded {
   padding: 10px;
@@ -108,4 +113,9 @@ h5,
 h6{
   font-family: $primary-head-font;
   font-weight: 600;
+}
+
+
+.md-toolbar-tools h1 {
+  font-size: 28px;
 }

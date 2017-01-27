@@ -1,0 +1,10 @@
+<td>
+	{{#paper-checkbox name="itemCheckbox" class = "purple shopping-list-checkbox" value=isCheckedComputed
+	                  onChange=(action (mut isChecked))}}
+	{{/paper-checkbox}}
+</td>
+{{#each columnPropertyNames as |columnPropertyName|}}
+	<td>
+		{{get rowItem columnPropertyName}}
+	</td>
+{{/each}}
