@@ -2,19 +2,18 @@
 {{#paper-card class = "shopping-list-comp" as |card|}}
 	{{#paper-toolbar}}
 		{{#paper-toolbar-tools}}
-			<h1>
+			<h2>
 				{{fa-icon 'shopping-cart'}}&nbsp;Shopping List
-			</h1>
+			</h2>
 		{{/paper-toolbar-tools}}
 	{{/paper-toolbar}}
   {{#card.content}}
 
     {{shopping-list/display-table
 		    items = items
-		    allSelectedActionButtons = allSelectedActionButtons
-		    tableRowActions = tableRowActions
-		    tableRowActionHeaders = tableRowActionHeaders
 		    sendActionUp = "sendActionUp"
+		    limit = limit
+		    deleteButton = deleteButton
     }}
 
 

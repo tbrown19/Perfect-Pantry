@@ -1,17 +1,23 @@
 
 
+{{#if noCheckBoxes}}
 
-<td>
+{{else}}
+	<td class="checkBoxCell">
 
-	{{#paper-checkbox
-			name="itemCheckbox"
-			class = "purple shopping-list-checkbox"
-			value=isCheckedComputed
-			onChange=(action (mut isChecked))
-	}}
-	{{/paper-checkbox}}
+		{{#paper-checkbox
+				name="itemCheckbox"
+				class = "purple shopping-list-checkbox"
+				value=isCheckedComputed
+				onChange=(action (mut isChecked))
+		}}
+		{{/paper-checkbox}}
 
-</td>
+
+	</td>
+{{/if}}
+
+
 
 {{#each colPropertyNames as |colPropertyName|}}
 

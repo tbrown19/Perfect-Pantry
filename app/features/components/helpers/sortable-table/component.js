@@ -3,26 +3,26 @@ import Ember from 'ember';
 export default Ember.Component.extend({
 
 	//model = rowData
+	checkedItems: [],
 
-	isActive: true,
+	allText: "",
 
-	//What name to show in the column headers.
-	colDisplayNames: ['Qty', 'Name', 'Date Added'],
+	colHeaderNames: Ember.computed('columnInformation', function () {
+		return this.get('columnInformation').map((column) => {
+			const mapProperty = this.get('shortNames')  ? 'shortName' : 'displayName';
+			return column[mapProperty];
+		});
+	}),
 
-	//What property to display within that column.
-	colPropertyNames: ['quantity', 'name', 'formattedDate'],
+	colPropertyNames: Ember.computed('columnInformation', function () {
+		//We map the property names to an array so that the row function knows what to display
+		return this.get('columnInformation').map((column) => {
+			return column.propertyName;
+		});
+	}),
 
-	//Might have to add another array property like what to actual sort on, for example date vs formatted date.
-	colSortPropertyNames: ['quantity', 'name', 'addedDate'],
-
-	//What data is actually going to be displayed in each row.
-	rowData: [],
-
-	//Current property being sorted on, and the order in which it's being sorted.
-	sortProperty: "",
-
-	reverseSort: true,
-	sortIcon: 'glyphicon glyphicon-menu-down',
+	reverseSort: true, //default sort is reversed, so that most recent items are first.
+	sortIcon: 'glyphicon glyphicon-menu-down', //default sort icon is down
 
 	sortBy: 'addedDate', // default sort by date items were added to the list
 	sortIndex: 2,
@@ -38,23 +38,48 @@ export default Ember.Component.extend({
 	//This is where we simply sort all the items, we get sorted definition from the computed property.
 	rowDataSorted: Ember.computed.sort('rowData', 'sortDefinition'),
 
-
-	checkAllIsChecked: false,
-	changeIncheckAll: Ember.observer('checkAllIsChecked', function () {
-		if (this.get('checkAllIsChecked')) {
-			$('#check-all-content').collapse('show');
-		} else {
-			$('#check-all-content').collapse('hide');
-		}
+	rowDataSortedLimited: Ember.computed('rowDataSorted', function () {
+		//We either use the limit, or just get all items by getting the length of the array and slicing up to it.
+		const limit = this.get('limit') || this.get('rowDataSorted').length;
+		return this.get('rowDataSorted').slice(0, limit);
 
 	}),
 
+	checkAllIsChecked: false,
+
+	changeIncheckAll: Ember.observer('checkAllIsChecked', function () {
+		if (this.get('checkAllIsChecked')) {
+			this.set('allText', 'All');
+			$('#check-all-content').collapse('show');
+		} else {
+			this.set('allText', '');
+			$('#check-all-content').collapse('hide');
+		}
+	}),
 
 	actions: {
-		sortBy(element, sortParamIndex){
+		itemChecked(item){
+			const content = $('#check-all-content');
+			//Start off by showing the buttons, if we need to hide them we will in the next step.
+			content.collapse('show');
+
+			if (!this.get('checkedItems').includes(item)) {
+				this.get('checkedItems').addObject(item);
+			}
+			else {
+				this.get('checkedItems').removeObject(item);
+				//If we have 0 items checked, then we want to call our un-check all items function so that everything can be updated.
+				if(this.get('checkedItems').length === 0){
+					content.collapse('hide');
+				}
+			}
+
+		},
+
+		sortBy(sortParamIndex){
 			this.set('sortIndex', sortParamIndex);
 
-			const sortProperty = this.get('colSortPropertyNames')[sortParamIndex];
+			const sortProperty = this.get('columnInformation')[sortParamIndex].sortableName;
 
 			if (this.get('sortBy') === sortProperty) {
 				this.set('reverseSort', !this.get('reverseSort'));
@@ -70,7 +95,6 @@ export default Ember.Component.extend({
 			}
 			else {
 				this.set('sortBy', sortProperty);
-
 			}
 		},
 
@@ -78,14 +102,7 @@ export default Ember.Component.extend({
 			this.sendAction('sendActionUp', action, item);
 		},
 
-		deleteItem(item){
-			this.sendAction('deleteItem', item);
-		},
-
-		click(){
-			console.log("derp");
-		}
-	}
+	},
 
 
 });

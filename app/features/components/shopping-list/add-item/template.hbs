@@ -1,13 +1,13 @@
 {{#paper-card as |card|}}
-	{{#paper-toolbar id = "toolbar"}}
+	{{#paper-toolbar class = "toolbar"}}
 		{{#paper-toolbar-tools}}
-			<h1>{{fa-icon 'plus'}}&nbsp;Add a new item</h1>
+			<h2>{{fa-icon 'plus'}}&nbsp;Add a new item</h2>
 			<span class="flex"></span>
-			<button id="collapse-button" data-toggle="collapse" data-target="#card-content" {{action 'collapseButton'}}>{{paper-icon currentIcon}}</button>
+			<button class="collapse-button" data-toggle="collapse" data-target="#addItemCardContent" {{action 'collapseButton'}}>{{paper-icon currentIcon}}</button>
 		{{/paper-toolbar-tools}}
 	{{/paper-toolbar}}
 
-	<div id="card-content" class="collapse in">
+	<div id="addItemCardContent" class="collapse in">
 		{{#card.content}}
 			{{#paper-form onSubmit=(action "addNewItems") as |form|}}
 				<div class="layout-row layout-xs-column">
@@ -32,8 +32,3 @@
 		{{/card.content}}
 	</div>
 {{/paper-card}}
-
-
-<div id="demo" class="collapse">
-	Lorem ipsum dolor text....
-</div>

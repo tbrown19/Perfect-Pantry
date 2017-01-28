@@ -1,18 +1,25 @@
-<div class="layout-row layout-xs-column">
-  <div class="layout-column flex-xs-100 flex-50 flex-gt-sm-40 flex-gt-md-30">
-    {{shopping-list/add-item addItem='addNewItems'}}
+<div class="layout-row layout-sm-column layout-xs-column">
+  <div class="layout-column layout-sm-row layout-xs-column flex-sm-100 flex-50 flex-gt-sm-60 flex-gt-md-40">
+	  <div class="flex-sm-50">
+		  {{shopping-list/add-item addItem='addNewItems'}}
+	  </div>
+	  <div class="flex-sm-50">
+		  {{shopping-list/information shoppingList = model items = model.shoppingList.shoppingListItems}}
+	  </div>
+
   </div>
+	<div class="layout-column flex-xs flex-gt-xs-100">
+		{{shopping-list/display shoppingList=model items = model.shoppingList.shoppingListItems
+		                        purchaseItem = "purchaseItem"
+		                        deleteItem = "deleteItem"
+		                        limit = false
+		                        deleteButton = true
+		                        group-listing = false
+		}}
+	</div>
 </div>
 
 <div class="layout-row layout-xs-column">
-  <div class="layout-column flex-xs flex-gt-xs-100">
-    {{shopping-list/display shoppingList=model items = model.shoppingList.shoppingListItems
-                            purchaseItem = "purchaseItem"
-                            deleteItem = "deleteItem"
-                            limit = false
-                            deleteButton = true
-                            group-listing = false
-    }}
-  </div>
+
 </div>
 

@@ -11,5 +11,5 @@ export default DS.Model.extend({
   consumed: DS.attr('boolean'),
   consumedDate: DS.attr('String'),
   consumedDateFormatted: DS.attr('String'),
-  tags: DS.attr(),
+  tags: DS.hasMany('tags'),
 });

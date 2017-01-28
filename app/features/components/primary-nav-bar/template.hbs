@@ -18,9 +18,9 @@
 			{{#bs-dropdown tagName="li" as |dd|}}
 				{{#dd.toggle}}Pantry <span class="caret"></span>{{/dd.toggle}}
 				{{#dd.menu as |ddm|}}
-					{{#ddm.item}}{{#link-to "pantry.current-items"}}Something{{/link-to}}{{/ddm.item}}
-					{{#ddm.item}}{{#link-to "pantry.current-items"}}Something{{/link-to}}{{/ddm.item}}
-					{{#ddm.item}}{{#link-to "pantry.current-items"}}Something{{/link-to}}{{/ddm.item}}
+					{{#ddm.item}}{{#link-to "pantry.current-items"}}Current Items{{/link-to}}{{/ddm.item}}
+					{{#ddm.item}}{{#link-to "pantry.group-shopping-list"}}Needed Items{{/link-to}}{{/ddm.item}}
+					{{#ddm.item}}{{#link-to "pantry.settings"}}Settings{{/link-to}}{{/ddm.item}}
 				{{/dd.menu}}
 			{{/bs-dropdown}}
 
@@ -28,11 +28,11 @@
 
 
 			{{#bs-dropdown tagName="li" as |dd|}}
-				{{#dd.toggle}}Pantry <span class="caret"></span>{{/dd.toggle}}
+				{{#dd.toggle}}Expenses <span class="caret"></span>{{/dd.toggle}}
 				{{#dd.menu as |ddm|}}
-					{{#ddm.item}}{{#link-to "expenses.overview"}}Something{{/link-to}}{{/ddm.item}}
-					{{#ddm.item}}{{#link-to "expenses.expense-splitting"}}Something{{/link-to}}{{/ddm.item}}
-					{{#ddm.item}}{{#link-to "expenses.visualizations"}}Something{{/link-to}}{{/ddm.item}}
+					{{#ddm.item}}{{#link-to "expenses.overview"}}Overview{{/link-to}}{{/ddm.item}}
+					{{#ddm.item}}{{#link-to "expenses.expense-splitting"}}Expense Splitting{{/link-to}}{{/ddm.item}}
+					{{#ddm.item}}{{#link-to "expenses.visualizations"}}Visulizations{{/link-to}}{{/ddm.item}}
 				{{/dd.menu}}
 			{{/bs-dropdown}}
 

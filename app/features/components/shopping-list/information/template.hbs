@@ -1,0 +1,19 @@
+{{#paper-card as |card|}}
+	{{#paper-toolbar class = "toolbar"}}
+		{{#paper-toolbar-tools}}
+			<h2>{{fa-icon 'info'}}&nbsp;Info</h2>
+			<span class="flex"></span>
+			<button class="collapse-button" data-toggle="collapse" data-target="#shoppingListInformation" {{action 'collapseButton'}}>{{paper-icon currentIcon}}</button>
+		{{/paper-toolbar-tools}}
+	{{/paper-toolbar}}
+
+	<div id="shoppingListInformation" class="collapse in">
+		{{#card.content}}
+			<div id="shoppingListStats">
+				<div>
+					You have <strong> {{numShoppingListItems}} </strong> items on your list.
+				</div>
+			</div>
+		{{/card.content}}
+	</div>
+{{/paper-card}}

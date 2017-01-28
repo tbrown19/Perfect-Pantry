@@ -58,5 +58,8 @@
     "loader.js": "^4.0.1",
     "semantic-ui-ember": "2.0.1",
     "torii": "0.8.0"
+  },
+  "dependencies": {
+    "ember-responsive": "^2.0.1"
   }
 }

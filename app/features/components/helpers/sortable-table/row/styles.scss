@@ -21,7 +21,30 @@ button{
     font-size: 10px;
   }
   button {
-    font-size:11px;
+    font-size:12px;
     padding:4px 6px;
+  }
+}
+
+@media (max-width: 1000px) {
+
+  button {
+    font-size:16px;
+    padding:4px 6px;
+  }
+}
+
+@media (max-width: 1200px) {
+
+  button {
+    font-size:16px;
+    padding:4px 6px;
+  }
+}
+
+@media (max-width: 640px)
+{
+  .checkBoxCell{
+    display: none;
   }
 }

@@ -22,6 +22,7 @@
 
 
 .glyphicon-none:before{
+  content: "\e094";
   color: transparent !important;
 }
 
@@ -34,17 +35,23 @@
 }
 
 
-@media (max-width: 768px) {
-  &{
-    font-size: 8px;
-  }
 
+
+@media (min-width: 992px) {
+  &{
+    font-size: 1.2em;
+  }
 }
 
-@media (min-width: 768px) {
-  &{
-    font-size: 1.25em;
-  }
 
+@media (max-width: 640px)
+{
+  #table-headers
+  {
+    :first-child{
+      display: none;
+    }
+  }
 }
+
 

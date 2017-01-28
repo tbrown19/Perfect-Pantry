@@ -54,7 +54,6 @@ export default Ember.Route.extend({
     },
 
     purchaseItem(item){
-
       const price = window.prompt("Enter the price of the item");
       //Make sure the value is a digit only.
       if (!isNaN(price) && price > 0) {
