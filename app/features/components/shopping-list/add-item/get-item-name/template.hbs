@@ -1,0 +1,22 @@
+{{#paper-form as |form|}}
+	<form onsubmit={{action "getItemName"}}>
+
+		<div class="layout-align-center">
+
+			<div class="flex-100">
+				{{form.input class = "input-box" label="Item Name" value=itemName onChange=(action (mut itemName)) minlength=3}}
+			</div>
+		</div>
+		<div class="layout-row">
+			<div class="layout-column flex-100">
+				{{#form.submit-button id = "add-new-item" raised=true primary=false disabled=form.isInvalid
+				                      onClick=(action "getItemName")}}
+					Next
+				{{/form.submit-button}}
+			</div>
+		</div>
+	</form>
+
+{{/paper-form}}
+
+

@@ -36,23 +36,12 @@ a.md-button.md-default-theme.md-raised, a.md-button.md-raised, .md-button.md-def
   max-width: 125px;
 }
 
-
-@media (min-width: 800px) {
-  .input-box{
-    font-size: 1em;
-    margin-right: 6px;
-  }
-
+.input-box {
+  font-size: 1.5em;
+  max-width: 200px;
 }
 
 @media (min-width: 992px) {
-
-  .input-box{
-    font-size: 1.1em;
-    margin-right: 5px;
-    padding-right: 5px;
-    max-width: 135px;
-  }
 
   #nav-branding{
     font-size: 2.5em;

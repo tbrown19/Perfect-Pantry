@@ -17,16 +17,23 @@ button{
 }
 
 @media (max-width: 768px) {
-  &{
-    font-size: 10px;
-  }
   button {
-    font-size:12px;
+    font-size:10px;
     padding:4px 6px;
   }
 }
 
-@media (max-width: 1000px) {
+@media (min-width: 768px) {
+  &{
+    font-size: 1em;
+  }
+  button {
+    font-size:10px;
+    padding:4px 6px;
+  }
+}
+
+@media (min-width: 1000px) {
 
   button {
     font-size:16px;
@@ -34,7 +41,7 @@ button{
   }
 }
 
-@media (max-width: 1200px) {
+@media (min-width: 1200px) {
 
   button {
     font-size:16px;

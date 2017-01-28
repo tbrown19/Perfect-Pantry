@@ -1,23 +1,30 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  quantity: "",
+	itemQty: "",
   itemName: "",
   currentIcon: "keyboard arrow up",
 
-  actions: {
-    addNewItems(){
-      //TODO add validation so that the user has to enter a quantity greater than one for an item
-
-      console.log(this.get('quantity'), this.get('itemName'));
-
-      this.sendAction('addItem',this.get('quantity'), this.get('itemName'));
-
-      this.set('quantity', "");
-      this.set('itemName', "");
+	requestingItemName: true,
+	requestingItemQty: false,
 
 
-    },
+	actions: {
+
+		getItemName(itemName){
+    	this.set('itemName', itemName);
+    	this.set('requestingItemQty', true);
+			this.set('requestingItemName', false);
+		},
+
+		getItemQty(itemQty){
+			this.set('itemQty', itemQty);
+			this.set('requestingItemName', true);
+			this.set('requestingItemQty', false);
+
+			this.sendAction('addItem',this.get('itemQty'), this.get('itemName'));
+
+		},
 
 		collapseButton(){
       console.log("you clicked it.");

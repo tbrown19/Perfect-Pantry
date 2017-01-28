@@ -16,7 +16,7 @@ export default Ember.Component.extend({
 		},
 		{
 			"displayName": "Date Added",
-			"shortName": "Added",
+			"shortName": "Date",
 			"propertyName": "formattedDate",
 			"sortableName":"addedDate"
 		},
