@@ -435,6 +435,14 @@ export default Ember.Service.extend({
 			startDate = moment().subtract(1, timeSpan + 's').startOf(timeFormatted);
 			endDate = moment().subtract(1, timeSpan + 's').endOf(timeFormatted);
 		}
+		else if(timeLength === 'this'){
+			console.log(timeSpan);
+			startDate = moment().startOf(timeFormatted);
+			endDate = moment();
+			console.log(startDate.clone());
+			console.log(endDate.clone());
+
+		}
 		else {
 			endDate = moment();
 			startDate = moment().subtract(timeLength, timeSpan + 's');

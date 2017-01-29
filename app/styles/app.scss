@@ -92,15 +92,14 @@ html, body {
   min-width: 50% !important;
 }
 
-.md-headline {
-  font-size: 1.4em !important;
-}
-
 md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar) {
   background-color: $header-color;
   color: white;
 }
 
+md-card{
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3), 0px 1px 1px 0px rgba(0, 0, 0, 0.24), 0px 2px 1px -1px rgba(0, 0, 0, 0.22)
+}
 
 h1,
 h2,

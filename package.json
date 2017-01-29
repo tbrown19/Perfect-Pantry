@@ -60,6 +60,7 @@
     "torii": "0.8.0"
   },
   "dependencies": {
+    "ember-inflector": "^1.11.0",
     "ember-responsive": "^2.0.1"
   }
 }

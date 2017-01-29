@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import moment from 'moment';
+import {singularize, pluralize} from 'ember-inflector';
 
 export default Ember.Route.extend({
   selectedItems: [],
@@ -19,11 +20,10 @@ export default Ember.Route.extend({
 
   actions: {
     addNewItems(itemQty, itemName){
-      const inflector = new Ember.Inflector(Ember.Inflector.defaultRules);
 
       if (itemQty > 1) {
-        if (itemName !== inflector.pluralize(itemName)) {
-          itemName = inflector.pluralize(itemName);
+        if (itemName !== pluralize(itemName)) {
+          itemName = pluralize(itemName);
         }
       }
 

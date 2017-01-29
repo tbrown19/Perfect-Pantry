@@ -6,4 +6,9 @@ export default Ember.Route.extend({
 		return this.modelFor('expenses');
 	},
 
+	actions: {
+		closeDialogWithParent(buttonClicked){
+			console.log(buttonClicked);
+		}
+	},
 });

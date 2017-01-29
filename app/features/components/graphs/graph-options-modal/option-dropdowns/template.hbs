@@ -1,0 +1,63 @@
+<h3 class="text-center">Choose a time period:</h3>
+<div class="layout-row layout-xs-column layout-align-gt-sm-center-center">
+	<div>
+		{{#paper-radio toggle=true value="week" groupValue=timePeriod
+		               onChange=(action (mut timePeriod))}}
+			Week
+		{{/paper-radio}}
+	</div>
+	<div>
+		{{#paper-radio toggle=true value="month" groupValue=timePeriod
+		               onChange=(action (mut timePeriod))}}
+			Month
+		{{/paper-radio}}
+	</div>
+
+	<div>
+		{{#paper-radio toggle=true value="year" groupValue=timePeriod
+		               onChange=(action (mut timePeriod))}}
+			Year
+		{{/paper-radio}}
+	</div>
+</div>
+
+
+<div id="secondary-options" class="layout-column layout-align-gt-sm-center-center">
+	<h3 class="text-center">Choose a time length:</h3>
+
+	<div class="layout-row layout-xs-column">
+		<div>
+			{{#paper-radio toggle=true value="this" groupValue=timeLength
+			               onChange=(action (mut timeLength))}}
+				This {{timePeriod}}
+			{{/paper-radio}}
+		</div>
+
+		<div>
+			{{#paper-radio toggle=true value="last" groupValue=timeLength
+			               onChange=(action (mut timeLength))}}
+				Last {{timePeriod}}
+			{{/paper-radio}}
+		</div>
+	</div>
+
+
+
+	<div class="layout-row layout-xs-column" id="secondRow">
+		{{#each timeLengthOptions as |timeOption index|}}
+			<div>
+				{{#if (gt index 0)}}
+					{{#paper-radio toggle=true value=timeOption groupValue=timeLength
+					               onChange=(action (mut timeLength))}}
+						{{timeOption}} {{timePeriod}}s
+					{{/paper-radio}}
+				{{else}}
+					{{#paper-radio toggle=true value=timeOption groupValue=timeLength
+					               onChange=(action (mut timeLength))}}
+						{{timeOption}} {{timePeriod}}
+					{{/paper-radio}}
+				{{/if}}
+			</div>
+		{{/each}}
+	</div>
+</div>

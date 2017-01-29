@@ -21,7 +21,7 @@ export default Ember.Component.extend({
   }),
 
   chartLabel: Ember.computed('chartLabel', function () {
-    return "Your spending breakdown by time";
+    return "Your Spending";
   }),
 
 
@@ -71,5 +71,11 @@ export default Ember.Component.extend({
 
     };
   }),
+
+	actions: {
+		showOptions(){
+			this.set('showDialog', true);
+		}
+	}
 
 });

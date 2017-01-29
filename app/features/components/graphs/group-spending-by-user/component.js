@@ -37,6 +37,7 @@ export default Ember.Component.extend({
 
 
   graphOptions: Ember.computed('data', function () {
+    console.log("derp");
     return {
       animation : true,
       labels: this.get('chartLabels'),
@@ -50,5 +51,11 @@ export default Ember.Component.extend({
       }]
     };
   }),
+
+	actions: {
+		showOptions(){
+			this.set('showDialog', true);
+		}
+	}
 
 });
