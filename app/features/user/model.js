@@ -1,4 +1,5 @@
 import DS from 'ember-data';
+import Ember from 'ember';
 
 export default DS.Model.extend({
   firstName : DS.attr('String'),
@@ -9,6 +10,12 @@ export default DS.Model.extend({
   shoppingList: DS.belongsTo('shopping-list', {async: true }),
   purchasedList: DS.belongsTo('purchased-list', {async: true }),
 	paymentsToOthers: DS.hasMany('user-to-user-payment', {async: true }),
+
+
+	fullName: Ember.computed('firstName','lastName',  function () {
+		return `${this.get('firstName')} ${this.get('lastName')}`;
+	}),
+
 });
 
 

@@ -1,8 +1,7 @@
 import Ember from 'ember';
-import FirebaseAdapter from 'emberfire/adapters/firebase';
+import moment from 'moment';
 
 export default Ember.Route.extend({
-	derp: false,
 	session: Ember.inject.service('session'),
 	firebaseApp: Ember.inject.service(),
 

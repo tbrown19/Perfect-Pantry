@@ -1,0 +1,18 @@
+
+{{#paper-card as |card|}}
+	{{#paper-toolbar}}
+		{{#paper-toolbar-tools}}
+			<h2>
+				Your Spending
+			</h2>
+		{{/paper-toolbar-tools}}
+	{{/paper-toolbar}}
+	{{#card.actions}}
+		{{#paper-button}}Action 1{{/paper-button}}
+		{{#paper-button}}Action 2{{/paper-button}}
+	{{/card.actions}}
+	{{#card.content}}
+		hi
+		{{userSpendingComp}}
+	{{/card.content}}
+{{/paper-card}}

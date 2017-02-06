@@ -12,7 +12,7 @@
 	{{#card.content}}
 		{{#paper-form onSubmit=(action "sendPantryRequest" pantryEmail) as |form|}}
 			<div class="layout-row">
-				<div class="layout-column flex-50">
+				<div class="layout-column flex-75">
 
 					{{form.input icon="email" type="email" label="Email" value=pantryEmail onChange=(action (mut pantryEmail)) required=true}}
 				</div>

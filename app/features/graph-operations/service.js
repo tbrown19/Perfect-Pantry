@@ -372,7 +372,7 @@ export default Ember.Service.extend({
 				spendingArray = expensesArray[1];
 				//If the time period is focusing on the last x, then we actually don't want the spending that occurs at the last value,
 				//We do want this spending in other cases however so we only remove it in this case.
-				if(timePeriod[0] == "last"){
+				if(timePeriod[0] === "last"){
 					spendingArray.pop();
 					spendingArray.push(0);
 				}

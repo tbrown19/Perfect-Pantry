@@ -1,0 +1,13 @@
+
+{{#paper-card as |card|}}
+	{{#card.title as |title|}}
+		{{#title.text as |text|}}
+			{{#text.headline}}{{user.firstName}}{{/text.headline}}
+			{{#text.subhead}}Large{{/text.subhead}}
+		{{/title.text}}
+	{{/card.title}}
+	{{#card.actions}}
+		{{#paper-button}}Action 1{{/paper-button}}
+		{{#paper-button}}Action 2{{/paper-button}}
+	{{/card.actions}}
+{{/paper-card}}

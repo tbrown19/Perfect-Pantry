@@ -23,7 +23,7 @@ export default Ember.Component.extend({
 
 		let getCostPerUser = getSpendingInfo.then(() => {
 			let totalSpent = spendingPerUser.reduce((a, b) => a + b, 0);
-			return totalSpent / users.length;;
+			return totalSpent / users.length;
 		});
 
 		getCostPerUser.then((costPerUser) => {

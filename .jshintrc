@@ -31,7 +31,8 @@
   "unused": true,
   "globals"      : {
     "Promise"   : true,
-    "$": false
+    "$": false,
+    "jQuery": false
 
   }
 }
