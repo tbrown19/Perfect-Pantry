@@ -9,6 +9,13 @@ export default Ember.Component.extend({
 	//isChecked: this.get('checkAll'),
 	isChecked: false,
 
+	rowItemComp: Ember.computed('rowItem', function () {
+		console.log(this.get('rowItem').get('name'));
+		return this.get('rowItem');
+
+	}),
+
+
 
 	changeInIsChecked: Ember.observer('isChecked', function() {
 		this.sendAction('itemChecked', this);

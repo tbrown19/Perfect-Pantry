@@ -77,6 +77,13 @@ export default Ember.Component.extend({
 	],
 
 
+	itemsChanged: Ember.observer('items', function() {
+		//If we realized the items have changed, which means someone added or deleted, then we want to let the route know.
+		//We send the action to the route so that the route can refresh itself and make sure it has the most updated version
+		//of all the shopping list items.		console.log("we got a change bby");
+		this.sendAction('changeInItems');
+	}),
+
 	smallWindowSize: Ember.computed('other', function () {
 		console.log(window.innerWidth);
 		// return this.get('other');

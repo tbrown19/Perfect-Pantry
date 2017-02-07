@@ -5,12 +5,17 @@ export default Ember.Route.extend({
 
   model: function () {
     const application = this.modelFor('application');
-    const pantry = application.pantry;
+    const shoppingItems = application.pantry.get('shoppingItems').then((items) => {
+      return items;
+    });
 
-    return Ember.RSVP.hash({
-      shoppingItems: pantry.get('shoppingItems'),
-      purchasedList: application.purchasedList,
-      shoppingList: application.shoppingList
+		return shoppingItems.then(() => {
+			return Ember.RSVP.hash({
+			  pantry: application.pantry,
+				shoppingItems: shoppingItems,
+				purchasedList: application.purchasedList,
+				shoppingList: application.shoppingList
+			});
     });
 
 
@@ -60,5 +65,12 @@ export default Ember.Route.extend({
     deleteItem(item){
       item.destroyRecord();
     },
+
+
+		changeInItems(){
+      //To handle the adding of new items, we simply refresh the route so that it can have the most updated version
+      //of the shopping list items.
+      this.refresh();
+		}
   }
 });

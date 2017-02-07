@@ -12,7 +12,6 @@ export default Ember.Component.extend({
 
 	colHeaderNames: Ember.computed('columnInformation', function () {
 		return this.get('columnInformation').map((column) => {
-			console.log(column);
 			const mapProperty = this.get('shortNames')  ? 'shortName' : 'displayName';
 			return column[mapProperty];
 		});
@@ -45,6 +44,9 @@ export default Ember.Component.extend({
 	rowDataSortedLimited: Ember.computed('rowDataSorted', function () {
 		//We either use the limit, or just get all items by getting the length of the array and slicing up to it.
 		const limit = this.get('limit') || this.get('rowDataSorted').length;
+		// this.get('rowDataSorted').forEach((item) => {
+		// 	console.log(item);
+		// });
 		return this.get('rowDataSorted').slice(0, limit);
 
 	}),
