@@ -17,6 +17,9 @@ button{
 }
 
 @media (max-width: 480px) {
+  &{
+    font-size: 1em;
+  }
   button {
     font-size:10px;
     padding:4px 6px;
@@ -25,7 +28,7 @@ button{
 
 @media (min-width: 480px) {
   &{
-    font-size: 1.3em;
+    font-size: 1.2em;
   }
   button {
     font-size:14px;
@@ -35,7 +38,7 @@ button{
 
 @media (min-width: 768px) {
   button {
-    font-size:14px;
+    font-size:.6em;
     padding:4px 6px;
   }
 }
@@ -43,7 +46,7 @@ button{
 @media (min-width: 960px) {
 
   button {
-    font-size:16px;
+    font-size:.75em;
     padding:4px 6px;
   }
 }
@@ -51,7 +54,7 @@ button{
 @media (min-width: 1200px) {
 
   button {
-    font-size:16px;
+    font-size:.75em;
     padding:4px 6px;
   }
 }

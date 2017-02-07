@@ -1,0 +1,21 @@
+{{#if deleteButton}}
+	{{helpers/sortable-table
+			rowData = items
+			allSelectedActionButtons = allSelectedActionButtons
+			tableRowActions = tableRowActions
+			tableRowActionHeaders = tableRowActionHeaders
+			columnInformation = columnInformation
+			sendActionUp = "sendActionUp"
+	}}
+{{else}}
+	{{helpers/sortable-table
+			rowData = items
+			allSelectedActionButtons = allSelectedActionButtons
+			tableRowActions = dashboardTableRowActions
+			tableRowActionHeaders = dashboardTableRowHeaders
+			columnInformation = columnInformation
+			sendActionUp = "sendActionUp"
+			limit = limit
+			shortNames = true
+	}}
+{{/if}}

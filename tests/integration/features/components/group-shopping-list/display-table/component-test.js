@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
-moduleForComponent('dashboard-pantry-list-item', 'Integration | Component | dashboard pantry list item', {
+moduleForComponent('group-shopping-list/display-table', 'Integration | Component | group shopping list/display table', {
   integration: true
 });
 
@@ -10,15 +10,15 @@ test('it renders', function(assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
-  this.render(hbs`{{dashboard-pantry-list-item}}`);
+  this.render(hbs`{{group-shopping-list/display-table}}`);
 
   assert.equal(this.$().text().trim(), '');
 
   // Template block usage:
   this.render(hbs`
-    {{#dashboard-pantry-list-item}}
+    {{#group-shopping-list/display-table}}
       template block text
-    {{/dashboard-pantry-list-item}}
+    {{/group-shopping-list/display-table}}
   `);
 
   assert.equal(this.$().text().trim(), 'template block text');

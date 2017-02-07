@@ -2,6 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 
+
+
+
 	//model = rowData
 	checkedItems: [],
 
@@ -9,6 +12,7 @@ export default Ember.Component.extend({
 
 	colHeaderNames: Ember.computed('columnInformation', function () {
 		return this.get('columnInformation').map((column) => {
+			console.log(column);
 			const mapProperty = this.get('shortNames')  ? 'shortName' : 'displayName';
 			return column[mapProperty];
 		});
@@ -56,6 +60,12 @@ export default Ember.Component.extend({
 			$('#check-all-content').collapse('hide');
 		}
 	}),
+
+
+	displayCheckBoxes: Ember.computed('displayCheckBoxes', function () {
+		return true;
+	}),
+
 
 	actions: {
 		itemChecked(item){

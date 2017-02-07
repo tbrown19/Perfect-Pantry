@@ -111,9 +111,17 @@ h6{
   font-weight: 600;
 }
 
+@media(min-width:768px) {
+  .md-toolbar-tools h2 {
+    font-size: 1.3em;
+  }
+}
 
-.md-toolbar-tools h1 {
-  font-size: 28px;
+
+@media(min-width:992px) {
+  .md-toolbar-tools h2 {
+    font-size: 1.4em;
+  }
 }
 
 

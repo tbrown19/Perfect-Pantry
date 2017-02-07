@@ -14,17 +14,6 @@ export default Ember.Route.extend({
     });
 
 
-    // return this.store.query('shoppingListItem', {
-    //   orderBy: 'pantry', equalTo: user.get('pantry.id')
-    // }).then((shoppingItems) => {
-    //   return Ember.RSVP.hash({
-    //     shoppingItems: shoppingItems,
-    //     purchasedList: user.get('purchasedList'),
-    //     shoppingList: user.get('shoppingList')
-    //   });
-    // });
-
-
   },
 
 

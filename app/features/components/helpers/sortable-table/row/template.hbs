@@ -1,21 +1,14 @@
+<td class="checkBoxCell">
 
+	{{#paper-checkbox
+			name="itemCheckbox"
+			class = "purple shopping-list-checkbox"
+			value=isCheckedComputed
+			onChange=(action (mut isChecked))
+	}}
+	{{/paper-checkbox}}
 
-{{#if noCheckBoxes}}
-
-{{else}}
-	<td class="checkBoxCell">
-
-		{{#paper-checkbox
-				name="itemCheckbox"
-				class = "purple shopping-list-checkbox"
-				value=isCheckedComputed
-				onChange=(action (mut isChecked))
-		}}
-		{{/paper-checkbox}}
-
-
-	</td>
-{{/if}}
+</td>
 
 
 

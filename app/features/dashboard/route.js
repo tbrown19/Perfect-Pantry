@@ -19,6 +19,10 @@ export default Ember.Route.extend({
   },
 
 
+	numberOfItemsToShow: Ember.computed('numberOfItemsToShow', function () {
+		return 7;
+	}),
+
 	actions: {
 		purchaseItem(item){
 			const price = window.prompt("Enter the price of the item");

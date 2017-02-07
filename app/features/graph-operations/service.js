@@ -462,7 +462,7 @@ export default Ember.Service.extend({
 		if (timeLength === 'last') {
 			moments.pop();
 			//For months however we add the current date. This makes it so that the graph ends at the current date and looks nice.
-			if(timeSpan === 'month'){
+			if(timeSpan === 'month' && moments.lastObject !== endDate){
 				moments.push(endDate);
 			}
 		}
