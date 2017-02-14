@@ -51,10 +51,12 @@
     :first-child{
       display: none;
     }
+    :nth-last-child(3){
+      display: none;
+    }
     :first-child i{
       display: inline;
     }
   }
 }
-
 

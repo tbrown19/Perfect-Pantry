@@ -10,7 +10,6 @@ export default Ember.Component.extend({
 	isChecked: false,
 
 	rowItemComp: Ember.computed('rowItem', function () {
-		console.log(this.get('rowItem').get('name'));
 		return this.get('rowItem');
 
 	}),

@@ -15,7 +15,7 @@
 
 			{{#nav.item}}{{#nav.link-to "dashboard"}}Dashboard{{/nav.link-to}}{{/nav.item}}
 
-			{{#bs-dropdown tagName="li" as |dd|}}
+			{{#bs-dropdown tagName="li" class="active" as |dd|}}
 				{{#dd.toggle}}Pantry <span class="caret"></span>{{/dd.toggle}}
 				{{#dd.menu as |ddm|}}
 					{{#ddm.item}}{{#link-to "pantry.current-items"}}Current Items{{/link-to}}{{/ddm.item}}

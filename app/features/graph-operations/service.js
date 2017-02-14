@@ -423,7 +423,7 @@ export default Ember.Service.extend({
 		const step = timePeriod[2].toLowerCase() + "s";
 		let startDate, endDate;
 		let moments = [];
-
+		console.log("The step is ", step);
 
 		let timeFormatted = timeSpan;
 		if(timeSpan === 'week'){

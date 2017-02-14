@@ -24,6 +24,7 @@
 				<th class="noselect th-sorted-on" {{action "sortBy" index}}>
 					{{columnHead}} <i class={{sortIcon}}></i>
 				</th>
+
 			{{else}}
 				<th class="noselect" {{action "sortBy" index}}>
 					{{columnHead}} <i class="glyphicon glyphicon-menu-up glyphicon-none"></i>
@@ -42,6 +43,8 @@
 			</th>
 
 		{{/each}}
+
+
 
 	</tr>
 	</thead>

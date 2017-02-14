@@ -10,9 +10,9 @@
 	<div id="addItemCardContent" class="collapse in">
 		{{#card.content}}
 			{{#if requestingItemName}}
-				{{shopping-list/add-item/get-item-name getItemName="getItemName"}}
+				{{shopping-list/add-item/get-item-name itemName=itemName getItemName="getItemName"}}
 			{{else if requestingItemQty}}
-				{{shopping-list/add-item/get-item-qty getItemQty="getItemQty"}}
+				{{shopping-list/add-item/get-item-qty getItemQty="getItemQty" goBack="goBack"}}
 			{{else}}
 
 			{{/if}}

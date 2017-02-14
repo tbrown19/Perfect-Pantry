@@ -23,7 +23,13 @@ export default Ember.Component.extend({
 			this.set('requestingItemQty', false);
 
 			this.sendAction('addItem',this.get('itemQty'), this.get('itemName'));
+			this.set('itemName', '');
+		},
 
+		goBack(){
+			console.log("hi");
+			this.set('requestingItemName', true);
+			this.set('requestingItemQty', false);
 		},
 
 		collapseButton(){

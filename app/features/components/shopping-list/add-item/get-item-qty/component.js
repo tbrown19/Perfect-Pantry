@@ -8,6 +8,11 @@ export default Ember.Component.extend({
 			event.preventDefault();
 			this.sendAction('getItemQty', this.get('itemQty'));
 		},
+
+		goBack(){
+			event.preventDefault();
+			this.sendAction('goBack');
+		}
 	},
 
 });

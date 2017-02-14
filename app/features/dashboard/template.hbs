@@ -9,6 +9,12 @@
   </div>
 
   <div class="layout-column flex-xs-100 flex-gt-sm-50 flex-sm-100">
+	  {{pantry/display-items
+		  items = model.purchasedItems
+		  limit = true
+		  deleteButton = false
+		  purchaseItem = "purchaseItem"
+	  }}
   </div>
 
 </div>

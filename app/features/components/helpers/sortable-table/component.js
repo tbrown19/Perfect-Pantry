@@ -24,6 +24,7 @@ export default Ember.Component.extend({
 		});
 	}),
 
+
 	reverseSort: true, //default sort is reversed, so that most recent items are first.
 	sortIcon: 'glyphicon glyphicon-menu-down', //default sort icon is down
 

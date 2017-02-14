@@ -5,7 +5,7 @@ export default Ember.Component.extend({
   graphOperations: Ember.inject.service('graph-operations'),
   chartData: [],
   chartLabels: [],
-	timePeriodBasic: ["this", "week", "day"], //length, span, step
+	timePeriodBasic: ["last", "month", "week"], //length, span, step
 
 	timePeriod: Ember.computed('timePeriodBasic', function () {
 		return this.get('timePeriodBasic');
@@ -38,8 +38,9 @@ export default Ember.Component.extend({
       this.set('chartData', results[1]);
     });
 
-
   }),
+
+
 
 
   graphOptions: Ember.computed('resolveChartData', function () {
@@ -84,7 +85,7 @@ export default Ember.Component.extend({
 
 		updateGraphTimeOptions(timeOptions){
 			this.set('chartData', []);
-			this.set('timePeriodBasic', [timeOptions[0], timeOptions[1], 'day']);
+			this.set('timePeriodBasic', [timeOptions[0], timeOptions[1], timeOptions[2]]);
 		}
 	}
 

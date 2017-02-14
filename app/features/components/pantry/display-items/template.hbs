@@ -1,0 +1,26 @@
+{{#paper-card class = "shopping-list-comp" as |card|}}
+	{{#paper-toolbar}}
+		{{#paper-toolbar-tools}}
+			<h2>
+				{{fa-icon 'fa-home'}}&nbsp;Items in pantry
+			</h2>
+		{{/paper-toolbar-tools}}
+	{{/paper-toolbar}}
+	{{#card.content}}
+
+		{{pantry/display-table
+				items = items
+				sendActionUp = "sendActionUp"
+				limit = numberOfItemsToDisplay
+				deleteButton = deleteButton
+		}}
+
+
+	{{/card.content}}
+
+
+	{{#if showingAreYouSureMenu}}
+		{{helpers/confirmation-dialog}}
+	{{/if}}
+
+{{/paper-card}}

@@ -4,7 +4,8 @@
 		<div class="layout-align-center">
 
 			<div class="flex-100">
-				{{form.input class = "input-box" label="Item Name" value=itemName onChange=(action (mut itemName)) minlength=3}}
+					{{form.input class = "input-box" label="Item Name"
+					             value=itemName onChange=(action (mut itemName)) minlength=3}}
 			</div>
 		</div>
 		<div class="layout-row">
@@ -13,6 +14,7 @@
 				                      onClick=(action "getItemName")}}
 					Next
 				{{/form.submit-button}}
+
 			</div>
 		</div>
 	</form>

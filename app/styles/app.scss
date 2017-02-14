@@ -120,11 +120,17 @@ h6{
 
 @media(min-width:992px) {
   .md-toolbar-tools h2 {
-    font-size: 1.4em;
+    font-size: 1.3em;
   }
 }
 
 
 #expenses-card{
   //background-color: #FAFAFA;
+}
+
+li a.active{
+  font-size: 1.1em;
+  background-color: #F0F0F0;
+
 }
