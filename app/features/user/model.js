@@ -9,7 +9,9 @@ export default DS.Model.extend({
   pendingPantry: DS.belongsTo('pantry'),
   shoppingList: DS.belongsTo('shopping-list', {async: true }),
   purchasedList: DS.belongsTo('purchased-list', {async: true }),
-	paymentsToOthers: DS.hasMany('user-to-user-payment', {async: true }),
+	consumedList: DS.belongsTo('consumed-list', {async: true }),
+	paymentsToOthers: DS.hasMany('user-to-user-payment', {inverse: 'sender'}),
+	paymentsFromOthers: DS.hasMany('user-to-user-payment', {inverse: 'receiver'}),
 
 
 	fullName: Ember.computed('firstName','lastName',  function () {

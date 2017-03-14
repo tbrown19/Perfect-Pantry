@@ -13,9 +13,16 @@ export default Ember.Component.extend({
 		}
 	}),
 
+
+	nonConsumedItems: Ember.computed('items', function () {
+		return this.get('items');
+	}),
+
+
 	actions: {
 		sendActionUp(action, item){
 			this.sendAction(action, item);
+
 		},
 
 	},

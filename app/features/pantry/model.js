@@ -1,5 +1,6 @@
 import DS from 'ember-data';
 import { hasMany } from 'ember-data/relationships';
+import Ember from 'ember';
 
 export default DS.Model.extend({
   name: DS.attr('String'),
@@ -7,6 +8,7 @@ export default DS.Model.extend({
   unconfirmedUsers: hasMany('user', {inverse: 'pendingPantry'}),
   shoppingItems: hasMany('shopping-list-item'),
   purchasedItems: hasMany('purchased-list-item'),
+	consumeItems: hasMany('consumed-list-item'),
 
 
 });

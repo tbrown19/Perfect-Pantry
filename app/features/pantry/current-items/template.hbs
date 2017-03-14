@@ -2,4 +2,14 @@
 		items = model.purchasedItems
 		deleteButton = true
 		limit = false
+		consumeItem = "consumeItem"
+		deleteItem = "deleteItem"
+		testAction = "testAction"
+
 }}
+
+
+{{#each model.currentPantryItems as |value|}}
+	{{value.id}}
+{{/each}}
+

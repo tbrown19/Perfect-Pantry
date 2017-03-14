@@ -70,12 +70,6 @@ export default Ember.Component.extend({
 
 	],
 
-
-	smallWindowSize: Ember.computed('other', function () {
-		console.log(window.innerWidth);
-		// return this.get('other');
-	}),
-
 	actions:{
 
 		sendActionUp(action, item){
