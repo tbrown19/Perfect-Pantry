@@ -14,33 +14,18 @@ export default Ember.Service.extend({
 	},
 
 	determineAllUsersPayments(users){
-		let usersActualSpending = [];
 
 		return new Promise((resolve) => {
-			let userPaymentArray = this.get('graphOperations').generateAllUsersAllTimeExpenses(users).then((results) => {
-				results[0].forEach(function (item, index) {
-					console.log(results[0][index], results[1][index]);
-					let userObject = {
-						name: results[0][index],
-						spending: results[1][index]
-					};
-					usersActualSpending.push(userObject);
-				});
-
-
+			let userPaymentArray = this.generateUserSpendingObjects(users).then((users2) => {
+				console.log(users2);
 			});
-			userPaymentArray.then(() => {
-				console.log(usersActualSpending);
-				console.log(usersActualSpending['lois']);
-				// usersArray.forEach()
-			});
-
 			userPaymentArray.then(() => {
 				// console.log("determineAllUsersPayments", usersArray);
 				// console.log("determineAllUsersPayments", spendingAmounts);
-				resolve("This is where the payments will be returned to the component.");
+				resolve("this is where the user payments will go.");
 			});
 		});
+
 
 	},
 
@@ -51,11 +36,73 @@ export default Ember.Service.extend({
 	},
 
 
-
+	// generateUserSpendingObjects(users){
+	// 	let usersActualSpending = [];
+	//
+	// 	return new Promise((resolve) => {
+	// 		//We create user spending objects
+	// 		let userPaymentArray = this.generateAllUsersAllTimeExpenses(users).then((results) => {
+	// 			//For each result we get we create a user object with that users spending and name.
+	// 			results[0].forEach(function (user, index) {
+	// 						let userObject = {
+	// 							user: user,
+	// 							spending: results[1][index]
+	// 				};
+	// 				usersActualSpending.push(userObject);
+	// 			});
+	// 		});
+	// 		userPaymentArray.then(() => {
+	// 			resolve(usersActualSpending);
+	// 		});
+	// 	});
+	// },
 
 
 	determineUserPayment(user, users){
 
+	},
+
+
+	generateUserSpendingObjects(users){
+		let userSpendingObjects = [];
+
+		//Return a new promise because we are dependent on getting each users items.
+		return new Promise((resolve) => {
+
+			//We begin by getting the purchased list for each user, and creating an array that is filled with
+			let purchasedLists = users.map((user) => {
+				return user.get('purchasedList').then((purchasedList) => {
+					return [user, purchasedList];
+				});
+			});
+
+
+			//First we have to resolve all the users purchased lists, before we can go on to summing the items from them.
+			Promise.all(purchasedLists).then((results) => {
+				let allUsersSums = results.map((result) => {
+					return this.get('graphOperations').sumAllTimeUserExpenses(result[0], result[1]);
+				});
+				//After we have allUsersSums, an array that contains information about how much each user has spent all time, we move on.
+				Promise.all(allUsersSums).then((userSpending) => {
+					//Map the spending of each user to an object that contains the user, as well as their spending. This makes
+					//it easier for us to do the math at later points, while still having the original user object.
+					userSpending.forEach(function (user, index) {
+						//Create a new user object using the user model, as well as their all time spending.
+						let userObject = {
+							user: userSpending[index][0],
+							spending: userSpending[index][1]
+						};
+						userSpendingObjects.push(userObject);
+					});
+					//Once we finish adding each user to our array of users, we can resolve the promise.
+					resolve(userSpendingObjects);
+
+				}).catch(function (err) {
+					console.log(err);
+				});
+
+			});
+		});
 	}
 
 

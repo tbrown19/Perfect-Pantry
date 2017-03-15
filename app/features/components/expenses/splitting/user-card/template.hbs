@@ -1,0 +1,13 @@
+
+{{#paper-card as |card|}}
+	{{#paper-toolbar}}
+		{{#paper-toolbar-tools}}
+			<h2>
+				Your Spending
+			</h2>
+		{{/paper-toolbar-tools}}
+	{{/paper-toolbar}}
+	{{#card.content}}
+		<div class="userTotalSpent">All time total: <span class="numberVal">{{userSpendingAllTimeComp}}</span></div>
+	{{/card.content}}
+{{/paper-card}}

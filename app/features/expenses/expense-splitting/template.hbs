@@ -1,24 +1,9 @@
-{{#paper-card as |card|}}
-	{{#card.title as |title|}}
-		{{#title.text as |text|}}
-			{{#text.headline}}Current expense splits for the users in your pantry{{/text.headline}}
-			{{#text.subhead}}The suggested payments owed to each person are shown below that user.{{/text.subhead}}
-		{{/title.text}}
-	{{/card.title}}
-	{{#card.content}}
-		<div>
-			<div class="testHead">
-				<h1> this is a test heading</h1>
-			</div>
+{{expenses/splitting/user-card user = model.user }}
 
-			<div class="testSubHead">
-				<h5> this isnt as big. this isnt as big. this isnt as big. this isnt as big. this isnt as big.this isnt as big.this isnt as big.</h5>
-			</div>
-		</div>
+{{#each model.otherUsers as |user|}}
+	{{expenses/splitting/pantry-member-card user=user makePayment="makePayment"}}
+
+{{/each}}
 
 
 
-
-		{{expenses/user-expenses user = model.user users = model.allUsers otherUsers = model.otherUsers}}
-	{{/card.content}}
-{{/paper-card}}

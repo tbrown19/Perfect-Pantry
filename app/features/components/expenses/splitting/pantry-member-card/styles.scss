@@ -1,0 +1,7 @@
+a.md-button.md-default-theme.md-raised, a.md-button.md-raised, .md-button.md-default-theme.md-raised, .md-button.md-raised {
+  background-color: #3F51B5;
+  color: white;
+  &:hover{
+    background-color: darken(#3F51B5, 5%);
+  }
+}
