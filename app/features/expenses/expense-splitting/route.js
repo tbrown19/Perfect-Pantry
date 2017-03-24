@@ -1,5 +1,5 @@
 import Ember from 'ember';
-
+import moment from 'moment';
 export default Ember.Route.extend({
 
 	model(){
@@ -13,46 +13,26 @@ export default Ember.Route.extend({
 
 
 	actions:{
+		makePayment(otherUser, paymentAmount){
+			console.log("you are", this.currentModel.user.get('firstName'));
+			console.log("you want to pay", otherUser.get('firstName'));
 
+
+			const newPayment = this.get('store').createRecord('user-to-user-payment', {
+				sender: this.currentModel.user,
+				receiver: otherUser,
+				paymentAmount: paymentAmount,
+				paymentDate: moment(),
+			});
+			console.log(newPayment);
+
+			otherUser.get('paymentsFromOthers').pushObject(newPayment);
+			this.currentModel.user.get('paymentsToOthers').pushObject(newPayment);
+			newPayment.save().then(() => {
+				otherUser.save();
+				this.currentModel.user.save();
+			}); 
+		}
 	},
-
-
-	graphOperations: Ember.inject.service('graph-operations'),
-	expenseOperations: Ember.inject.service('expense-operations'),
-
-	spending: Ember.computed('spending', function () {
-		const otherUsers = this.get('otherUsers');
-		const users = this.get('users');
-
-		otherUsers.forEach((user) => {
-			console.log(user.get('firstName'));
-		});
-
-		let userNames = [];
-		let spendingPerUser = [100,100,200,200];
-		let derp = this.get('expenseOperations').determineAllUsersPayments(users).then((results) => {
-			console.log("results go here");
-			console.log(results);
-		});
-
-		let getSpendingInfo = this.get('graphOperations').generateAllUsersAllTimeExpenses(users).then((results) => {
-			console.log(results);
-			userNames = results[0];
-			//spendingPerUser = results[1];
-			//return results;
-		});
-
-		let getCostPerUser = getSpendingInfo.then(() => {
-			console.log(userNames);
-			let totalSpent = spendingPerUser.reduce((a, b) => a + b, 0);
-			return totalSpent / users.length;
-		});
-
-		getCostPerUser.then((costPerUser) => {
-			console.log(spendingPerUser);
-			let differenceFromCost = spendingPerUser.map((x) => x - costPerUser);
-			console.log(differenceFromCost);
-		});
-	}),
 
 });

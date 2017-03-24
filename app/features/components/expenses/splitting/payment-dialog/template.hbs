@@ -1,1 +1,34 @@
-{{yield}}
+{{#paper-dialog class="flex-50" onClose=(action "closePaymentDialog" "cancel") parent="#application-container" origin=dialogOrigin clickOutsideToClose=true}}
+	<form>
+		{{#paper-toolbar}}
+			{{#paper-toolbar-tools}}
+				<h2>New payment for {{user.firstName}}</h2>
+				<span class="flex"></span>
+				{{#paper-button iconButton=true onClick=(action "closePaymentDialog" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
+			{{/paper-toolbar-tools}}
+		{{/paper-toolbar}}
+
+		{{#paper-dialog-content}}
+			{{#paper-form as |form|}}
+				<form onsubmit={{action "getPaymentAmount"}}>
+
+					<div class="layout-align-center">
+
+						<div class="flex-100">
+							{{form.input class="input-box" type="number" label="Payment Amount" default = "0"
+							             autofocus="autofocus"
+							             value=paymentAmount onChange=(action (mut paymentAmount))
+							             min=1 max=10000 required=true}}
+						</div>
+					</div>
+				</form>
+			{{/paper-form}}
+		{{/paper-dialog-content}}
+
+		{{#paper-dialog-actions class="layout-row"}}
+			<span class="flex"></span>
+			{{#paper-button onClick=(action "closePaymentDialog" "cancel")}}Cancel{{/paper-button}}
+			{{#paper-button onClick=(action "closePaymentDialog" "makePayment")}}Pay{{/paper-button}}
+		{{/paper-dialog-actions}}
+	</form>
+{{/paper-dialog}}

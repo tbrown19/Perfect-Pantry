@@ -3,7 +3,9 @@
 	{{#card.title as |title|}}
 		{{#title.text as |text|}}
 			{{#text.headline}}{{user.firstName}}{{/text.headline}}
-			{{#text.subhead}}Large{{/text.subhead}}
+			{{#text.subhead}}Total Spending on items: {{userSpendingAllTimeComp}}{{/text.subhead}}
+			{{#text.subhead}}Total Paid to Others: {{userSpendingAllTimeComp}}{{/text.subhead}}
+
 		{{/title.text}}
 	{{/card.title}}
 	{{#card.actions}}

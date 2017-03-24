@@ -4,13 +4,19 @@ export default Ember.Component.extend({
 	showPaymentDialog:false,
 
 	actions:{
-		makePayment(){
-			console.log("you want to pay", this.get('user').get('firstName'));
+		showPaymentDialog(){
 			this.set('showPaymentDialog', true);
 		},
 
-		closeDialogWithParent(){
+		makePayment(){
+		},
+
+		closePaymentDialog(action, paymentAmount){
 			this.set('showPaymentDialog', false);
+			if (action === 'makePayment') {
+				console.log("you want to pay", this.get('user'));
+				this.sendAction('makePayment', this.get('user'), paymentAmount);
+			}
 		}
 	}
 });

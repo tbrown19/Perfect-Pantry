@@ -1,40 +1,20 @@
 
 {{#if showPaymentDialog}}
-	{{#paper-dialog class="flex-50" onClose=(action "closeDialogWithParent" "cancel") parent="#application-container" origin=dialogOrigin clickOutsideToClose=true}}
-		<form>
-			{{#paper-toolbar}}
-				{{#paper-toolbar-tools}}
-					<h2>Mango (Fruit)</h2>
-					<span class="flex"></span>
-					{{#paper-button iconButton=true onClick=(action "closeDialogWithParent" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
-				{{/paper-toolbar-tools}}
-			{{/paper-toolbar}}
-
-			{{#paper-dialog-content}}
-				<p>
-					This is a dialog rendered into a specific element. Clicking outside the dialog will close it.
-				</p>
-			{{/paper-dialog-content}}
-
-			{{#paper-dialog-actions class="layout-row"}}
-				<span class="flex"></span>
-				{{#paper-button onClick=(action "closeDialogWithParent" "cancel")}}Cancel{{/paper-button}}
-				{{#paper-button onClick=(action "closeDialogWithParent" "ok")}}OK{{/paper-button}}
-			{{/paper-dialog-actions}}
-		</form>
-	{{/paper-dialog}}
+	{{expenses/splitting/payment-dialog user=user closePaymentDialog="closePaymentDialog"}}
 {{/if}}
 
 {{#paper-card as |card|}}
 	{{#paper-toolbar}}
 		{{#paper-toolbar-tools}}
 			<h2>
-				{{user.firstName}}
+				{{user.firstName}} {{user.itemSpending}}
 			</h2>
 		{{/paper-toolbar-tools}}
 	{{/paper-toolbar}}
 	{{#card.content}}
-		{{#paper-button raised=true class="primary" onClick=(action "makePayment")}}Pay this fool.{{/paper-button}}
+		{{#paper-button onClick=(action "showPaymentDialog") raised=true class="payment-button"}}
+			{{fa-icon 'dollar'}} Make Payment
+		{{/paper-button}}
 	{{/card.content}}
 {{/paper-card}}
 

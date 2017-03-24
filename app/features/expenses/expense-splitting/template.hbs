@@ -1,7 +1,9 @@
-{{expenses/splitting/user-card user = model.user }}
+{{expenses/splitting/user-card user = model.user otherUsers=model.otherUsers}}
 
 {{#each model.otherUsers as |user|}}
-	{{expenses/splitting/pantry-member-card user=user makePayment="makePayment"}}
+	{{expenses/splitting/pantry-member-card user=user
+											allUsers = model.allUsers
+	                                        makePayment="makePayment"}}
 
 {{/each}}
 
