@@ -29,8 +29,8 @@ export default Ember.Component.extend({
     const users = this.get('allUsers');
 
     this.get('graphOperations').generateAllUsersAllTimeExpenses(users).then((results) => {
-      this.set('chartLabels', results[0]);
-      this.set('chartData', results[1]);
+      this.set('chartLabels', results.nameLabels);
+      this.set('chartData', results.spendingLabels);
     });
 
   }),

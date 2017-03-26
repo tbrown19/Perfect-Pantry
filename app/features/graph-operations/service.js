@@ -3,46 +3,52 @@ import moment from 'moment';
 
 export default Ember.Service.extend({
 
+	//TODO add method header - method is DONE
+	getSingleUserItemsByDay(items, date){
+		return items.filter(item => {
+			return item.get('purchasedDateFormatted') === date;
+		});
+	},
+
+	/**
+	 * Sums the total cost of all the items in a purchasedList
+	 * @param {purchasedList} purchasedList
+	 * @return {Number} totalSpending
+	 */
+	sumAllSpendingFromList(purchasedList){
+		return new Promise((resolve) => {
+			purchasedList.get('purchasedListItems').then((purchasedItems) => {
+				return purchasedItems.reduce((total, item) => total + item.get('price'), 0);
+			}).then((totalSpending) => {
+				resolve(totalSpending);
+			});
+		});
+	},
+
 	/**
 	 * Sums an individual users all time spending.
 	 * @param {user} user
-	 * @return {Promise} [user, totalSpent]
+	 * @return {Object} {"user":user, "spending":totalSpentAllTime}
 	 */
 	sumAllTimeUserSpending(user) {
-		let totalSpentAllTime = 0;
 		return new Promise((resolve) => {
 			//We have to first get the users purchased list and resolve that promise
 			user.get('purchasedList').then((purchasedList) => {
 				//Then we can get the list of items they've purchased
-				purchasedList.get('purchasedListItems').then((purchasedItemsToSum) => {
-					purchasedItemsToSum.forEach((item) => {
-						totalSpentAllTime += parseFloat(item.get('price'));
-					});
-				}).then(() => {
+				this.sumAllSpendingFromList(purchasedList).then((totalSpentAllTime) => {
 					resolve({
 						"user": user,
 						"spending": totalSpentAllTime
 					});
 				});
 			});
-
 		});
 	},
 
 	//TODO add method header - method is DONE
-	sumSingleDayUserExpenses(user, purchasedList, date){
-		//Return a new promise because we are dependent on getting the items by day and waiting on that.
-		return new Promise((resolve) => {
-			this.getSingleUserItemsByDay(purchasedList, date).then((purchasedItemsToSum) => {
-				//Map the prices of the items to their own array.
-				let itemPrices = purchasedItemsToSum.map((x) => x.get('price'));
-
-				//Then sum them and return so that the we can move onto resolving the promise.
-				return itemPrices.reduce((a, b) => a + b, 0);
-			}).then((totalSpentOnDay) => {
-				resolve([user, date, totalSpentOnDay]);
-			});
-		});
+	sumSingleDayUserExpenses(user, items, date){
+		let itemsOnDay = this.getSingleUserItemsByDay(items, date);
+		return itemsOnDay.reduce((total, item) => total + item.get('price'), 0);
 	},
 
 	//TODO add method header - method is NOT DONE - needs to be rewritten like sumTimePeriodAllUsersExpenses
@@ -50,21 +56,17 @@ export default Ember.Service.extend({
 		let step = timePeriod[2].toLowerCase();
 		let momentPeriods = this.generateMomentObjects(timePeriod);
 		if (step === "day") {
-
-			console.log("we should be here.");
 			//Return a new promise because we are dependent on summing the items for each day.
 			return new Promise((resolve) => {
 				//Create and array of sums for each day by mapping each moment object to the sum function.
-				let dailyTotals = momentPeriods.map((moment) => {
-					return this.sumSingleDayUserExpenses(user, purchasedList, moment.format('MM-DD-YYYY'));
-				});
-				Promise.all(dailyTotals).then((results) => {
-					let totals = results.map((x) => x[2]);
+				purchasedList.get('purchasedListItems').then((items) => {
+					let dailyTotals = momentPeriods.map((moment) => {
+						return this.sumSingleDayUserExpenses(user, items, moment.format('MM-DD-YYYY'));
+					});
+					console.log(dailyTotals);
+					let totals = dailyTotals.map((x) => x);
 					let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
 					resolve([timePeriod, totals, totalSpentOverPeriod]);
-					console.log([timePeriod, totals, totalSpentOverPeriod]);
-				}).catch(function (err) {
-					console.log(err);
 				});
 			});
 		}
@@ -158,29 +160,6 @@ export default Ember.Service.extend({
 			});
 		}
 
-	},
-
-	//TODO add method header - method is DONE
-	getSingleUserItemsByDay(purchasedList, date){
-		let itemsOnDate = [];
-
-		//Return a new promise because we are dependent on getting the items from the purchased list.
-		return new Promise((resolve) => {
-			purchasedList.get('purchasedListItems').then((purchasedItems) => {
-				//If the items purchased date is the same as the date we are looking for, then add it to the array.
-				itemsOnDate = purchasedItems.filter(item => {
-					if (item.get('purchasedDateFormatted') === date) {
-						return item;
-					}
-				});
-
-			}).then(() => {
-				resolve(itemsOnDate);
-
-			}).catch(function (err) {
-				console.log(err);
-			});
-		});
 	},
 
 	//TODO add method header - method is DONE
@@ -339,6 +318,29 @@ export default Ember.Service.extend({
 
 	},
 
+	generateAllUsersAllTimeExpenses(users){
+
+		//Return a new promise because we are dependent on getting each users items.
+		return new Promise((resolve) => {
+			//Create a promise array of all the users and their spending.
+			let allUsersSums = users.map((user) => {
+				return this.sumAllTimeUserSpending(user);
+			});
+
+			//We wait for the promise array of all the users spending to resolve.
+			Promise.all(allUsersSums).then((userSpending) => {
+				//Map the user objects first names and then the users spending to an array of labels for each.
+				resolve({
+					"nameLabels": userSpending.map((x) => x.user.get('firstName')),
+					"spendingLabels": userSpending.map((x) => x.spending)
+				});
+			}).catch(function (err) {
+				console.log(err);
+			});
+
+		});
+	},
+
 	/**
 	 * Generates and formats the data values and labels for a user's spending over a specified time period.
 	 * Ex: Want to find expenses over past week - returns [['Monday','Tuesday',etc'], [10,20,etc]]
@@ -391,27 +393,6 @@ export default Ember.Service.extend({
 		});
 
 
-	},
-
-	generateAllUsersAllTimeExpenses(users){
-
-		//Return a new promise because we are dependent on getting each users items.
-		return new Promise((resolve) => {
-			//Create an array of all the users and their spending.
-			let allUsersSums = users.map((user) => {
-				return this.sumAllTimeUserSpending(user);
-			});
-
-			//After we have allUsersSums, an array that contains information about how much each user has spent all time, we move on.
-			Promise.all(allUsersSums).then((userSpending) => {
-				let spendingArray = userSpending.map((x) => x.spending);
-				let labelsArray = userSpending.map((x) => x.user.get('firstName'));
-				resolve([labelsArray, spendingArray]);
-			}).catch(function (err) {
-				console.log(err);
-			});
-
-		});
 	},
 
 	//TODO add method header  - method is NOT DONE

@@ -14,7 +14,7 @@ export default Ember.Service.extend({
 		// });
 
 		return this.get('graphOperations').sumAllTimeUserSpending(user).then((results) => {
-			return results[1];
+			return results.spending;
 		});
 
 	},
