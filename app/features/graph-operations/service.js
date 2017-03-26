@@ -4,21 +4,28 @@ import moment from 'moment';
 export default Ember.Service.extend({
 
 	/**
-	 * Sums an individual users expenses for all time.
+	 * Sums an individual users all time spending.
 	 * @param {user} user
-	 * @param {purchasedList} purchasedList
 	 * @return {Promise} [user, totalSpent]
 	 */
-	sumAllTimeUserExpenses(user, purchasedList) {
+	sumAllTimeUserSpending(user) {
 		let totalSpentAllTime = 0;
 		return new Promise((resolve) => {
-			purchasedList.get('purchasedListItems').then((purchasedItemsToSum) => {
-				purchasedItemsToSum.forEach((item) => {
-					totalSpentAllTime += parseFloat(item.get('price'));
+			//We have to first get the users purchased list and resolve that promise
+			user.get('purchasedList').then((purchasedList) => {
+				//Then we can get the list of items they've purchased
+				purchasedList.get('purchasedListItems').then((purchasedItemsToSum) => {
+					purchasedItemsToSum.forEach((item) => {
+						totalSpentAllTime += parseFloat(item.get('price'));
+					});
+				}).then(() => {
+					resolve({
+						"user": user,
+						"spending": totalSpentAllTime
+					});
 				});
-			}).then(() => {
-				resolve([user, totalSpentAllTime]);
 			});
+
 		});
 	},
 
@@ -372,7 +379,7 @@ export default Ember.Service.extend({
 				spendingArray = expensesArray[1];
 				//If the time period is focusing on the last x, then we actually don't want the spending that occurs at the last value,
 				//We do want this spending in other cases however so we only remove it in this case.
-				if(timePeriod[0] === "last"){
+				if (timePeriod[0] === "last") {
 					spendingArray.pop();
 					spendingArray.push(0);
 				}
@@ -390,25 +397,16 @@ export default Ember.Service.extend({
 
 		//Return a new promise because we are dependent on getting each users items.
 		return new Promise((resolve) => {
-
-			let purchasedLists = users.map((user) => {
-				return user.get('purchasedList').then((purchasedList) => {
-					return [user, purchasedList];
-				});
+			//Create an array of all the users and their spending.
+			let allUsersSums = users.map((user) => {
+				return this.sumAllTimeUserSpending(user);
 			});
 
-
-			//First we have to resolve all the users purchased lists, before we can go on to summing the items from them.
-			Promise.all(purchasedLists).then((results) => {
-				let allUsersSums = results.map((result) => {
-					return this.sumAllTimeUserExpenses(result[0], result[1]);
-				});
-				//After we have allUsersSums, an array that contains information about how much each user has spent all time, we move on.
-				Promise.all(allUsersSums).then((userSpending) => {
-					let spendingArray = userSpending.map((x) => x[1]);
-					let labelsArray = userSpending.map((x) => x[0].get('firstName'));
-					resolve([labelsArray, spendingArray]);
-				});
+			//After we have allUsersSums, an array that contains information about how much each user has spent all time, we move on.
+			Promise.all(allUsersSums).then((userSpending) => {
+				let spendingArray = userSpending.map((x) => x.spending);
+				let labelsArray = userSpending.map((x) => x.user.get('firstName'));
+				resolve([labelsArray, spendingArray]);
 			}).catch(function (err) {
 				console.log(err);
 			});
@@ -426,7 +424,7 @@ export default Ember.Service.extend({
 		console.log("The step is ", step);
 
 		let timeFormatted = timeSpan;
-		if(timeSpan === 'week'){
+		if (timeSpan === 'week') {
 			//Weeks can be a little weird when getting the start of them, so we make sure to use iso Week.
 			timeFormatted = 'isoWeek';
 		}
@@ -435,7 +433,7 @@ export default Ember.Service.extend({
 			startDate = moment().subtract(1, timeSpan + 's').startOf(timeFormatted);
 			endDate = moment().subtract(1, timeSpan + 's').endOf(timeFormatted);
 		}
-		else if(timeLength === 'this'){
+		else if (timeLength === 'this') {
 			console.log(timeSpan);
 			startDate = moment().startOf(timeFormatted);
 			endDate = moment();
@@ -462,14 +460,14 @@ export default Ember.Service.extend({
 		if (timeLength === 'last') {
 			moments.pop();
 			//For months however we add the current date. This makes it so that the graph ends at the current date and looks nice.
-			if(timeSpan === 'month' && moments.lastObject !== endDate){
+			if (timeSpan === 'month' && moments.lastObject !== endDate) {
 				moments.push(endDate);
 			}
 		}
-		else{
+		else {
 			//Since months don't have a perfect 4 weeks, we need to pop the last moment ( because it could end up being past
 			//todays date if we are adding a week at a time).
-			if(timeSpan === 'month'){
+			if (timeSpan === 'month') {
 				moments.pop();
 			}
 		}

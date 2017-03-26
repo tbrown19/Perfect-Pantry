@@ -31,7 +31,7 @@ export default Ember.Route.extend({
 			newPayment.save().then(() => {
 				otherUser.save();
 				this.currentModel.user.save();
-			}); 
+			});
 		}
 	},
 

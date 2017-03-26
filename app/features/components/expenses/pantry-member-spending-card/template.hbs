@@ -3,13 +3,16 @@
 	{{#card.title as |title|}}
 		{{#title.text as |text|}}
 			{{#text.headline}}{{user.firstName}}{{/text.headline}}
-			{{#text.subhead}}Total Spending on items: {{userSpendingAllTimeComp}}{{/text.subhead}}
-			{{#text.subhead}}Total Paid to Others: {{userSpendingAllTimeComp}}{{/text.subhead}}
-
 		{{/title.text}}
 	{{/card.title}}
 	{{#card.actions}}
 		{{#paper-button}}Action 1{{/paper-button}}
 		{{#paper-button}}Action 2{{/paper-button}}
 	{{/card.actions}}
+
+	{{#card.content}}
+		<div class="userTotalSpent">Spending on items: <span class="numberVal">{{userSpendingAllTimeComp}}</span></div>
+		<div class="userTotalSpent">Payments to others: <span class="numberVal">{{userPaymentsAllTimeComp}}</span></div>
+		<div class="userTotalSpent">Total contributions to pantry: <span class="numberVal">{{userContributionAllTimeComp}}</span></div>
+	{{/card.content}}
 {{/paper-card}}

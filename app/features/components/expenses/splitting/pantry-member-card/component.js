@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
 	showPaymentDialog:false,
 
+
 	actions:{
 		showPaymentDialog(){
 			this.set('showPaymentDialog', true);

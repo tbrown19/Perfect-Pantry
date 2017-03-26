@@ -19,7 +19,7 @@
 				<div class="layout-row layout-wrap " >
 					{{#each model.otherUsers as |user|}}
 						<div class="flex-50 flex-xs-100">
-							{{expenses/pantry-member-spending-card user = user}}
+							{{expenses/pantry-member-spending-card user = user purchasedList = user.purchasedList}}
 						</div>
 					{{/each}}
 

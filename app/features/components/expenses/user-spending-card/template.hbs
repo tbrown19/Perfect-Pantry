@@ -8,6 +8,13 @@
 		{{/paper-toolbar-tools}}
 	{{/paper-toolbar}}
 	{{#card.content}}
-		<div class="userTotalSpent">All time total: <span class="numberVal">{{userSpendingAllTimeComp}}</span></div>
+		<div>
+			<h3>All time</h3>
+			<div class="userTotalSpent">Spending on items: <span class="numberVal">{{userSpendingAllTimeComp}}</span></div>
+			<div class="userTotalSpent">Payments to others: <span class="numberVal">{{userPaymentsAllTimeComp}}</span></div>
+			<div class="userTotalSpent">Total contributions to pantry: <span class="numberVal">{{userContributionAllTimeComp}}</span></div>
+		</div>
+
+
 	{{/card.content}}
 {{/paper-card}}
