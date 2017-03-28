@@ -46,49 +46,127 @@ export default Ember.Service.extend({
 	},
 
 	//TODO add method header - method is DONE
-	sumSingleDayUserExpenses(user, items, date){
+	sumSingleDayUserExpenses(items, date){
 		let itemsOnDay = this.getSingleUserItemsByDay(items, date);
 		return itemsOnDay.reduce((total, item) => total + item.get('price'), 0);
 	},
 
-	//TODO add method header - method is NOT DONE - needs to be rewritten like sumTimePeriodAllUsersExpenses
-	sumTimePeriodUserExpenses(user, purchasedList, timePeriod){
-		let step = timePeriod[2].toLowerCase();
+
+	sumTimePeriodByDay(items, timePeriod){
 		let momentPeriods = this.generateMomentObjects(timePeriod);
-		if (step === "day") {
-			//Return a new promise because we are dependent on summing the items for each day.
-			return new Promise((resolve) => {
+		return new Promise((resolve) => {
 				//Create and array of sums for each day by mapping each moment object to the sum function.
-				purchasedList.get('purchasedListItems').then((items) => {
-					let dailyTotals = momentPeriods.map((moment) => {
-						return this.sumSingleDayUserExpenses(user, items, moment.format('MM-DD-YYYY'));
-					});
-					console.log(dailyTotals);
-					let totals = dailyTotals.map((x) => x);
-					let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
-					resolve([timePeriod, totals, totalSpentOverPeriod]);
+				let dailyTotals = momentPeriods.map((moment) => {
+					return this.sumSingleDayUserExpenses(items, moment.format('MM-DD-YYYY'));
 				});
-			});
+				let totals = dailyTotals.map((x) => x);
+				let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
+				resolve([timePeriod, totals, totalSpentOverPeriod]);
+		});
+	},
+
+
+	timePeriodToStartEndDates(timePeriod){
+		const timeLength = timePeriod[0]; //Last, 1, 2, 3, 4, etc
+		const timeSpan = timePeriod[1].toLowerCase(); //Day, Month, Week, Year
+		let startDate, endDate;
+		let timeFormatted = timeSpan;
+
+		if (timeSpan === 'week') {
+			//Weeks can be a little weird when getting the start of them, so we make sure to use iso Week.
+			timeFormatted = 'isoWeek';
+		}
+		if (timeLength === 'last') {
+			//If we want the LAST, we want the start and end of the previous time span.
+			startDate = moment().subtract(1, timeSpan + 's').startOf(timeFormatted);
+			endDate = moment().subtract(1, timeSpan + 's').endOf(timeFormatted);
+		}
+		else if (timeLength === 'this') {
+			//If we want THIS, we want the start of the time span until now.
+			startDate = moment().startOf(timeFormatted);
+			endDate = moment();
+		}
+		else {
+			//Otherwise we want from the desired time length until now.
+			endDate = moment();
+			startDate = moment().subtract(timeLength, timeSpan + 's');
 		}
 
-		else {
-			return new Promise((resolve) => {
-				console.log("are we here??");
-				//Create and array of sums for each day by mapping each moment object to the sum function.
-				let periodTotals = this.getSingleUserItemsWithinTimePeriod(user, purchasedList, momentPeriods).then((itemsByPeriod) => {
-					return itemsByPeriod.map((period) => {
-						return period.reduce((a, b) => a + b, 0);
-					});
-				});
-				periodTotals.then((results) => {
-					let totals = results;
-					let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
-					resolve([timePeriod, totals, totalSpentOverPeriod]);
-				}).catch(function (err) {
-					console.log(err);
-				});
-			});
+		return {
+			"startDate": startDate,
+			"endDate": endDate
+		};
+	},
+
+
+	generateWeekObjects(startDate, endDate){
+		console.log("start date" , startDate);
+		console.log("end date" , endDate);
+		console.log(startDate.clone());
+		while (startDate < endDate) {
+			startDate.add(1, "week");
+			console.log(startDate.clone());
 		}
+	},
+
+	sumTimePeriodByWeek(items, timePeriod){
+		let momentPeriods = this.generateMomentObjects(timePeriod);
+		console.log(momentPeriods);
+		let dates = this.timePeriodToStartEndDates( ["1", "Month", "Week"]);
+		this.generateWeekObjects(dates.startDate, dates.endDate);
+
+		let dates2 = this.timePeriodToStartEndDates( ["last", "Month", "Week"]);
+		this.generateWeekObjects(dates2.startDate, dates2.endDate);
+
+		return new Promise((resolve) => {
+			//Create and array of sums for each day by mapping each moment object to the sum function.
+			let dailyTotals = momentPeriods.map((moment) => {
+				return this.sumSingleDayUserExpenses(items, moment.format('MM-DD-YYYY'));
+			});
+			let totals = dailyTotals.map((x) => x);
+			let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
+			resolve([timePeriod, totals, totalSpentOverPeriod]);
+		});
+	},
+
+
+	//TODO add method header - method is NOT DONE - needs to be rewritten like sumTimePeriodAllUsersExpenses
+	sumTimePeriodUserExpenses(user, purchasedList, timePeriod){
+		console.log("time period2", timePeriod);
+		let step = timePeriod[2].toLowerCase();
+		//Return a new promise because we are dependent on summing the items for each day.
+		return new Promise((resolve) => {
+			//We get the items here so that we only have to load them once.
+			purchasedList.get('purchasedListItems').then((items) => {
+				if (step === "day") {
+					this.sumTimePeriodByDay(items, timePeriod).then((results) => {
+						resolve(results);
+					});
+				}
+				else if (step === 'week'){
+					console.log("step is a week.");
+					this.sumTimePeriodByWeek(items, timePeriod).then((results) => {
+						resolve(results);
+					});
+				}
+				else {
+						console.log("are we here??");
+						//Create and array of sums for each day by mapping each moment object to the sum function.
+						let periodTotals = this.getSingleUserItemsWithinTimePeriod(user, purchasedList, momentPeriods).then((itemsByPeriod) => {
+							return itemsByPeriod.map((period) => {
+								return period.reduce((a, b) => a + b, 0);
+							});
+						});
+						periodTotals.then((results) => {
+							let totals = results;
+							let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
+							resolve([timePeriod, totals, totalSpentOverPeriod]);
+						}).catch(function (err) {
+							console.log(err);
+						});
+				}
+			});
+		});
 
 	},
 
