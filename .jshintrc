@@ -33,6 +33,5 @@
     "Promise"   : true,
     "$": false,
     "jQuery": false
-
   }
 }

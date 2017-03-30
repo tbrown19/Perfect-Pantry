@@ -10,6 +10,7 @@ export default Ember.Service.extend({
 		});
 	},
 
+	
 	/**
 	 * Sums the total cost of all the items in a purchasedList
 	 * @param {purchasedList} purchasedList
@@ -54,15 +55,13 @@ export default Ember.Service.extend({
 
 	sumTimePeriodByDay(items, timePeriod){
 		let momentPeriods = this.generateMomentObjects(timePeriod);
-		return new Promise((resolve) => {
-				//Create and array of sums for each day by mapping each moment object to the sum function.
-				let dailyTotals = momentPeriods.map((moment) => {
-					return this.sumSingleDayUserExpenses(items, moment.format('MM-DD-YYYY'));
-				});
-				let totals = dailyTotals.map((x) => x);
-				let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
-				resolve([timePeriod, totals, totalSpentOverPeriod]);
+		//Create and array of sums for each day by mapping each moment object to the sum function.
+		let dailyTotals = momentPeriods.map((moment) => {
+			return this.sumSingleDayUserExpenses(items, moment.format('MM-DD-YYYY'));
 		});
+		let totals = dailyTotals.map((x) => x);
+		let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
+		return([timePeriod, totals, totalSpentOverPeriod]);
 	},
 
 
@@ -100,33 +99,68 @@ export default Ember.Service.extend({
 
 
 	generateWeekObjects(startDate, endDate){
-		console.log("start date" , startDate);
-		console.log("end date" , endDate);
-		console.log(startDate.clone());
-		while (startDate < endDate) {
-			startDate.add(1, "week");
-			console.log(startDate.clone());
+		let weekObjects = [];
+
+		//Start date is incremented by a loop within the current week object.
+		while (startDate <= endDate) {
+			let currentWeek = {
+				"startDate": startDate.clone(),
+				"endDate": startDate.add(1, "week").clone(),
+				"items": []
+			};
+			weekObjects.push(currentWeek);
 		}
+		//We want to make sure the last objects end date is the end date we were provided, not a week after the start date.
+		weekObjects[weekObjects.length - 1].endDate = endDate;
+		return weekObjects;
 	},
 
+
+	findFirstItemWithinPeriod(items, firstDate){
+		let firstValidIndex = 0;
+		//We to search until the item we are checking has a purchase date after our first date in a time period,
+		while(moment(items.objectAt(firstValidIndex).get('purchasedDate')).isBefore(firstDate.startDate)){
+			console.log(items.objectAt(firstValidIndex).get('purchasedDate'), " has been checked.");
+			firstValidIndex++;
+		}
+		return firstValidIndex;
+	},
+
+
 	sumTimePeriodByWeek(items, timePeriod){
-		let momentPeriods = this.generateMomentObjects(timePeriod);
-		console.log(momentPeriods);
 		let dates = this.timePeriodToStartEndDates( ["1", "Month", "Week"]);
-		this.generateWeekObjects(dates.startDate, dates.endDate);
+		let weekobjects = this.generateWeekObjects(dates.startDate, dates.endDate);
 
 		let dates2 = this.timePeriodToStartEndDates( ["last", "Month", "Week"]);
-		this.generateWeekObjects(dates2.startDate, dates2.endDate);
+		let weekobjects2 = this.generateWeekObjects(dates2.startDate, dates2.endDate);
+		let numItems = items.length;
+		let currentWeek = 0;
+		let numLoops = 0;
 
-		return new Promise((resolve) => {
-			//Create and array of sums for each day by mapping each moment object to the sum function.
-			let dailyTotals = momentPeriods.map((moment) => {
-				return this.sumSingleDayUserExpenses(items, moment.format('MM-DD-YYYY'));
-			});
-			let totals = dailyTotals.map((x) => x);
-			let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
-			resolve([timePeriod, totals, totalSpentOverPeriod]);
-		});
+		let startIndex = this.findFirstItemWithinPeriod(items, weekobjects[0]);
+
+		for(let i = startIndex; i < numItems; i++){
+			numLoops++;
+			let startDate = weekobjects[currentWeek].startDate;
+			let endDate = weekobjects[currentWeek].endDate;
+			let itemPurchDate = moment(items.objectAt(i).get('purchasedDate'));
+			//If our current items date is between the two dates of the current week, then we add it to that weeks items.
+			if(itemPurchDate.isBetween(startDate,endDate)) {
+				weekobjects[currentWeek].items.push(items.objectAt(i));
+			}
+			//Otherwise we increase the current week so we can if the item fits there
+			else{
+				currentWeek++;
+				if(currentWeek === weekobjects.length){
+					currentWeek = 0;
+				}
+				else{
+					i--;
+				}
+			}
+		}
+		console.log(weekobjects);
+		console.log(numItems, numLoops);
 	},
 
 
@@ -139,15 +173,11 @@ export default Ember.Service.extend({
 			//We get the items here so that we only have to load them once.
 			purchasedList.get('purchasedListItems').then((items) => {
 				if (step === "day") {
-					this.sumTimePeriodByDay(items, timePeriod).then((results) => {
-						resolve(results);
-					});
+					this.sumTimePeriodByDay(items, timePeriod);
 				}
 				else if (step === 'week'){
 					console.log("step is a week.");
-					this.sumTimePeriodByWeek(items, timePeriod).then((results) => {
-						resolve(results);
-					});
+					this.sumTimePeriodByWeek(items,["1", "Month", "Week"]);
 				}
 				else {
 						console.log("are we here??");
