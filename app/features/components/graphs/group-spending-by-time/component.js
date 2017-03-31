@@ -19,7 +19,7 @@ export default Ember.Component.extend({
     return this.get('graphColors').get('borderColorsArray');
   }),
 
-  chartHead: Ember.computed('chartLabel', function () {
+  chartHead: Ember.computed('timePeriodBasic', function () {
   	const timePeriod = this.get('timePeriodBasic');
     return "Pantry spending " + timePeriod[0] + " " + timePeriod[1];
   }),

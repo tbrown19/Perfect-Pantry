@@ -1,45 +1,46 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  graphColors: Ember.inject.service('theme-helper'),
-  graphOperations: Ember.inject.service('graph-operations'),
-  chartData: [],
-  chartLabels: [],
+	graphColors: Ember.inject.service('theme-helper'),
+	graphOperations: Ember.inject.service('graph-operations'),
+	chartData: [],
+	chartLabels: [],
+	timePeriodBasic: ["last", "month", "week"], //length, span, step
 
+	timePeriod: Ember.computed('timePeriodBasic', function () {
+		return this.get('timePeriodBasic');
+	}),
 
-  backgroundColors: Ember.computed('backgroundColorsArray', function () {
-    return this.get('graphColors').get('backgroundColorsArray');
-  }),
+	backgroundColors: Ember.computed('backgroundColorsArray', function () {
+		return this.get('graphColors').get('backgroundColorsArray');
+	}),
 
-  borderColors: Ember.computed('borderColors', function () {
-    return this.get('graphColors').get('borderColorsArray');
-  }),
+	borderColors: Ember.computed('borderColors', function () {
+		return this.get('graphColors').get('borderColorsArray');
+	}),
 
+	chartHead: Ember.computed('timePeriodBasic', function () {
+		const timePeriod = this.get('timePeriodBasic');
+		return "Your spending " + timePeriod[0] + " " + timePeriod[1];
+	}),
 
-  chartHead: Ember.computed('chartLabel', function () {
-    return "Your spending breakdown by time";
-  }),
-
-  chartLabel: Ember.computed('chartLabel', function () {
-    return "Your Spending";
-  }),
-
+	chartLabel: Ember.computed('chartLabel', function () {
+		return "Total Pantry Spending";
+	}),
 
   //This chart is a pie graph that shows all the user's expenses relative to each other.
-  resolveChartData: Ember.computed('resolveChartData', function () {
-    let timePeriod = ["1", "Month", "Week"];
-
+  resolveChartData: Ember.computed('timePeriod', function () {
     let user = this.get('user');
-    this.get('graphOperations').generateFormattedUserExpenses(user, user.get('purchasedList'), timePeriod).then((results) => {
-      this.set('chartLabels', results[0]);
-      this.set('chartData', results[1]);
+    this.get('graphOperations').generateFormattedUserExpenses(user, ['1','week','day']).then((results) => {
+      this.set('chartLabels', results.labels);
+      this.set('chartData', results.spendingAmounts);
     });
 
 
   }),
 
 
-  graphOptions: Ember.computed('data', function () {
+  graphOptions: Ember.computed('resolveChartData', function () {
     return {
       animation: true,
       labels: this.get('chartLabels'),
@@ -75,6 +76,11 @@ export default Ember.Component.extend({
 	actions: {
 		showOptions(){
 			this.set('showDialog', true);
+		},
+		updateGraphTimeOptions(timeOptions){
+			this.set('chartData', []);
+			this.set('timePeriodBasic', [timeOptions[0], timeOptions[1], timeOptions[2]]);
+
 		}
 	}
 
