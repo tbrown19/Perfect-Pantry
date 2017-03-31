@@ -96,7 +96,7 @@ export default Ember.Service.extend({
 
 	findFirstItemWithinPeriod(items, firstDate){
 		let firstValidIndex = 0;
-		firstDate = firstDate.startDate;
+		firstDate = firstDate.startDate || firstDate.date;
 		//We to search until the item we are checking has a purchase date after our first date in a time period,
 		while(moment(items.objectAt(firstValidIndex).get('purchasedDate')).isBefore(firstDate)){
 			console.log(items.objectAt(firstValidIndex).get('purchasedDate'), " has been checked.");
@@ -107,7 +107,7 @@ export default Ember.Service.extend({
 
 	findLastItemWithinPeriod(items, endDate){
 		let lastValidIndex = items.length - 1;
-		endDate = endDate.endDate;
+		endDate = endDate.endDate || endDate.date;
 		//We to search until the item we are checking has a purchase date after our first date in a time period,
 		while(moment(items.objectAt(lastValidIndex).get('purchasedDate')).isAfter(endDate)){
 			console.log(items.objectAt(lastValidIndex).get('purchasedDate'), " has been checked.");
@@ -182,21 +182,22 @@ export default Ember.Service.extend({
 		return timePeriods;
 	},
 
-	addItemsToTimePeriodObjects(items, timePeriods){
+	addItemsToDayObjects(items, days){
 		let curTimePeriod = 0;
-		let startIndex = this.findFirstItemWithinPeriod(items, timePeriods[0]);
-		console.log("timePeriods", timePeriods);
-		let endIndex = this.findLastItemWithinPeriod(items, timePeriods[timePeriods.length - 1]);
+		let startIndex = this.findFirstItemWithinPeriod(items, days[0]);
+		console.log("timePeriods", days);
+		let endIndex = this.findLastItemWithinPeriod(items, days[days.length - 1]);
+		let acc = 0;
 
 		for(let i = startIndex; i <= endIndex; i++){
-			let startDate = timePeriods[curTimePeriod].startDate;
-			let endDate = timePeriods[curTimePeriod].endDate;
+			console.log(acc++);
+			let date = days[curTimePeriod].date;
 			let itemPurchDate = moment(items.objectAt(i).get('purchasedDate'));
 
 			//If our current items date is between the two dates of the current week, then we add it to that weeks items.
-			if(itemPurchDate.isBetween(startDate,endDate, null, [])) {
-				timePeriods[curTimePeriod].items.push(items.objectAt(i));
-				timePeriods[curTimePeriod].totalCost += items.objectAt(i).get('price');
+			if(itemPurchDate.isSame(date, 'day')) {
+				days[curTimePeriod].items.push(items.objectAt(i));
+				days[curTimePeriod].totalCost += items.objectAt(i).get('price');
 
 			}
 			//Wwe increase the current week so we can if the item fits there, in order to recheck the item we subtract 1 from i
@@ -205,21 +206,22 @@ export default Ember.Service.extend({
 				i--;
 			}
 		}
-		return timePeriods;
+		return days;
 	},
-	
+
 
 	sumTimePeriodByDay(items, timePeriod){
 		let dates = this.timePeriodToStartEndDates(timePeriod);
 		let dayObjects = this.generateDayObjects(dates.startDate, dates.endDate);
-		let acc = 0;
-		dayObjects.forEach((day)=> {
-			day.items = items.filter(item => {
-				console.log(acc++);
-				return item.get('purchasedDateFormatted') === day.date.format("MM-DD-YYYY");
-			});
-			day.totalCost =  day.items.reduce((total, item) => total + item.get('price'), 0);
-		});
+		dayObjects = this.addItemsToDayObjects(items, dayObjects);
+		console.log('day objects', dayObjects);
+		// dayObjects.forEach((day)=> {
+		// 	day.items = items.filter(item => {
+		// 		console.log(acc++);
+		// 		return item.get('purchasedDateFormatted') === day.date.format("MM-DD-YYYY");
+		// 	});
+		// 	day.totalCost =  day.items.reduce((total, item) => total + item.get('price'), 0);
+		// });
 		return dayObjects;
 	},
 
