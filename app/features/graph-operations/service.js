@@ -116,24 +116,6 @@ export default Ember.Service.extend({
 		return lastValidIndex;
 	},
 
-	generateWeekObjects(startDate, endDate){
-		let weekObjects = [];
-
-		//Start date is incremented by a loop within the current week object.
-		while (startDate <= endDate) {
-			let currentWeek = {
-				"startDate": startDate.clone(),
-				"endDate": startDate.add(1, "week").clone(),
-				"items": [],
-				"totalCost": 0
-			};
-			weekObjects.push(currentWeek);
-		}
-		//We want to make sure the last objects end date is the end date we were provided, not a week after the start date.
-		weekObjects[weekObjects.length - 1].endDate = endDate;
-		return weekObjects;
-	},
-
 
 	generateDayObjects(startDate, endDate){
 		console.log(startDate, endDate);
@@ -155,11 +137,46 @@ export default Ember.Service.extend({
 	},
 
 
+	generateWeekObjects(startDate, endDate){
+		let weekObjects = [];
+
+		//Start date is incremented by a loop within the current week object.
+		while (startDate <= endDate) {
+			let currentWeek = {
+				"startDate": startDate.clone(),
+				"endDate": startDate.add(1, "week").clone(),
+				"items": [],
+				"totalCost": 0
+			};
+			weekObjects.push(currentWeek);
+		}
+		//We want to make sure the last objects end date is the end date we were provided, not a week after the start date.
+		weekObjects[weekObjects.length - 1].endDate = endDate;
+		return weekObjects;
+	},
+
+	generateMonthObjects(startDate, endDate){
+		let monthObjects = [];
+
+		//Start date is incremented by a loop within the current week object.
+		while (startDate <= endDate) {
+			let currentMonth = {
+				"startDate": startDate.clone().add(1, "day"),
+				"endDate": startDate.add(1, "month").endOf("month").clone(),
+				"items": [],
+				"totalCost": 0
+			};
+			monthObjects.push(currentMonth);
+		}
+		//We want to make sure the last objects end date is the end date we were provided, not a week after the start date.
+		monthObjects[monthObjects.length - 1].endDate = endDate;
+		return monthObjects;
+	},
+
 
 	addItemsToTimePeriodObjects(items, timePeriods){
 		let curTimePeriod = 0;
 		let startIndex = this.findFirstItemWithinPeriod(items, timePeriods[0]);
-		console.log("timePeriods", timePeriods);
 		let endIndex = this.findLastItemWithinPeriod(items, timePeriods[timePeriods.length - 1]);
 
 		for(let i = startIndex; i <= endIndex; i++){
@@ -171,9 +188,8 @@ export default Ember.Service.extend({
 			if(itemPurchDate.isBetween(startDate,endDate, null, [])) {
 				timePeriods[curTimePeriod].items.push(items.objectAt(i));
 				timePeriods[curTimePeriod].totalCost += items.objectAt(i).get('price');
-
 			}
-			//Wwe increase the current week so we can if the item fits there, in order to recheck the item we subtract 1 from i
+			//Wwe increase the current period so we can if the item fits there, in order to recheck the item we subtract 1 from i
 			else{
 				curTimePeriod++;
 				i--;
@@ -185,22 +201,19 @@ export default Ember.Service.extend({
 	addItemsToDayObjects(items, days){
 		let curTimePeriod = 0;
 		let startIndex = this.findFirstItemWithinPeriod(items, days[0]);
-		console.log("timePeriods", days);
 		let endIndex = this.findLastItemWithinPeriod(items, days[days.length - 1]);
-		let acc = 0;
 
 		for(let i = startIndex; i <= endIndex; i++){
-			console.log(acc++);
 			let date = days[curTimePeriod].date;
 			let itemPurchDate = moment(items.objectAt(i).get('purchasedDate'));
 
-			//If our current items date is between the two dates of the current week, then we add it to that weeks items.
+			//If our current items day is the same as the current day then we add it and its price to our day object.
 			if(itemPurchDate.isSame(date, 'day')) {
 				days[curTimePeriod].items.push(items.objectAt(i));
 				days[curTimePeriod].totalCost += items.objectAt(i).get('price');
 
 			}
-			//Wwe increase the current week so we can if the item fits there, in order to recheck the item we subtract 1 from i
+			//Wwe increase the current day so we can if the item fits there, in order to recheck the item we subtract 1 from i
 			else{
 				curTimePeriod++;
 				i--;
@@ -209,19 +222,12 @@ export default Ember.Service.extend({
 		return days;
 	},
 
-
 	sumTimePeriodByDay(items, timePeriod){
+		//Generate the date objects, then pass them on to generate week objects.
 		let dates = this.timePeriodToStartEndDates(timePeriod);
 		let dayObjects = this.generateDayObjects(dates.startDate, dates.endDate);
+		//Add the items to each day object as well as sum up the items costs.
 		dayObjects = this.addItemsToDayObjects(items, dayObjects);
-		console.log('day objects', dayObjects);
-		// dayObjects.forEach((day)=> {
-		// 	day.items = items.filter(item => {
-		// 		console.log(acc++);
-		// 		return item.get('purchasedDateFormatted') === day.date.format("MM-DD-YYYY");
-		// 	});
-		// 	day.totalCost =  day.items.reduce((total, item) => total + item.get('price'), 0);
-		// });
 		return dayObjects;
 	},
 
@@ -229,27 +235,25 @@ export default Ember.Service.extend({
 		//Generate the date objects, then pass them on to generate week objects.
 		let dates = this.timePeriodToStartEndDates(timePeriod);
 		let weekObjects = this.generateWeekObjects(dates.startDate, dates.endDate);
-
 		//Add the items to each week object as well as sum up the items costs.
 		weekObjects = this.addItemsToTimePeriodObjects(items,weekObjects);
     return weekObjects;
 	},
 
 	sumTimePeriodByMonth(items, timePeriod){
+		//Generate the date objects, then pass them on to generate week objects.
 		let dates = this.timePeriodToStartEndDates(timePeriod);
-		let dayObjects = this.generateDayObjects(dates.startDate, dates.endDate);
+		console.log(dates.startDate.clone(), dates.endDate.clone());
+		let monthObjects = this.generateMonthObjects(dates.startDate, dates.endDate);
+		//Add the items to each week object as well as sum up the items costs.
+		monthObjects = this.addItemsToTimePeriodObjects(items,monthObjects);
+		console.log(monthObjects);
 
-		dayObjects.forEach((day)=> {
-			day.items = items.filter(item => {
-				return item.get('purchasedDateFormatted') === day.date.format("MM-DD-YYYY");
-			});
-			day.totalCost =  day.items.reduce((total, item) => total + item.get('price'), 0);
-		});
-		return dayObjects;
+		return monthObjects;
 	},
 
 	//TODO add method header - method is NOT DONE - needs to be rewritten like sumTimePeriodAllUsersExpenses
-	sumTimePeriodUserExpenses(user, purchasedList, timePeriod, forGraphing){
+	sumTimePeriodUserExpenses(purchasedList, timePeriod, forGraphing){
 		console.log("time period2", timePeriod);
 		let step = timePeriod[2].toLowerCase();
 		let timePeriodObjects;
@@ -296,7 +300,7 @@ export default Ember.Service.extend({
 					}
 
 				}
-				else if (step === 'Month'){
+				else if (step === 'month'){
 					timePeriodObjects = this.sumTimePeriodByMonth(items, timePeriod);
 					if(forGraphing) {
 						let labelsArray = timePeriodObjects.map((period) => {
@@ -314,7 +318,6 @@ export default Ember.Service.extend({
 					else{
 						resolve(timePeriodObjects);
 					}
-
 				}
 			});
 		});
@@ -581,7 +584,7 @@ export default Ember.Service.extend({
 		//Return a new promise because we are dependent on summing items over a time period.
 		return new Promise((resolve) => {
 			user.get('purchasedList').then((purchasedList) => {
-				this.sumTimePeriodUserExpenses(user, purchasedList, timePeriod, true).then((results) => {
+				this.sumTimePeriodUserExpenses(purchasedList, timePeriod, true).then((results) => {
 					resolve(results);
 				}).catch(function (err) {
 					console.log(err);
