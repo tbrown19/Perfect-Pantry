@@ -21,17 +21,32 @@ export default Ember.Component.extend({
 
 	chartHead: Ember.computed('timePeriodBasic', function () {
 		const timePeriod = this.get('timePeriodBasic');
-		return "Your spending " + timePeriod[0] + " " + timePeriod[1];
+		if(timePeriod[0] === 'last' || timePeriod[0] === 'this'){
+			return "Your spending " + timePeriod[0] + " " + timePeriod[1] + " by " + timePeriod[2];
+		}
+		else if(timePeriod[1] === 1){
+			return "Your spending over the last " + timePeriod[0] + " " + timePeriod[1] + " by " + timePeriod[2];
+		}
+		else{
+			return "Your spending over the last " + timePeriod[0] + " " + timePeriod[1] + "s by " + timePeriod[2];
+		}
 	}),
 
 	chartLabel: Ember.computed('chartLabel', function () {
 		return "Total Pantry Spending";
 	}),
 
+	xAxisLabel: Ember.computed('timePeriodBasic', function () {
+		return this.get('timePeriodBasic')[2] + " of";
+	}),
+
+
   //This chart is a pie graph that shows all the user's expenses relative to each other.
   resolveChartData: Ember.computed('timePeriod', function () {
+		//this.get('timePeriod')
+		//["this","year","month"]
     let user = this.get('user');
-    this.get('graphOperations').generateFormattedUserExpenses(user, ['3','month','month']).then((results) => {
+    this.get('graphOperations').generateFormattedUserExpenses(user,this.get('timePeriod')).then((results) => {
       this.set('chartLabels', results.labels);
       this.set('chartData', results.spendingAmounts);
     });
@@ -44,9 +59,11 @@ export default Ember.Component.extend({
     return {
       animation: true,
       labels: this.get('chartLabels'),
-      indexLabelFontSize: 16,
+			xLabels: "Week of",
+			indexLabelFontSize: 16,
       datasets: [{
-        label: "Week of",
+      	xLabels: ["Week of"],
+        label: "Your Spending",
         data: this.get('chartData'),
         backgroundColor: this.get('backgroundColors')[6],
         borderColor: this.get('borderColors')[6],
@@ -66,8 +83,12 @@ export default Ember.Component.extend({
         yAxes: [{
           ticks: {
             beginAtZero: true
-          }
-        }]
+          },
+					scaleLabel: {
+						display: true,
+						labelString: 'Spending'
+					}
+        }],
       },
 
     };

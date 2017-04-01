@@ -30,8 +30,11 @@ export default Ember.Component.extend({
 
 	changeInTimeLength: Ember.observer('timeLength', function () {
 		const timeLength = this.get('timeLength');
-		console.log("hmmmm" + this.get('timeStep'));
+		const timePeriod = this.get('timePeriod');
 		if(timeLength !== null){
+			if(timeLength >= 6 && timePeriod === 'month'){
+				this.set('timeStep', 'month');
+			}
 			this.sendAction('enableOKButton', true, [this.get('timeLength'), this.get('timePeriod'), this.get('timeStep')]);
 		}
 		else{
@@ -42,7 +45,6 @@ export default Ember.Component.extend({
 
 	updateTimeLengthOptions(){
 		const timePeriod = this.get('timePeriod');
-		console.log(timePeriod);
 		if(timePeriod === 'week'){
 			//Show the secondary row in order to display the other options.
 			document.getElementById("secondRow").style.visibility = "visible";
@@ -54,12 +56,15 @@ export default Ember.Component.extend({
 			this.set('timeLengthOptions', ['1', '3', '6']);
 			console.log("set to week?");
 			this.set('timeStep', "week");
-
+		}
+		else if(timePeriod === 'year'){
+			this.set('timeStep', "month");
+			document.getElementById("secondRow").style.visibility = "hidden";
 		}
 		else{
 			//Hide the second row and set the options back to default, since a time period of a year doesn't need those options.
 			document.getElementById("secondRow").style.visibility = "hidden";
-			//Set it to 10 and 20, that way it maintains similiar length, but won't auto select a value.
+			//Set it to 10 and 20, that way it maintains similar length, but won't auto select a value.
 			this.set('timeLengthOptions', ['10', '20']);
 			this.set('timeLength', 'This');
 		}

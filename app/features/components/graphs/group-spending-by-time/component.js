@@ -21,7 +21,15 @@ export default Ember.Component.extend({
 
   chartHead: Ember.computed('timePeriodBasic', function () {
   	const timePeriod = this.get('timePeriodBasic');
-    return "Pantry spending " + timePeriod[0] + " " + timePeriod[1];
+		if(timePeriod[0] === 'last' || timePeriod[0] === 'this'){
+			return "Pantry spending " + timePeriod[0] + " " + timePeriod[1] + " by " + timePeriod[2];
+		}
+		else if(timePeriod[1] === 1){
+			return "Pantry spending over the last " + timePeriod[0] + " " + timePeriod[1] + " by " + timePeriod[2];
+		}
+		else{
+			return "Pantry spending over the last " + timePeriod[0] + " " + timePeriod[1] + "s by " + timePeriod[2];
+		}
   }),
 
   chartLabel: Ember.computed('chartLabel', function () {
@@ -44,7 +52,6 @@ export default Ember.Component.extend({
 
 
   graphOptions: Ember.computed('resolveChartData', function () {
-  	console.log("hii??");
   	//Get the chart data and wait for it to resolve, then
 		return {
 			animation: true,

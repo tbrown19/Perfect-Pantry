@@ -99,7 +99,6 @@ export default Ember.Service.extend({
 		firstDate = firstDate.startDate || firstDate.date;
 		//We to search until the item we are checking has a purchase date after our first date in a time period,
 		while(moment(items.objectAt(firstValidIndex).get('purchasedDate')).isBefore(firstDate)){
-			console.log(items.objectAt(firstValidIndex).get('purchasedDate'), " has been checked.");
 			firstValidIndex++;
 		}
 		return firstValidIndex;
@@ -110,7 +109,6 @@ export default Ember.Service.extend({
 		endDate = endDate.endDate || endDate.date;
 		//We to search until the item we are checking has a purchase date after our first date in a time period,
 		while(moment(items.objectAt(lastValidIndex).get('purchasedDate')).isAfter(endDate)){
-			console.log(items.objectAt(lastValidIndex).get('purchasedDate'), " has been checked.");
 			lastValidIndex--;
 		}
 		return lastValidIndex;
@@ -160,9 +158,10 @@ export default Ember.Service.extend({
 
 		//Start date is incremented by a loop within the current week object.
 		while (startDate <= endDate) {
+			console.log(startDate.clone());
 			let currentMonth = {
-				"startDate": startDate.clone().add(1, "day"),
-				"endDate": startDate.add(1, "month").endOf("month").clone(),
+				"startDate": startDate.add(1,"day").startOf("month").clone(),
+				"endDate": startDate.endOf("month").clone(),
 				"items": [],
 				"totalCost": 0
 			};
@@ -598,7 +597,7 @@ export default Ember.Service.extend({
 		let spendingArray = [];
 		let labelsArray = [];
 		labelsArray = this.generateLabelsForTimePeriod(timePeriod);
-
+		console.log(labelsArray);
 		//Return a new promise because we are dependent on summing items over a time period.
 		return new Promise((resolve) => {
 			//Create and array of sums for each day by mapping each moment object to the sum function.
@@ -627,7 +626,6 @@ export default Ember.Service.extend({
 		const step = timePeriod[2].toLowerCase() + "s";
 		let startDate, endDate;
 		let moments = [];
-		console.log("The step is ", step);
 
 		let timeFormatted = timeSpan;
 		if (timeSpan === 'week') {
