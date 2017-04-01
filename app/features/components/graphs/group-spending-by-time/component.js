@@ -5,7 +5,7 @@ export default Ember.Component.extend({
   graphOperations: Ember.inject.service('graph-operations'),
   chartData: [],
   chartLabels: [],
-	timePeriodBasic: ["last", "month", "week"], //length, span, step
+	timePeriodBasic: ["last", "week", "day"], //length, span, step
 
 	timePeriod: Ember.computed('timePeriodBasic', function () {
 		return this.get('timePeriodBasic');
@@ -41,9 +41,14 @@ export default Ember.Component.extend({
 	resolveChartData: Ember.computed('timePeriod', function () {
 
     let timePeriod = this.get('timePeriod');
+		var t0 = performance.now();
+
+
     this.get('graphOperations').generateAllUsersFormattedExpenses(this.get('user').get('pantry'), timePeriod).then((results) => {
       this.set('chartLabels', results[0]);
       this.set('chartData', results[1]);
+			var t1 = performance.now();
+			console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.");
     });
 
   }),

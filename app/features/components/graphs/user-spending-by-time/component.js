@@ -5,7 +5,7 @@ export default Ember.Component.extend({
 	graphOperations: Ember.inject.service('graph-operations'),
 	chartData: [],
 	chartLabels: [],
-	timePeriodBasic: ["last", "month", "week"], //length, span, step
+	timePeriodBasic: ["last", "month", "day"], //length, span, step
 
 	timePeriod: Ember.computed('timePeriodBasic', function () {
 		return this.get('timePeriodBasic');
@@ -46,11 +46,12 @@ export default Ember.Component.extend({
 		//this.get('timePeriod')
 		//["this","year","month"]
     let user = this.get('user');
-    this.get('graphOperations').generateFormattedUserExpenses(user,this.get('timePeriod')).then((results) => {
-      this.set('chartLabels', results.labels);
-      this.set('chartData', results.spendingAmounts);
-    });
-
+		// this.get('graphOperations').generateFormattedUserExpenses(user,this.get('timePeriod')).then((results) => {
+     //  this.set('chartLabels', results.labels);
+     //  this.set('chartData', results.spendingAmounts);
+		//
+		//
+		// });
 
   }),
 

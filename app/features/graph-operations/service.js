@@ -107,10 +107,12 @@ export default Ember.Service.extend({
 	findLastItemWithinPeriod(items, endDate){
 		let lastValidIndex = items.length - 1;
 		endDate = endDate.endDate || endDate.date;
+
 		//We to search until the item we are checking has a purchase date after our first date in a time period,
-		while(moment(items.objectAt(lastValidIndex).get('purchasedDate')).isAfter(endDate)){
+		while(moment(items.objectAt(lastValidIndex).get('purchasedDate')).startOf('day').isAfter(endDate)){
 			lastValidIndex--;
 		}
+
 		return lastValidIndex;
 	},
 
@@ -172,7 +174,6 @@ export default Ember.Service.extend({
 		return monthObjects;
 	},
 
-
 	addItemsToTimePeriodObjects(items, timePeriods){
 		let curTimePeriod = 0;
 		let startIndex = this.findFirstItemWithinPeriod(items, timePeriods[0]);
@@ -198,14 +199,15 @@ export default Ember.Service.extend({
 	},
 
 	addItemsToDayObjects(items, days){
+		console.log(items);
 		let curTimePeriod = 0;
 		let startIndex = this.findFirstItemWithinPeriod(items, days[0]);
 		let endIndex = this.findLastItemWithinPeriod(items, days[days.length - 1]);
-
+		console.log(startIndex,endIndex);
 		for(let i = startIndex; i <= endIndex; i++){
 			let date = days[curTimePeriod].date;
 			let itemPurchDate = moment(items.objectAt(i).get('purchasedDate'));
-
+			console.log(date,itemPurchDate);
 			//If our current items day is the same as the current day then we add it and its price to our day object.
 			if(itemPurchDate.isSame(date, 'day')) {
 				days[curTimePeriod].items.push(items.objectAt(i));
@@ -227,6 +229,7 @@ export default Ember.Service.extend({
 		let dayObjects = this.generateDayObjects(dates.startDate, dates.endDate);
 		//Add the items to each day object as well as sum up the items costs.
 		dayObjects = this.addItemsToDayObjects(items, dayObjects);
+		console.log(dayObjects);
 		return dayObjects;
 	},
 
@@ -351,45 +354,110 @@ export default Ember.Service.extend({
 	},
 
 	//TODO add method header - method is DONE i think.
-	sumTimePeriodAllUsersExpenses(pantry, timePeriod){
+	sumTimePeriodAllUsersExpenses(pantry, timePeriod, forGraphing){
 		let momentPeriods = this.generateMomentObjects(timePeriod);
 		let step = timePeriod[2].toLowerCase();
+		let timePeriodObjects;
+		return new Promise((resolve) => {
 
-		//Return a new promise because we are dependent on summing the items for each day.
-		if (step === "day") {
-			return new Promise((resolve) => {
-				//Create and array of sums for each day by mapping each moment object to the sum function.
-				let dailyTotals = momentPeriods.map((moment) => {
-					return this.sumSingleDayAllUsersExpenses(pantry, moment.format('MM-DD-YYYY'));
-				});
+			//Return a new promise because we are dependent on summing the items for each day.
+			pantry.get('purchasedItems').then((items) => {
+				console.log(items);
+				if (step === "day") {
+					timePeriodObjects = this.sumTimePeriodByDay(items, timePeriod);
+					if (forGraphing) {
+						let labelsArray = timePeriodObjects.map((period) => {
+							return period.date.format("MM-DD");
+						});
 
-				Promise.all(dailyTotals).then((results) => {
-					let totals = results.map((x) => x[2]);
-					let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
+						let spendingArray = timePeriodObjects.map((period) => {
+							return period.totalCost;
+						});
+						resolve({
+							"labels": labelsArray,
+							"spendingAmounts": spendingArray
+						});
+					}
+					else {
+						//console.log(timePeriodObjects);
+						resolve(timePeriodObjects);
+					}
+				}
+				else if (step === 'week') {
+					timePeriodObjects = this.sumTimePeriodByWeek(items, timePeriod);
+					if (forGraphing) {
+						let labelsArray = timePeriodObjects.map((period) => {
+							return period.startDate.format("MM-DD");
+						});
 
-					resolve([timePeriod, totals, totalSpentOverPeriod]);
-				}).catch(function (err) {
-					console.log(err);
-				});
+						let spendingArray = timePeriodObjects.map((period) => {
+							return period.totalCost;
+						});
+						resolve({
+							"labels": labelsArray,
+							"spendingAmounts": spendingArray
+						});
+					}
+					else {
+						resolve(timePeriodObjects);
+					}
+
+				}
+				else if (step === 'month') {
+					timePeriodObjects = this.sumTimePeriodByMonth(items, timePeriod);
+					if (forGraphing) {
+						let labelsArray = timePeriodObjects.map((period) => {
+							return period.startDate.format("MM-DD");
+						});
+
+						let spendingArray = timePeriodObjects.map((period) => {
+							return period.totalCost;
+						});
+						resolve({
+							"labels": labelsArray,
+							"spendingAmounts": spendingArray
+						});
+					}
+					else {
+						resolve(timePeriodObjects);
+					}
+				}
 			});
-		}
-		else {
-			return new Promise((resolve) => {
-				//Create and array of sums for each day by mapping each moment object to the sum function.
-				let periodTotals = this.getAllUsersItemsWithinTimePeriod(pantry, momentPeriods).then((itemsByPeriod) => {
-					return itemsByPeriod.map((period) => {
-						return period.reduce((a, b) => a + b, 0);
-					});
-				});
-				periodTotals.then((results) => {
-					let totals = results;
-					let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
-					resolve([timePeriod, totals, totalSpentOverPeriod]);
-				}).catch(function (err) {
-					console.log(err);
-				});
-			});
-		}
+		});
+		// if (step === "day") {
+		// 	return new Promise((resolve) => {
+		// 		//Create and array of sums for each day by mapping each moment object to the sum function.
+		// 		let dailyTotals = momentPeriods.map((moment) => {
+		// 			return this.sumSingleDayAllUsersExpenses(pantry, moment.format('MM-DD-YYYY'));
+		// 		});
+		//
+		// 		Promise.all(dailyTotals).then((results) => {
+		// 			let totals = results.map((x) => x[2]);
+		// 			let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
+		//
+		// 			resolve([timePeriod, totals, totalSpentOverPeriod]);
+		// 		}).catch(function (err) {
+		// 			console.log(err);
+		// 		});
+		// 	});
+		// }
+		// else {
+		// 	return new Promise((resolve) => {
+		// 		//Create and array of sums for each day by mapping each moment object to the sum function.
+		// 		let periodTotals = this.getAllUsersItemsWithinTimePeriod(pantry, momentPeriods).then((itemsByPeriod) => {
+		// 			return itemsByPeriod.map((period) => {
+		// 				return period.reduce((a, b) => a + b, 0);
+		// 			});
+		// 		});
+		// 		periodTotals.then((results) => {
+		// 			let totals = results;
+		// 			let totalSpentOverPeriod = totals.reduce((a, b) => a + b, 0);
+		// 			resolve([timePeriod, totals, totalSpentOverPeriod]);
+		// 		}).catch(function (err) {
+		// 			console.log(err);
+		// 		});
+		// 	});
+		//}
 
 	},
 
