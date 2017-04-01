@@ -118,8 +118,6 @@ export default Ember.Service.extend({
 
 
 	generateDayObjects(startDate, endDate){
-		console.log(startDate, endDate);
-
 		let dayObjects = [];
 
 		//Start date is incremented by a loop within the current week object.
@@ -135,8 +133,7 @@ export default Ember.Service.extend({
 		//We want to make sure the last objects end date is the end date we were provided, not a week after the start date.
 		return dayObjects;
 	},
-
-
+	
 	generateWeekObjects(startDate, endDate){
 		let weekObjects = [];
 
@@ -199,20 +196,16 @@ export default Ember.Service.extend({
 	},
 
 	addItemsToDayObjects(items, days){
-		console.log(items);
 		let curTimePeriod = 0;
 		let startIndex = this.findFirstItemWithinPeriod(items, days[0]);
 		let endIndex = this.findLastItemWithinPeriod(items, days[days.length - 1]);
-		console.log(startIndex,endIndex);
 		for(let i = startIndex; i <= endIndex; i++){
 			let date = days[curTimePeriod].date;
 			let itemPurchDate = moment(items.objectAt(i).get('purchasedDate'));
-			console.log(date,itemPurchDate);
 			//If our current items day is the same as the current day then we add it and its price to our day object.
 			if(itemPurchDate.isSame(date, 'day')) {
 				days[curTimePeriod].items.push(items.objectAt(i));
 				days[curTimePeriod].totalCost += items.objectAt(i).get('price');
-
 			}
 			//Wwe increase the current day so we can if the item fits there, in order to recheck the item we subtract 1 from i
 			else{
@@ -362,7 +355,6 @@ export default Ember.Service.extend({
 
 			//Return a new promise because we are dependent on summing the items for each day.
 			pantry.get('purchasedItems').then((items) => {
-				console.log(items);
 				if (step === "day") {
 					timePeriodObjects = this.sumTimePeriodByDay(items, timePeriod);
 					if (forGraphing) {
@@ -662,29 +654,16 @@ export default Ember.Service.extend({
 
 	//TODO Add method header - method is DONE
 	generateAllUsersFormattedExpenses(pantry, timePeriod){
-		let spendingArray = [];
-		let labelsArray = [];
-		labelsArray = this.generateLabelsForTimePeriod(timePeriod);
-		console.log(labelsArray);
+		//labelsArray = this.generateLabelsForTimePeriod(timePeriod);
 		//Return a new promise because we are dependent on summing items over a time period.
 		return new Promise((resolve) => {
 			//Create and array of sums for each day by mapping each moment object to the sum function.
-			this.sumTimePeriodAllUsersExpenses(pantry, timePeriod).then((expensesArray) => {
-				spendingArray = expensesArray[1];
-				//If the time period is focusing on the last x, then we actually don't want the spending that occurs at the last value,
-				//We do want this spending in other cases however so we only remove it in this case.
-				if (timePeriod[0] === "last") {
-					spendingArray.pop();
-					spendingArray.push(0);
-				}
-				resolve([labelsArray, spendingArray]);
+			this.sumTimePeriodAllUsersExpenses(pantry, timePeriod, true).then((results) => {
+				resolve(results);
 			}).catch(function (err) {
-
 				console.log(err);
 			});
 		});
-
-
 	},
 
 	//TODO add method header  - method is NOT DONE

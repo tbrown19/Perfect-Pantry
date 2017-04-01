@@ -45,8 +45,8 @@ export default Ember.Component.extend({
 
 
     this.get('graphOperations').generateAllUsersFormattedExpenses(this.get('user').get('pantry'), timePeriod).then((results) => {
-      this.set('chartLabels', results[0]);
-      this.set('chartData', results[1]);
+			this.set('chartLabels', results.labels);
+			this.set('chartData', results.spendingAmounts);
 			var t1 = performance.now();
 			console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.");
     });
