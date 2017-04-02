@@ -46,12 +46,12 @@ export default Ember.Component.extend({
 		//this.get('timePeriod')
 		//["this","year","month"]
     let user = this.get('user');
-		// this.get('graphOperations').generateFormattedUserExpenses(user,this.get('timePeriod')).then((results) => {
-     //  this.set('chartLabels', results.labels);
-     //  this.set('chartData', results.spendingAmounts);
-		//
-		//
-		// });
+		this.get('graphOperations').generateFormattedUserExpenses(user,this.get('timePeriod')).then((results) => {
+      this.set('chartLabels', results.labels);
+      this.set('chartData', results.spendingAmounts);
+
+
+		});
 
   }),
 
