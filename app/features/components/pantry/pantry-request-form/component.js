@@ -6,6 +6,7 @@ export default Ember.Component.extend({
 	actions:{
 		sendPantryRequest(email){
 			console.log(email);
+			this.sendAction("sendPantryRequest", email);
 		}
 	}
 });

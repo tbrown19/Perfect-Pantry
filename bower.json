@@ -6,11 +6,9 @@
     "firebase": "^3.0.0",
     "bootstrap": "~3.3.5",
     "font-awesome": "~4.5.0",
-    "hammer.js": "^2.0.8",
     "matchMedia": "0.2.0",
     "lodash": "~3.10.0",
     "chartjs": "2.1.6",
-    "chart.js": "^2.4.0",
-    "semantic-ui": "^2.2.7"
+    "hammer.js": "^2.0.8"
   }
 }

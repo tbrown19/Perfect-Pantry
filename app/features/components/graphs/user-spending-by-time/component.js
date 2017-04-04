@@ -1,11 +1,12 @@
 import Ember from 'ember';
+import _ from 'lodash';
 
 export default Ember.Component.extend({
 	graphColors: Ember.inject.service('theme-helper'),
 	graphOperations: Ember.inject.service('graph-operations'),
 	chartData: [],
 	chartLabels: [],
-	timePeriodBasic: ["last", "month", "day"], //length, span, step
+	timePeriodBasic: ["last", "week", "day"], //length, span, step
 
 	timePeriod: Ember.computed('timePeriodBasic', function () {
 		return this.get('timePeriodBasic');
@@ -21,6 +22,7 @@ export default Ember.Component.extend({
 
 	chartHead: Ember.computed('timePeriodBasic', function () {
 		const timePeriod = this.get('timePeriodBasic');
+
 		if(timePeriod[0] === 'last' || timePeriod[0] === 'this'){
 			return "Your spending " + timePeriod[0] + " " + timePeriod[1] + " by " + timePeriod[2];
 		}
@@ -46,10 +48,10 @@ export default Ember.Component.extend({
 		//this.get('timePeriod')
 		//["this","year","month"]
     let user = this.get('user');
-		this.get('graphOperations').generateFormattedUserExpenses(user,this.get('timePeriod')).then((results) => {
+    let timePeriod = this.get('timePeriod');
+		this.get('graphOperations').generateFormattedUserExpenses(user, timePeriod, true).then((results) => {
       this.set('chartLabels', results.labels);
       this.set('chartData', results.spendingAmounts);
-
 
 		});
 

@@ -9,6 +9,4 @@ export default DS.Model.extend({
   addedDate: DS.attr('String'),
   formattedDate: DS.attr('String'),
   tags: DS.hasMany('tags'),
-
-
 });

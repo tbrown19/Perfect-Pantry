@@ -41,10 +41,11 @@ export default Ember.Component.extend({
 	resolveChartData: Ember.computed('timePeriod', function () {
 
     let timePeriod = this.get('timePeriod');
+    let pantry = this.get('user').get('pantry');
 		var t0 = performance.now();
 
 
-    this.get('graphOperations').generateAllUsersFormattedExpenses(this.get('user').get('pantry'), timePeriod).then((results) => {
+    this.get('graphOperations').generateAllUsersFormattedExpenses(pantry, timePeriod, true).then((results) => {
 			this.set('chartLabels', results.labels);
 			this.set('chartData', results.spendingAmounts);
 			var t1 = performance.now();

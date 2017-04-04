@@ -6,19 +6,7 @@ export default Ember.Route.extend({
 
 
   model(){
-    // //Get the user from the application model and return their shopping list
-    // if (this.get('user') === 0) {
-    //   const user = this.modelFor('application');
-    //   this.set('user', user);
-    //   this.set('pantryID', user.get('pantry.id'));
-    // }
-    //
-    // //return this.get('pantry');
-    // return this.store.findAll('pantry').then((pantries) => {
-    //   return pantries.filterBy("id", this.get('pantryID')).objectAt(0);
-    // });
     return this.modelFor('pantry');
-
   },
 
   actions: {
@@ -34,7 +22,7 @@ export default Ember.Route.extend({
       //We first need to see if their is a user that matches the email the user entered.
       this.store.query('user', {
         orderBy: 'email', equalTo: email
-      }).then((allUsers) => {
+      }).then((user) => {
         //TODO For now there is simply an alert if there is no user with that email. will change to be modal later.
         if (allUsers.get('length') === 0) {
           alert("no user found with that email.");

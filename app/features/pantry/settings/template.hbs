@@ -1,9 +1,9 @@
 
 <div class="layout-row layout-xs-column">
 	<div class="layout-column flex-50 flex-xs-100">
-		{{pantry/pantry-request-form}}
+		{{pantry/pantry-request-form sendPantryRequest="sendPantryRequest"}}
 	</div>
 	<div class="layout-column flex-50 flex-xs-100">
-		{{pantry/users-in-pantry users = model.users}}
+		{{pantry/users-in-pantry users = model.users }}
 	</div>
 </div>
