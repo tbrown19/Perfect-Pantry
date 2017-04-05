@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 export default Ember.Component.extend({
 	graphColors: Ember.inject.service('theme-helper'),
-	graphOperations: Ember.inject.service('graph-operations'),
+	spending: Ember.inject.service('services/spending-operations'),
 	chartData: [],
 	chartLabels: [],
 	timePeriodBasic: ["last", "week", "day"], //length, span, step
@@ -49,7 +49,7 @@ export default Ember.Component.extend({
 		//["this","year","month"]
     let user = this.get('user');
     let timePeriod = this.get('timePeriod');
-		this.get('graphOperations').generateFormattedUserExpenses(user, timePeriod, true).then((results) => {
+		this.get('spending').generateFormattedUserExpenses(user, timePeriod, true).then((results) => {
       this.set('chartLabels', results.labels);
       this.set('chartData', results.spendingAmounts);
 

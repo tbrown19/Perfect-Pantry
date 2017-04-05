@@ -1,45 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-	graphOperations: Ember.inject.service('graph-operations'),
-
-
-
-	getSingleUsersSpending(user){
-		//Get the users purchased list so that we can pass it onto the next
-		// return user.get('purchasedList').then((purchasedList) => {
-		// 	return this.get('graphOperations').sumAllTimeUserSpending(user, purchasedList).then((results) => {
-		// 		return results[1];
-		// 	});
-		// });
-
-		return this.get('graphOperations').sumAllTimeUserSpending(user).then((results) => {
-			return results.spending;
-		});
-
-	},
-
-	getSingleUsersPayments(user){
-		return user.get('paymentsToOthers').then((payments) => {
-			//Map the value of each payment to an array, and then reduce it to get the total value of all the payments.
-			let paymentValues = payments.map((payment) => payment.get('paymentAmount'));
-			return paymentValues.reduce((a, b) => a + b, 0);
-		});
-	},
-
-
-	getSingleUsersContributions(user){
-
-	},
-
-
-	getAllUserExpenses(users){
-		let getSpendingInfo = this.get('graphOperations').generateAllUsersAllTimeExpenses(users).then((results) => {
-			console.log(results);
-			//spendingPerUser = results[1];
-			//return results;
-		});
-	},
+	spending: Ember.inject.service('services/spending-operations'),
 
 	determineAllUsersPayments(users){
 
@@ -64,26 +26,6 @@ export default Ember.Service.extend({
 	},
 
 
-	// generateUserSpendingObjects(users){
-	// 	let usersActualSpending = [];
-	//
-	// 	return new Promise((resolve) => {
-	// 		//We create user spending objects
-	// 		let userPaymentArray = this.generateAllUsersAllTimeExpenses(users).then((results) => {
-	// 			//For each result we get we create a user object with that users spending and name.
-	// 			results[0].forEach(function (user, index) {
-	// 						let userObject = {
-	// 							user: user,
-	// 							spending: results[1][index]
-	// 				};
-	// 				usersActualSpending.push(userObject);
-	// 			});
-	// 		});
-	// 		userPaymentArray.then(() => {
-	// 			resolve(usersActualSpending);
-	// 		});
-	// 	});
-	// },
 
 
 	determineUserPayment(user, users){
@@ -108,7 +50,7 @@ export default Ember.Service.extend({
 			//First we have to resolve all the users purchased lists, before we can go on to summing the items from them.
 			Promise.all(purchasedLists).then((results) => {
 				let allUsersSums = results.map((result) => {
-					return this.get('graphOperations').sumAllTimeUserSpending(result[0], result[1]);
+					return this.get('spending').sumAllTimeUserSpending(result[0], result[1]);
 				});
 				//After we have allUsersSums, an array that contains information about how much each user has spent all time, we move on.
 				Promise.all(allUsersSums).then((userSpending) => {

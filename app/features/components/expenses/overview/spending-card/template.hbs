@@ -1,0 +1,13 @@
+{{#if currentUser}}
+	{{expenses/overview/user-spending-card
+		userSpending = userSpendingComp
+		userPayments = userPaymentsComp
+		userContributions = userPaymentsComp
+	}}
+{{else}}
+	{{expenses/overview/pantry-member-spending-card
+		userSpending = userSpendingComp
+		userPayments = userPaymentsComp
+		userContributions = userPaymentsComp
+	}}
+{{/if}}

@@ -24,12 +24,12 @@ export default Ember.Route.extend({
         orderBy: 'email', equalTo: email
       }).then((user) => {
         //TODO For now there is simply an alert if there is no user with that email. will change to be modal later.
-        if (allUsers.get('length') === 0) {
+        if (user.get('length') === 0) {
           alert("no user found with that email.");
         }
         else {
           //Get the pantryID of the pantry we are trying to join, NOT the current users pantry.
-          const pantryID = allUsers.objectAt(0).get('pantry.id');
+          const pantryID = user.objectAt(0).get('pantry.id');
 
           //We then take the user that we found and their pantry id then find their pantry.
           this.store.findAll('pantry').then((pantries) => {

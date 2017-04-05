@@ -1,0 +1,17 @@
+{{#paper-card as |card|}}
+	{{#paper-toolbar}}
+		{{#paper-toolbar-tools}}
+			<h2>
+				Your Spending
+			</h2>
+		{{/paper-toolbar-tools}}
+	{{/paper-toolbar}}
+	{{#card.content}}
+		<div>
+			<h3>All time</h3>
+			<div class="userTotalSpent">Spending on items: <span class="numberVal">{{userSpending}}</span></div>
+			<div class="userTotalSpent">Payments to others: <span class="numberVal">{{userPayments}}</span></div>
+			<div class="userTotalSpent">Total contributions to pantry: <span class="numberVal">{{userContribution}}</span></div>
+		</div>
+	{{/card.content}}
+{{/paper-card}}

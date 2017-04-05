@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('service:graph-operations', 'Unit | Service | graph operations', {
+moduleFor('service:services/spending-operations', 'Unit | Service | services/spending operations', {
   // Specify the other units that are required for this test.
   // needs: ['service:foo']
 });

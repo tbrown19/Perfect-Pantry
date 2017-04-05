@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   graphColors: Ember.inject.service('theme-helper'),
-  graphOperations: Ember.inject.service('graph-operations'),
+	spending: Ember.inject.service('services/spending-operations'),
   chartData: [],
   chartLabels:  [],
 
@@ -28,7 +28,7 @@ export default Ember.Component.extend({
   resolveChartData: Ember.computed('resolveChartData', function () {
     const users = this.get('allUsers');
 
-    this.get('graphOperations').generateAllUsersAllTimeExpenses(users).then((results) => {
+    this.get('spending').generateAllUsersAllTimeExpenses(users).then((results) => {
       this.set('chartLabels', results.nameLabels);
       this.set('chartData', results.spendingLabels);
     });
@@ -37,7 +37,6 @@ export default Ember.Component.extend({
 
 
   graphOptions: Ember.computed('data', function () {
-    console.log("derp");
     return {
       animation : true,
       labels: this.get('chartLabels'),
