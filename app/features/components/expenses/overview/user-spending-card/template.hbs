@@ -6,11 +6,28 @@
 			</h2>
 		{{/paper-toolbar-tools}}
 	{{/paper-toolbar}}
+
 	{{#card.content}}
 		<div>
-			<div class="userTotalSpent">Spending on items: <span class="numberVal">{{user.spendingTotals}}</span></div>
-			<div class="userTotalSpent">Payments to others: <span class="numberVal">{{user.paymentTotals}}</span></div>
-			<div class="userTotalSpent">Total contributions to pantry: <span class="numberVal">{{user.contribTotals}}</span></div>
+
+			<div class="userTotalSpent">Spending on items:
+				<span class="numberVal">
+					{{await user.spendingTotals}}
+				</span>
+			</div>
+
+			<div class="userTotalSpent">Payments to others:
+				<span class="numberVal">
+					{{await user.paymentTotals}}
+				</span>
+			</div>
+
+			<div class="userTotalSpent">Total contributions to pantry:
+				<span class="numberVal">
+					{{await user.contribTotals}}
+				</span>
+			</div>
 		</div>
 	{{/card.content}}
+
 {{/paper-card}}

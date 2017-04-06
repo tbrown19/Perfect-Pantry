@@ -24,29 +24,25 @@ export default DS.Model.extend({
 	}),
 
 
-
-	spendingTotals: Ember.computed('spending','purchasedList', function () {
-		if (this.get('spending') === '') {
-			let userSpending = this.get('spendingHelp').sumAllTimeUserSpending(this);
-			userSpending.then((result) => this.set('spending', result.spending));
-		}
-		return this.get('spending');
+	spendingTotals: Ember.computed('spending', 'purchasedList', function () {
+		return DS.PromiseObject.create({
+			promise: this.get('spendingHelp').sumAllTimeUserSpending(this).then(result => result.spending)
+		});
 	}),
 
 
 	paymentTotals: Ember.computed('payments', 'paymentsToOthers', function () {
-		if (this.get('payments') === '') {
-			let userPayments = this.get('paymentsHelp').getSingleUsersPayments(this);
-			userPayments.then((payments) => this.set('payments', payments));
-		}
-		return this.get('payments');
+		return DS.PromiseObject.create({
+			promise: this.get('paymentsHelp').getSingleUsersPayments(this).then(result => result)
+		});
 	}),
 
 
-	contributionTotals: Ember.computed('spendingTotals', 'paymentTotals', function () {
-		return this.get('spendingTotals') + this.get('paymentTotals');
-	}),
-
+	contribTotals: Ember.computed('spendingTotals', 'paymentTotals', function () {
+		return this.get('spendingTotals')
+			.then((spending) => this.get('paymentTotals')
+				.then((payments) => spending + payments));
+	})
 });
 
 

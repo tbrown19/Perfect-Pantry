@@ -8,7 +8,7 @@ export default Ember.Service.extend({
 	getSingleUserItemsByDay(items, date){
 		console.log(items, date);
 		return items.filter(item => {
-			return item.get('purchasedDateFormatted') === date;
+			return item.get('purchasedDate') === date;
 		});
 	},
 

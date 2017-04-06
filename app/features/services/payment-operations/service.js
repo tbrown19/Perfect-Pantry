@@ -10,9 +10,8 @@ export default Ember.Service.extend({
 
 	getSingleUsersPayments(user){
 		return user.get('paymentsToOthers').then((payments) => {
-			//Map the value of each payment to an array, and then reduce it to get the total value of all the payments.
-			let paymentValues = payments.map((payment) => payment.get('paymentAmount'));
-			return paymentValues.reduce((a, b) => a + b, 0);
+			let paymentValues = payments.mapBy('paymentAmount');
+			return paymentValues.reduce((total, paymentAmount) => total + paymentAmount, 0);
 		});
 	},
 
