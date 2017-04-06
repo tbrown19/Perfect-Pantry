@@ -1,7 +1,7 @@
 <div class="layout-row layout-xs-column">
 
 	<div class="flex-30 flex-xs-100">
-		{{expenses/overview/spending-card currentUser=true user=model.user purchasedList=model.purchasedList}}
+		{{expenses/overview/user-spending-card user=model.user purchasedList=model.purchasedList}}
 	</div>
 
 	<div class="flex-70 flex-xs-100">
@@ -19,7 +19,7 @@
 				<div class="layout-row layout-wrap " >
 					{{#each model.otherUsers as |user|}}
 						<div class="flex-50 flex-xs-100">
-							{{expenses/overview/spending-card currentUser=false user = user purchasedList = user.purchasedList}}
+							{{expenses/overview/pantry-member-spending-card user = user purchasedList = user.purchasedList}}
 						</div>
 					{{/each}}
 

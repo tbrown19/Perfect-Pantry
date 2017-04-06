@@ -1,17 +1,18 @@
 {{#paper-card as |card|}}
 	{{#card.title as |title|}}
 		{{#title.text as |text|}}
-			{{#text.headline}}{{user.firstName}}{{/text.headline}}
+			{{#text.headline}}{{user.firstName}} {{user.lastName}}{{/text.headline}}
 		{{/title.text}}
 	{{/card.title}}
-	{{#card.actions}}
-		{{#paper-button}}Action 1{{/paper-button}}
-		{{#paper-button}}Action 2{{/paper-button}}
-	{{/card.actions}}
 
 	{{#card.content}}
-		<div class="userTotalSpent">Spending on items: <span class="numberVal">{{userSpending}}</span></div>
-		<div class="userTotalSpent">Payments to others: <span class="numberVal">{{userPayments}}</span></div>
-		<div class="userTotalSpent">Total contributions to pantry: <span class="numberVal">{{userContributions}}</span></div>
+		<div class="userTotalSpent">Spending on items: <span class="numberVal">{{user.spendingTotals}}</span></div>
+		<div class="userTotalSpent">Payments to others: <span class="numberVal">{{user.paymentTotals}}</span></div>
+		<div class="userTotalSpent">Total contributions to pantry: <span class="numberVal">{{user.contribTotals}}</span></div>
 	{{/card.content}}
+
+	{{#card.actions}}
+		{{#paper-button}}View All Purchases{{/paper-button}}
+		{{#paper-button}}View All Payments{{/paper-button}}
+	{{/card.actions}}
 {{/paper-card}}

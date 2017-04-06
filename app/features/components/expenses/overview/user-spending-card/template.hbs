@@ -8,10 +8,9 @@
 	{{/paper-toolbar}}
 	{{#card.content}}
 		<div>
-			<h3>All time</h3>
-			<div class="userTotalSpent">Spending on items: <span class="numberVal">{{userSpending}}</span></div>
-			<div class="userTotalSpent">Payments to others: <span class="numberVal">{{userPayments}}</span></div>
-			<div class="userTotalSpent">Total contributions to pantry: <span class="numberVal">{{userContribution}}</span></div>
+			<div class="userTotalSpent">Spending on items: <span class="numberVal">{{user.spendingTotals}}</span></div>
+			<div class="userTotalSpent">Payments to others: <span class="numberVal">{{user.paymentTotals}}</span></div>
+			<div class="userTotalSpent">Total contributions to pantry: <span class="numberVal">{{user.contribTotals}}</span></div>
 		</div>
 	{{/card.content}}
 {{/paper-card}}
