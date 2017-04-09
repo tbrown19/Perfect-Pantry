@@ -67,9 +67,9 @@ export default Ember.Route.extend({
 			this.transitionTo('landing-page');
 		},
 
-    accessDenied: function () {
-      return this.transitionTo('landing-page');
-    },
+    // accessDenied: function () {
+    //   return this.transitionTo('landing-page');
+    // },
 
 		purchaseItem(item){
 			console.log("test");

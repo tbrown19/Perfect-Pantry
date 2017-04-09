@@ -14,10 +14,10 @@ export default Ember.Component.extend({
 
 		let userNames = [];
 		let spendingPerUser = [100,100,200,200];
-		let derp = this.get('expenseOperations').determineAllUsersPayments(users).then((results) => {
-			console.log("results go here");
-			console.log(results);
-		});
+		// let derp = this.get('expenseOperations').determineAllUsersPayments(users).then((results) => {
+		// 	console.log("results go here");
+		// 	console.log(results);
+		// });
 
 		let getSpendingInfo = this.get('graphOperations').generateAllUsersAllTimeExpenses(users).then((results) => {
 			console.log(results);

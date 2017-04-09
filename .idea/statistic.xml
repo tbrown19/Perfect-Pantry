@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Statistic">
+    <option name="excludedDirectories">
+      <list>
+        <option value="$PROJECT_DIR$/bower_components" />
+        <option value="$PROJECT_DIR$/config" />
+        <option value="$PROJECT_DIR$/dist" />
+        <option value="$PROJECT_DIR$/node_modules" />
+        <option value="$PROJECT_DIR$/Perfect-Pantry" />
+        <option value="$PROJECT_DIR$/public" />
+        <option value="$PROJECT_DIR$/tmp" />
+        <option value="$PROJECT_DIR$/vendor" />
+      </list>
+    </option>
+  </component>
+</project>

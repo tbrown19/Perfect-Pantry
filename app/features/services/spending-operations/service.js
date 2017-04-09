@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import _ from 'lodash';
+//import _ from 'lodash';
 
 export default Ember.Service.extend({
 	time: Ember.inject.service('services/time-operations'),
@@ -8,7 +8,7 @@ export default Ember.Service.extend({
 	getSingleUserItemsByDay(items, date){
 		console.log(items, date);
 		return items.filter(item => {
-			return item.get('purchasedDate') === date;
+			return item.get('purchasedDat') === date;
 		});
 	},
 
@@ -132,7 +132,8 @@ export default Ember.Service.extend({
 	 * Generates and formats the data values and labels for a user's spending over a specified time period.
 	 * Ex: Want to find expenses over past week - returns [['Monday','Tuesday',etc'], [10,20,etc]]
 	 * @param {user} user
-	 * @param {Array} timePeriod [timeLength, timeSpan] ex [1, week] [3, months], [last,week], etc
+	 * @param {Array} timePeriod
+	 * @param {Boolean} forGraphing
 	 * @return {Promise} {LabelsArray, SpendingArray]
 	 */
 	generateFormattedUserExpenses(user, timePeriod, forGraphing){

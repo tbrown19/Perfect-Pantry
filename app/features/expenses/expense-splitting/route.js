@@ -26,10 +26,10 @@ export default Ember.Route.extend({
 			});
 			console.log(newPayment);
 
-			otherUser.get('paymentsFromOthers').pushObject(newPayment);
+			//otherUser.get('paymentsFromOthers').pushObject(newPayment);
 			this.currentModel.user.get('paymentsToOthers').pushObject(newPayment);
 			newPayment.save().then(() => {
-				otherUser.save();
+				//otherUser.save();
 				this.currentModel.user.save();
 			});
 		}

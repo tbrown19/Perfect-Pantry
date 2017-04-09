@@ -28,9 +28,9 @@ export default Ember.Service.extend({
 
 
 
-	determineUserPayment(user, users){
-
-	},
+	// determineUserPayment(user, users){
+	//
+	// },
 
 
 	generateUserSpendingObjects(users){

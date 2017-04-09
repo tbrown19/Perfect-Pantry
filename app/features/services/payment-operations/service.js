@@ -16,11 +16,11 @@ export default Ember.Service.extend({
 	},
 
 
-	getAllUserExpenses(users){
-		let getSpendingInfo = this.get('spending').generateAllUsersAllTimeExpenses(users).then((results) => {
-			console.log(results);
-			//spendingPerUser = results[1];
-			//return results;
-		});
-	},
+	/*getAllUserExpenses(users){
+		// let getSpendingInfo = this.get('spending').generateAllUsersAllTimeExpenses(users).then((results) => {
+		// 	console.log(results);
+		// 	//spendingPerUser = results[1];
+		// 	//return results;
+		// });
+	},*/
 });

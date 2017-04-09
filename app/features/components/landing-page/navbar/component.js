@@ -4,7 +4,7 @@ export default Ember.Component.extend({
 	didScroll: false,
 
 	scrollPage: function () {
-		var sy = this.get('scrollY')(),
+		let sy = this.get('scrollY')(),
 			classie = window.classie,
 			header = document.querySelector('.navbar-custom'),
 			changeHeaderOn = 200;
@@ -19,14 +19,14 @@ export default Ember.Component.extend({
 	},
 
 	scrollY: function () {
-		var docElem = document.documentElement;
+		let docElem = document.documentElement;
 
 		return window.pageYOffset || docElem.scrollTop;
 	},
 
 	didInsertElement: function () {
 		if (!(this.get('isDestroyed') || this.get('isDestroying'))) {
-			var didScroll = this.get('didScroll') || false;
+			let didScroll = this.get('didScroll') || false;
 
 			/*jshint unused:false*/
 			window.addEventListener('scroll', function (event) {
@@ -46,7 +46,7 @@ export default Ember.Component.extend({
 			// jQuery for page scrolling feature - requires jQuery Easing plugin
 			Ember.$(function () {
 				Ember.$('a.page-scroll').bind('click', function (event) {
-					var $anchor = Ember.$(this);
+					let $anchor = Ember.$(this);
 					Ember.$('html, body').stop().animate({
 						scrollTop: Ember.$($anchor.attr('href')).offset().top
 					}, 1000, 'easeInOutExpo');
