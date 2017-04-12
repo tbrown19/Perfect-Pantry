@@ -6,7 +6,6 @@ export default Ember.Component.extend({
 	actions:{
 		signOut(){
 			//Closing the session here makes sure it is closed before performing the actions in the app route.
-			this.get("session").close();
 			this.sendAction('signOut');
 		}
 	}

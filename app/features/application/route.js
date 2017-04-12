@@ -4,58 +4,55 @@ import moment from 'moment';
 export default Ember.Route.extend({
 	session: Ember.inject.service('session'),
 	firebaseApp: Ember.inject.service(),
+	userAuth: Ember.inject.service('services/user-auth'),
 
-	authed: false,
   landingPage: true,
-
-  beforeModel: function () {
-    return this.get('session').fetch().then(() => {
-      //Get the the url the user is coming from
-      //This is needed so if the user refreshes it redirects them back the page they were on.
-      const url = window.location.href;
-      const split_url = url.split("/");
-      let redirect;
-
-      if (split_url.length > 4) {
-        //redirect = split_url[split_url.length - 2] + "/" + split_url[split_url.length - 1];
-      }
-      else {
-        redirect = split_url[split_url.length - 1] || "dashboard";
-
-      }
-
-      //Get just the end item which is the current pages
-      this.set('authed', true);
-      this.transitionTo(redirect);
-
-    }, () => {
-
-			console.log('no session to fetch');
-    });
-  },
+	//
+  // beforeModel: function () {
+		// console.log(this.get('session'));
+		// if (this.get('session').get('isAuthenticated')){
+		// 	//TODO implement an actual redirect.
+		// 	this.transitionTo("dashboard");
+	//
+		// 	//Get the the url the user is coming from
+  //     //This is needed so if the user refreshes it redirects them back the page they were on.
+  //     const url = window.location.href;
+  //     const split_url = url.split("/");
+  //     let redirect;
+	//
+  //     if (split_url.length > 4) {
+  //       //redirect = split_url[split_url.length - 2] + "/" + split_url[split_url.length - 1];
+  //     }
+  //     else {
+  //       redirect = split_url[split_url.length - 1] || "dashboard";
+	//
+  //     }
+	//
+  //     //Get just the end item which is the current pages
+  //     //console.log("redirect", redirect);
+  //   }
+  //   else{
+		// 	console.log("no session");
+		// }
+  // },
 
   model: function () {
-
     //Make sure the user is authenticated before we attempt to return the model
     if (this.get('session').get('isAuthenticated')) {
-      const userEmail = this.get('session').get('currentUser.email');
-
-      //find the user based of their email and then return the model related to them
-      return this.store.query('user', {
-        orderBy: 'email', equalTo: userEmail
-      }).then((allUsers) => {
-        const user = allUsers.objectAt(0);
-        const pantry = user.get('pantry');
-        return Ember.RSVP.hash({
-          user: user,
-          pantry: pantry,
-          pantryUsers: pantry.get('users'),
-          shoppingList: user.get('shoppingList'),
-          purchasedList: user.get('purchasedList')
-        });
-      });
-    }
-
+			//this.transitionTo('dashboard');
+			return this.get('userAuth').get('user').then((user) => {
+				console.log(this.get('session'));
+			  console.log("user2", user);
+				const pantry = user.get('pantry');
+				return Ember.RSVP.hash({
+					user: user,
+					pantry: pantry,
+					pantryUsers: pantry.get('users'),
+					shoppingList: user.get('shoppingList'),
+					purchasedList: user.get('purchasedList')
+				});
+			});
+		}
   },
 
   actions: {
@@ -63,13 +60,24 @@ export default Ember.Route.extend({
     signOut() {
 			//Reload the page first so that all the models unload since the user session has ended, they won't repopulate.
       //Then we can transition to index. otherwise it leads to weird permission errors.
-			window.location.reload(true);
-			this.transitionTo('landing-page');
+			this.store.peekAll('pantry').forEach((r) => r.unloadRecord());
+			this.store.peekAll('user').forEach((r) => r.unloadRecord());
+			this.store.peekAll('purchasedList').forEach((r) => r.unloadRecord());
+			this.store.peekAll('shoppingList').forEach((r) => r.unloadRecord());
+
+			this.get('firebaseApp').auth().signOut().then(function() {
+				console.log("derp?");
+				window.location.reload(true);
+			}).catch(function(error) {
+				// An error happened.
+				console.log(error);
+			});
+
 		},
 
-    // accessDenied: function () {
-    //   return this.transitionTo('landing-page');
-    // },
+    accessDenied: function () {
+      return this.transitionTo('landing-page');
+    },
 
 		purchaseItem(item){
 			console.log("test");

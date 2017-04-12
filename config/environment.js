@@ -17,7 +17,13 @@ module.exports = function(environment) {
     },
 
     torii: {
-      sessionServiceName: 'session'
+      sessionServiceName: 'session',
+			providers: {
+				'google-oauth2': {
+					apiKey: "385354777639-8nk49si7qure55ki9gjht4sbroi4pejk.apps.googleusercontent.com",
+					redirectUri: "http://localhost:4200/oauth2callback"
+				}
+			}
     },
 
     EmberENV: {

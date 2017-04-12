@@ -45,7 +45,7 @@ export default Ember.Service.extend({
 		let lastValidIndex = items.length - 1;
 		endDate = endDate.endDate || endDate.date;
 		//We to search until the item we are checking has a purchase date before our last date in a time period,
-		while (moment(items.objectAt(lastValidIndex).get('purchasedDate')).startOf('day').isAfter(endDate)) {
+		while (moment(items.objectAt(lastValidIndex).get('purchasedDate')).startOf('day').isAfter(endDate) && lastValidIndex > 0) {
 			lastValidIndex--;
 		}
 		return lastValidIndex;
@@ -133,6 +133,7 @@ export default Ember.Service.extend({
 		let curTimePeriod = 0;
 		let startIndex = this.findFirstItemWithinPeriod(items, days[0]);
 		let endIndex = this.findLastItemWithinPeriod(items, days[days.length - 1]);
+		console.log(startIndex, endIndex);
 		for (let i = startIndex; i <= endIndex; i++) {
 			let date = days[curTimePeriod].date;
 			let itemPurchDate = moment(items.objectAt(i).get('purchasedDate'));
@@ -144,6 +145,10 @@ export default Ember.Service.extend({
 			//We increase the current day so we can if the item fits there, in order to recheck the item we subtract 1 from i
 			else {
 				curTimePeriod++;
+				//If we've checked every time period, then we can break out of the loop. As these items don't fit in the time period.
+				if (curTimePeriod === days.length) {
+					break;
+				}
 				i--;
 			}
 		}

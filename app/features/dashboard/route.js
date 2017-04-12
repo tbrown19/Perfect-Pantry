@@ -5,15 +5,15 @@ export default Ember.Route.extend({
 
 
   model() {
+  	console.log();
     const application = this.modelFor('application');
-    const pantry = application.pantry;
-
+    console.log(application);
     return Ember.RSVP.hash({
       user: application.user,
-      pantry: pantry,
+      pantry: application.pantry,
       purchasedList: application.purchasedList,
-      shoppingItems: pantry.get('shoppingItems'),
-      purchasedItems: pantry.get('purchasedItems')
+      shoppingItems: application.pantry.get('shoppingItems'),
+      purchasedItems: application.pantry.get('purchasedItems')
     });
 
   },

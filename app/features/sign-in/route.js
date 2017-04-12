@@ -3,10 +3,6 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   session: Ember.inject.service('session'),
 
-  model(){
-    console.log(this.get('session'));
-	},
-
 
   actions: {
 		signInRequest(email,password) {
@@ -15,9 +11,8 @@ export default Ember.Route.extend({
         'email': email,
         'password': password
       }).then(() => {
-        this.transitionTo('dashboard');
-      });
-
+				window.location.reload();
+			});
     },
 
   }

@@ -2,14 +2,14 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   firebaseApp: Ember.inject.service(),
+	session: Ember.inject.service('session'),
 
-  beforeModel() {
-    if (this.get('session.isAuthenticated')) {
-      this.transitionTo('dashboard');
-    }
-  },
+	beforeModel: function() {
+		return this.get('session').fetch().catch(function() {});
+	},
 
   actions: {
+
     signUpRequest(email, firstName, lastName, password) {
       const auth = this.get('firebaseApp').auth();
 
@@ -26,17 +26,22 @@ export default Ember.Route.extend({
           const pantry = this.get('store').createRecord('pantry');
 					const shoppingList = this.get('store').createRecord('shopping-list');
           const purchasedList = this.get('store').createRecord('purchased-list');
-
           user.set('pantry', pantry);
           user.set('shoppingList', shoppingList);
           user.set('purchasedList', purchasedList);
-
+					//
           pantry.save();
           shoppingList.save();
           purchasedList.save();
 
           return user.save().then(() => {
-            this.transitionTo('dashboard');
+						this.get('session').open('firebase', {
+							provider: 'password',
+							'email': email,
+							'password': password
+						}).then(() => {
+							this.transitionTo('dashboard');
+						});
           });
         });
       }).catch(function (err) {
