@@ -6,39 +6,11 @@ export default Ember.Route.extend({
 	firebaseApp: Ember.inject.service(),
 	userAuth: Ember.inject.service('services/user-auth'),
 
-  landingPage: true,
-	//
-  // beforeModel: function () {
-		// console.log(this.get('session'));
-		// if (this.get('session').get('isAuthenticated')){
-		// 	//TODO implement an actual redirect.
-		// 	this.transitionTo("dashboard");
-	//
-		// 	//Get the the url the user is coming from
-  //     //This is needed so if the user refreshes it redirects them back the page they were on.
-  //     const url = window.location.href;
-  //     const split_url = url.split("/");
-  //     let redirect;
-	//
-  //     if (split_url.length > 4) {
-  //       //redirect = split_url[split_url.length - 2] + "/" + split_url[split_url.length - 1];
-  //     }
-  //     else {
-  //       redirect = split_url[split_url.length - 1] || "dashboard";
-	//
-  //     }
-	//
-  //     //Get just the end item which is the current pages
-  //     //console.log("redirect", redirect);
-  //   }
-  //   else{
-		// 	console.log("no session");
-		// }
-  // },
 
   model: function () {
     //Make sure the user is authenticated before we attempt to return the model
     if (this.get('session').get('isAuthenticated')) {
+    	console.log("derp");
 			//this.transitionTo('dashboard');
 			return this.get('userAuth').get('user').then((user) => {
 				console.log(this.get('session'));

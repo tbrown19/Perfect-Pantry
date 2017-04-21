@@ -11,7 +11,7 @@ Router.map(function() {
   this.route('sign-in');
 	this.route('landing-page', { path: '/' });
 
-  this.authenticatedRoute('dashboard');
+  this.authenticatedRoute('dashboard', { path: '/' });
   //this.authenticatedRoute('pantry');
   this.authenticatedRoute('shopping-list');
   this.authenticatedRoute('expenses');
